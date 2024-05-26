@@ -15,13 +15,9 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up SSH
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y sshpass
-        chmod +x ./add_ssh_key.sh
-        ./add_ssh_key.sh
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Copy frontend files to VPS
       env:
@@ -58,13 +54,9 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up SSH
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y sshpass
-        chmod +x ./add_ssh_key.sh
-        ./add_ssh_key.sh
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Copy backend files to VPS
       env:
@@ -72,21 +64,21 @@ jobs:
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "sudo mkdir -p /var/www/lstapp/backend"
-        scp -o StrictHostKeyChecking-no -r ./backend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
+        scp -o StrictHostKeyChecking=no -r ./backend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
       
     - name: Copy docker-compose.yml to VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        scp -o StrictHostKeyChecking-no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
+        scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
 
     - name: Deploy backend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
         sudo docker-compose build backend
         sudo docker-compose up -d backend
