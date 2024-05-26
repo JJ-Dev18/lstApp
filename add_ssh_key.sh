@@ -1,11 +1,7 @@
-#!/usr/bin/expect -f
+#!/bin/bash
 
 # Iniciar el agente SSH
-spawn ssh-agent -s
-expect "Agent pid"
+eval "$(ssh-agent -s)"
 
 # Agregar la clave privada al agente SSH
-spawn ssh-add ~/.ssh/id_rsa
-expect "Enter passphrase for ~/.ssh/id_rsa:"
-send "$env(SSH_PASSPHRASE)\r"
-interact
+ssh-add - <<< "${SSH_PASSPHRASE}"
