@@ -46,7 +46,8 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
-        docker-compose down
+        docker-compose down --volumes --remove-orphans
+        docker network prune -f
         EOF
 
     - name: Deploy frontend on VPS
@@ -95,7 +96,8 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
-        docker-compose down
+        docker-compose down --volumes --remove-orphans
+        docker network prune -f
         EOF
     
     - name: Deploy backend on VPS

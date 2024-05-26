@@ -6,7 +6,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  console.log( import.meta.env.VITE_API_URL )
+  console.log( "api url ", import.meta.env.VITE_API_URL )
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
