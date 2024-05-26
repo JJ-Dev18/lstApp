@@ -1,0 +1,105 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model Usuario {
+  id        Int     @id @default(autoincrement())
+  nombre    String
+  email     String  @unique
+  password  String
+  rol       String
+  googleId  String? @unique
+  eventos  Evento[] @relation("PlanilleroEventos")
+ @@map("usuarios")
+}
+
+model Categoria {
+  id    Int      @id @default(autoincrement())
+  nombre String
+  equipos Equipo[]
+  @@map("categorias")
+}
+
+model Equipo {
+  id          Int         @id @default(autoincrement())
+  nombre      String
+  categoria   Categoria   @relation(fields: [categoriaId], references: [id])
+  categoriaId Int
+  jugadores   Jugador[]
+  grupos      EquiposGrupos[]
+  equipo1     Partido[]   @relation("Equipo1")
+  equipo2     Partido[]   @relation("Equipo2")
+  @@map("equipos")
+}
+
+model Jugador {
+  id       Int       @id @default(autoincrement())
+  nombre   String
+  equipo   Equipo    @relation(fields: [equipoId], references: [id])
+  equipoId Int
+  eventos  Evento[]
+  estadisticas Estadistica[]
+  @@map("jugadores")
+}
+
+model Partido {
+  id         Int       @id @default(autoincrement())
+  equipo1    Equipo    @relation("Equipo1", fields: [equipo1Id], references: [id])
+  equipo1Id  Int
+  equipo2    Equipo    @relation("Equipo2", fields: [equipo2Id], references: [id])
+  equipo2Id  Int
+  fecha      DateTime
+  duracion   Int
+  eventos    Evento[]
+  estadisticas Estadistica[]
+  @@map("partidos")
+}
+
+model Evento {
+  id          Int       @id @default(autoincrement())
+  partido     Partido   @relation(fields: [partidoId], references: [id])
+  partidoId   Int
+  tipo        String
+  tiempo      String
+  jugador     Jugador   @relation(fields: [jugadorId], references: [id])
+  jugadorId   Int
+  planillero  Usuario   @relation("PlanilleroEventos", fields: [planilleroId], references: [id])
+  planilleroId Int
+  comentario  String?
+  @@map("eventos")
+}
+
+model GrupoClasificacion {
+  id     Int            @id @default(autoincrement())
+  nombre String
+  equiposGrupos EquiposGrupos[]
+  @@map("grupos_clasificacion")
+}
+
+model EquiposGrupos {
+  equipoId Int
+  grupoId  Int
+  equipo   Equipo           @relation(fields: [equipoId], references: [id])
+  grupo    GrupoClasificacion @relation(fields: [grupoId], references: [id])
+  @@id([equipoId, grupoId])
+  @@map("equipos_grupos")
+}
+
+model Estadistica {
+  id           Int       @id @default(autoincrement())
+  jugador      Jugador   @relation(fields: [jugadorId], references: [id])
+  jugadorId    Int
+  partido      Partido   @relation(fields: [partidoId], references: [id])
+  partidoId    Int
+  goles        Int       @default(0)
+  bloqueos     Int       @default(0)
+  intercepciones Int     @default(0)
+  asistencias  Int       @default(0)
+  @@map("estadisticas")
+}

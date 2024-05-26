@@ -1,0 +1,65 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[frontend]')
+    environment:
+      SSH_CREDENTIALS: ${{ secrets.SSH_PRIVATE_KEY }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Copy frontend files to VPS
+      run: |
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./frontend ${VPS_USER}@${VPS_HOST}:/path/to/your/project/on/vps/frontend
+
+    - name: Deploy frontend on VPS
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /path/to/your/project/on/vps
+        docker-compose build frontend
+        docker-compose up -d frontend
+        EOF
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[backend]')
+    environment:
+      SSH_CREDENTIALS: ${{ secrets.SSH_PRIVATE_KEY }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Copy backend files to VPS
+      run: |
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./backend ${VPS_USER}@${VPS_HOST}:/path/to/your/project/on/vps/backend
+
+    - name: Deploy backend on VPS
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /path/to/your/project/on/vps
+        docker-compose build backend
+        docker-compose up -d backend
+        EOF

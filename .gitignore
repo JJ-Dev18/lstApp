@@ -1,0 +1,60 @@
+# Ignorar node_modules en el raíz y en cualquier subdirectorio (backend y frontend)
+node_modules/
+**/node_modules/
+
+# Ignorar archivos de dependencias
+package-lock.json
+yarn.lock
+
+# Ignorar archivos de entorno
+.env
+**/.env
+
+# Ignorar logs
+logs/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar cachés del sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de configuración del editor
+.vscode/
+.idea/
+*.swp
+
+# Ignorar directorios de construcción y distribución
+dist/
+build/
+out/
+
+# Ignorar Docker archivos si los hay
+
+
+# Ignorar archivos temporales de sistema operativo
+*.~undo-tree*
+*.sublime-workspace
+
+# Ignorar otros archivos innecesarios
+*.bak
+*.tmp
+*.temp
+
+# Ignorar archivos de configuración de OS específicos
+*.sass-cache
+**/.sass-cache
+
+# Ignorar archivos de cobertura de pruebas
+coverage/
+**/coverage/
+
+# Ignorar archivos generados por Jest
+jest/
+**/jest/
+
+# Ignorar archivos de salida de compilación de TypeScript
+*.tsbuildinfo
