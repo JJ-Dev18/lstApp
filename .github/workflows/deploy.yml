@@ -41,8 +41,8 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
-        sudo docker-compose build frontend
-        sudo docker-compose up -d frontend
+        docker-compose build frontend
+        docker-compose up -d frontend
         EOF
 
   deploy-backend:
@@ -71,15 +71,15 @@ jobs:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
+        scp -o StrictHostKeyChecking-no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
 
     - name: Deploy backend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
-        sudo docker-compose build backend
-        sudo docker-compose up -d backend
+        docker-compose build backend
+        docker-compose up -d backend
         EOF
