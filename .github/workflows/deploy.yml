@@ -4,7 +4,12 @@ on:
   push:
     branches:
       - main  # Este pipeline se ejecutará cuando haya un push en la rama 'main'
-
+  workflow_dispatch:
+    inputs:
+      run_migrations:
+        description: 'Run database migrations'
+        required: false
+        default: 'false'
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -82,4 +87,16 @@ jobs:
         cd /var/www/lstapp
         docker-compose build backend
         docker-compose up -d backend
+        EOF
+    
+    - name: Run migrations
+      if: github.event.inputs.run_migrations == 'true'
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /var/www/lstapp
+        docker-compose exec backend npm run migrate
+        docker-compose exec backend npm run seeds
         EOF

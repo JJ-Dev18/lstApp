@@ -4,10 +4,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: 'http://147.182.204.43/api'
     ports:
       - "3000:80"
-    environment:
-      - VITE_API_URL=http://147.182.204.43/api
     depends_on:
       - backend  
     networks:
@@ -22,6 +22,9 @@ services:
       - "3001:3001"
     environment:
       - DATABASE_URL=postgresql://username:password@db:5432/mydatabase
+      - FRONTEND_URL=http://147.182.204.43
+      - SESSION_SECRET=mysecret
+      - JWT_SECRET=myjwtsecret
     networks:
       - app-network
     depends_on:

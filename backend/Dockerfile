@@ -16,9 +16,6 @@ COPY . .
 # Genera el cliente de Prisma
 RUN npm run prisma
 
-RUN npm run migrate
-
-RUN npm run seeds
 
 
 # Compila TypeScript a JavaScript
