@@ -17,7 +17,7 @@ jobs:
     - name: Set up SSH
       run: |
         sudo apt-get update
-        sudo apt-get install -y expect
+        sudo apt-get install -y sshpass
         chmod +x ./add_ssh_key.sh
         ./add_ssh_key.sh
       env:
@@ -53,7 +53,7 @@ jobs:
     - name: Set up SSH
       run: |
         sudo apt-get update
-        sudo apt-get install -y expect
+        sudo apt-get install -y sshpass
         chmod +x ./add_ssh_key.sh
         ./add_ssh_key.sh
       env:

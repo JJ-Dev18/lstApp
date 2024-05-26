@@ -4,4 +4,4 @@
 eval "$(ssh-agent -s)"
 
 # Agregar la clave privada al agente SSH
-ssh-add - <<< "${SSH_PASSPHRASE}"
+echo "$SSH_PRIVATE_KEY" | ssh-add -
