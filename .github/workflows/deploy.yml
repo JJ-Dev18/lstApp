@@ -77,7 +77,7 @@ jobs:
       run: |
         scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
 
-    - name: Deploy frontend on VPS
+    - name: Build frontend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -85,6 +85,15 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
         docker-compose build frontend
+        EOF
+
+    - name: Deploy frontend on VPS
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /var/www/lstapp
         docker-compose up -d frontend
         EOF
 
@@ -117,7 +126,7 @@ jobs:
       run: |
         scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
 
-    - name: Deploy backend on VPS
+    - name: Build backend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -125,6 +134,15 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
         docker-compose build backend
+        EOF
+
+    - name: Deploy backend on VPS
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /var/www/lstapp
         docker-compose up -d backend
         EOF
 
