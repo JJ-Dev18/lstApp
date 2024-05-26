@@ -3,16 +3,12 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main
+      - main  # Este pipeline se ejecutará cuando haya un push en la rama 'main'
 
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '[frontend]') || contains(github.event.head_commit.message, '[both]')
-    environment:
-      SSH_CREDENTIALS: ${{ secrets.SSH_PRIVATE_KEY }}
-      VPS_HOST: ${{ secrets.VPS_HOST }}
-      VPS_USER: ${{ secrets.VPS_USER }}
 
     steps:
     - name: Checkout code
@@ -23,11 +19,18 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Copy frontend files to VPS
+    - name: Copy files to VPS
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./frontend ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/frontend
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/
 
     - name: Deploy frontend on VPS
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
@@ -38,10 +41,6 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     if: contains(github.event.head_commit.message, '[backend]') || contains(github.event.head_commit.message, '[both]')
-    environment:
-      SSH_CREDENTIALS: ${{ secrets.SSH_PRIVATE_KEY }}
-      VPS_HOST: ${{ secrets.VPS_HOST }}
-      VPS_USER: ${{ secrets.VPS_USER }}
 
     steps:
     - name: Checkout code
@@ -52,11 +51,18 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Copy backend files to VPS
+    - name: Copy files to VPS
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./backend ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/
 
     - name: Deploy backend on VPS
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
