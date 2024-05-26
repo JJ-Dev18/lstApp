@@ -38,6 +38,16 @@ jobs:
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
+    
+    - name: Stop and remove old containers
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /var/www/lstapp
+        docker-compose down
+        EOF
 
     - name: Deploy frontend on VPS
       env:
@@ -77,7 +87,17 @@ jobs:
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
-
+    
+    - name: Stop and remove old containers
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /var/www/lstapp
+        docker-compose down
+        EOF
+    
     - name: Deploy backend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
