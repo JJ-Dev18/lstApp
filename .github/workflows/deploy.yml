@@ -146,8 +146,8 @@ jobs:
         docker-compose up -d backend
         EOF
 
-    - name: Run migrations and seeds
-      if: github.event.inputs.run_migrations == 'true'
+    - name: Run migrations
+      if: contains(github.event.head_commit.message, '[migrate]') || github.event.inputs.run_migrations == 'true'
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -155,11 +155,10 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
         docker-compose exec backend npm run migrate
-        docker-compose exec backend npm run seeds
         EOF
 
     - name: Run seeds
-      if: github.event.inputs.run_migrations == 'true'
+      if: contains(github.event.head_commit.message, '[seeds]') || github.event.inputs.run_migrations == 'true'
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}

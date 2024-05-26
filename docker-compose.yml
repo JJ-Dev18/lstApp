@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_URL: 'http://147.182.204.43/api'
+        VITE_API_URL_SOCKET: 'ws://147.182.204.43/api'
     ports:
       - "3000:80"
     depends_on:

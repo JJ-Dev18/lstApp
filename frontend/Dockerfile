@@ -6,9 +6,11 @@ RUN npm install
 COPY . .
 # Declarar el argumento de construcción
 ARG VITE_API_URL
-
+ARG VITE_API_URL_SOCKET
 # Asignar el argumento de construcción a una variable de entorno
 ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_API_URL_SOCKET=$VITE_API_URL_SOCKET
+
 
 RUN npm run build
 
