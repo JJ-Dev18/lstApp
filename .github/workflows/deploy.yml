@@ -75,7 +75,7 @@ jobs:
         scp -o StrictHostKeyChecking=no -r ./backend ${VPS_USER}@${VPS_HOST}:/tmp/backend
         ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} "sudo mv /tmp/backend /var/www/lstapp/"
 
-     - name: Copy docker-compose.yml to VPS
+    - name: Copy docker-compose.yml to VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
