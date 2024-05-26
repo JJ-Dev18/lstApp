@@ -157,14 +157,14 @@ jobs:
         docker-compose exec backend npm run migrate
         docker-compose exec backend npm run seeds
         EOF
-        
+
     - name: Run seeds
       if: github.event.inputs.run_migrations == 'true'
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
         docker-compose exec backend npm run seeds
         EOF
