@@ -22,31 +22,31 @@ jobs:
         ./add_ssh_key.sh
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
 
     - name: Copy frontend files to VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        scp -o StrictHostKeyChecking=no -r ./frontend ${VPS_USER}@${VPS_HOST}:/tmp/frontend
-        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "sudo mv /tmp/frontend /var/www/lstapp/"
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "sudo mkdir -p /var/www/lstapp/frontend"
+        scp -o StrictHostKeyChecking=no -r ./frontend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/frontend/
+      
     - name: Copy docker-compose.yml to VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/tmp/docker-compose.yml
-        ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} "sudo mv /tmp/docker-compose.yml /var/www/lstapp/"
+        scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
+
     - name: Deploy frontend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
-        cd /path/to/your/project/on/vps
-        docker-compose build frontend
-        docker-compose up -d frontend
+        cd /var/www/lstapp
+        sudo docker-compose build frontend
+        sudo docker-compose up -d frontend
         EOF
 
   deploy-backend:
@@ -65,30 +65,29 @@ jobs:
         ./add_ssh_key.sh
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
 
     - name: Copy backend files to VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        scp -o StrictHostKeyChecking=no -r ./backend ${VPS_USER}@${VPS_HOST}:/tmp/backend
-        ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} "sudo mv /tmp/backend /var/www/lstapp/"
-
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "sudo mkdir -p /var/www/lstapp/backend"
+        scp -o StrictHostKeyChecking-no -r ./backend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
+      
     - name: Copy docker-compose.yml to VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/tmp/docker-compose.yml
-        ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} "sudo mv /tmp/docker-compose.yml /var/www/lstapp/"
+        scp -o StrictHostKeyChecking-no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
+
     - name: Deploy backend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
-        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
-        cd /path/to/your/project/on/vps
-        docker-compose build backend
-        docker-compose up -d backend
+        ssh -o StrictHostKeyChecking-no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        cd /var/www/lstapp
+        sudo docker-compose build backend
+        sudo docker-compose up -d backend
         EOF
