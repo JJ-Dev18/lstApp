@@ -5,8 +5,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: 'http://147.182.204.43/api'
-        VITE_API_URL_SOCKET: 'http://147.182.204.43'
+        VITE_API_URL: 'https://livescoretracking.online/api'
+        VITE_API_URL_SOCKET: 'https://livescoretracking.online'
     ports:
       - "3000:80"
     depends_on:
@@ -23,7 +23,7 @@ services:
       - "3001:3001"
     environment:
       - DATABASE_URL=postgresql://username:password@db:5432/mydatabase
-      - FRONTEND_URL=http://147.182.204.43
+      - FRONTEND_URL=https://livescoretracking.online
       - SESSION_SECRET=mysecret
       - JWT_SECRET=myjwtsecret
     networks:

@@ -58,3 +58,5 @@ jest/
 
 # Ignorar archivos de salida de compilación de TypeScript
 *.tsbuildinfo
+
+
