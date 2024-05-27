@@ -10,13 +10,17 @@ const MatchDetails: React.FC<Props> = ({partidoId}) => {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    console.log(partidoId,"partidoID")
-    if(partidoId){
-      socket.emit('joinRoom', { partidoId });
-      instance.get(`/events/partido/${partidoId}/eventos`)
-        .then(response => setEvents(response.data))
-        .catch(error => console.error('Error fetching events:', error));
+    const connect = async () => {
+      console.log(partidoId,"partidoID")
+      if(partidoId){
+        socket.emit('joinRoom', { partidoId });
+        await instance.get(`/events/partido/${partidoId}/eventos`)
+          .then(response => setEvents(response.data))
+          .catch(error => console.error('Error fetching events:', error));
+      }
+
     }
+    connect()
   }, [partidoId]);
 
     // useEffect(() => {

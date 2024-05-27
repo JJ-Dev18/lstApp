@@ -3,16 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('planillero1@example.com');
+  const [password, setPassword] = useState('planillero123');
   const navigate = useNavigate();
   console.log( "api url ", import.meta.env.VITE_API_URL )
+  console.log( "api url ", import.meta.env.VITE_API_URL_SOCKET )
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await login(email,password)
       if(response.error){
         window.alert(response.error)
+        console.log(response.error)
       }else{
         navigate('/events');
       }
