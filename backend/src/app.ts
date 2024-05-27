@@ -21,14 +21,14 @@ const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   path: '/socket.io',
   cors: {
-    origin: process.env.FRONTEND_URL,
+    origin: ['https://livescoretracking.online', 'https://www.livescoretracking.online','http://localhost:3000'],
     methods: ['GET', 'POST'],
     credentials: true,
   },
 });
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: ['https://livescoretracking.online', 'https://www.livescoretracking.online','http://localhost:3000'],
   credentials: true,
 }));
 
