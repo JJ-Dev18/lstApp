@@ -26,6 +26,8 @@ services:
       - FRONTEND_URL=https://www.livescoretracking.online
       - SESSION_SECRET=mysecret
       - JWT_SECRET=myjwtsecret
+      - GOOGLE_CLIENT_ID=yourclientid
+      - GOOGLE_CLIENT_SECRET=yourclientsecret
     networks:
       - app-network
     depends_on:
