@@ -17,7 +17,7 @@ const UploadForm: React.FC = () => {
       formData.append('file', file);
 
       try {
-        const response = await instance.post('/jugadores/create', formData, {
+         await instance.post('/jugadores/create', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

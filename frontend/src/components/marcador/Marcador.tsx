@@ -1,5 +1,4 @@
-import {  Box, Flex, Text, VStack, HStack, IconButton, Select, Button, useColorMode, Image } from "@chakra-ui/react";
-import { BellIcon, SunIcon, MoonIcon } from "@chakra-ui/icons";
+import {  Box, Flex, Text, VStack,useColorMode, Image } from "@chakra-ui/react";
 import Logo from '../../assets/uro.png'
 import socket from "../../api/socket";
 import { useEffect, useState } from "react";
@@ -11,17 +10,7 @@ import { useParams } from "react-router-dom";
 import Timer from "./Timer";
 import AddEventForm from "../planillero/AddEventForm";
 
-function ToggleThemeButton() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <IconButton
-      icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-      onClick={toggleColorMode}
-      variant="ghost"
-      aria-label="Toggle Theme"
-    />
-  );
-}
+
 
 function Marcador() {
   const { colorMode } = useColorMode();

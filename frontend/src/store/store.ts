@@ -38,7 +38,7 @@ const createAuthSlice = (set: any, ): AuthSlice => ({
   checkToken: async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = instance.get('/check-token',{
+      await instance.get('/check-token',{
         headers: {
           'Authorization': `Bearer ${token}`,
         },

@@ -68,6 +68,7 @@ const Timer: React.FC<TimerProps> = ({ partidoId , settime}) => {
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       {/* <h1>{formatTime(time)}</h1> */}
+      {isActive}
       <Flex justifyContent="center" mt={4}>
         <HStack spacing={8}>
           <Box textAlign="center" bg={colorMode === 'dark' ? 'gray.800' : 'gray.200'} p={4} borderRadius="md">

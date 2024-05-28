@@ -1,6 +1,6 @@
 // Layout.js
-import { Box, Flex, HStack, IconButton, Image, Text, useColorMode } from "@chakra-ui/react";
-import { BellIcon, SunIcon, MoonIcon, SmallCloseIcon } from "@chakra-ui/icons";
+import { Box, Flex, HStack, IconButton, Image, useColorMode } from "@chakra-ui/react";
+import { BellIcon, SunIcon, MoonIcon } from "@chakra-ui/icons";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo  from '../../assets/logo3.svg'

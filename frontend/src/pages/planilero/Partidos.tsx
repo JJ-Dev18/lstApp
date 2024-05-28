@@ -1,6 +1,5 @@
 import React, {  useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box, Button, Card, Grid } from '@chakra-ui/react';
+import { Box} from '@chakra-ui/react';
 import instance from '../../api/axios';
 import { PartidoType } from '../../interfaces/marcador';
 import Layout from '../../components/layout/Layout';
