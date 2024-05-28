@@ -68,7 +68,8 @@ jobs:
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "mkdir -p /var/www/lstapp/frontend"
-        scp -o StrictHostKeyChecking=no -r ./frontend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/frontend/
+        rsync -avz --exclude 'node_modules' --exclude '.git' --exclude 'dist' ./frontend/ ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/frontend/
+        # scp -o StrictHostKeyChecking=no -r ./frontend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/frontend/
       
     - name: Copy docker-compose.yml to VPS
       env:
@@ -117,7 +118,8 @@ jobs:
         VPS_HOST: ${{ secrets.VPS_HOST }}
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "mkdir -p /var/www/lstapp/backend"
-        scp -o StrictHostKeyChecking=no -r ./backend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
+        rsync -avz --exclude 'node_modules' --exclude '.git' --exclude 'dist' ./backend/ ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
+        # scp -o StrictHostKeyChecking=no -r ./backend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
       
     - name: Copy docker-compose.yml to VPS
       env:
