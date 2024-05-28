@@ -1,9 +1,11 @@
 # Dockerfile del Frontend (React con Vite)
 FROM node:18-alpine as build
 WORKDIR /app
-COPY package*.json ./
+# COPY package*.json ./
+COPY package.json package-lock.json ./
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 # Install dependencies using npm ci
-RUN npm install
+RUN npm ci
 COPY . .
 # Declarar el argumento de construcción
 ARG VITE_API_URL
