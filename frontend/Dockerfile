@@ -3,7 +3,7 @@ FROM node:18-alpine as build
 WORKDIR /app
 COPY package*.json ./
 # Install dependencies using npm ci
-RUN npm ci --silent
+RUN npm ci 
 COPY . .
 # Declarar el argumento de construcción
 ARG VITE_API_URL
