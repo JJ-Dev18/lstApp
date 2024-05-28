@@ -43,6 +43,9 @@ model Jugador {
   nombre   String
   equipo   Equipo    @relation(fields: [equipoId], references: [id])
   equipoId Int
+  numero    Int    
+  posicion  String
+  fotoUrl   String
   eventos  Evento[]
   estadisticas Estadistica[]
   @@map("jugadores")

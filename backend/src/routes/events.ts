@@ -14,7 +14,7 @@ let currentTimes: { [key: number]: number } = {};
 const registerEventHandlers = (io: SocketIOServer) => {
   io.on('connection', (socket: Socket) => {
     console.log(`Client connected: ${socket.id}`);
-
+    console.log(socket.data,"socket")
     socket.on('joinRoom', ({ partidoId }) => {
       console.log('join')
       const roomName = `partido_${partidoId}`;
@@ -82,11 +82,11 @@ const registerEventHandlers = (io: SocketIOServer) => {
           },
         });
         const roomName = `partido_${partidoId}`;
-        callback({ status: 'success', evento });
-        io.to(roomName).emit('newEvent', evento);
-        console.log(evento,'se emitio el evento a todos lados') // Emitir evento a todos los clientes en la sala del partido
+        callback({ status: 'success', data });
+        io.to(roomName).emit('newEvent', data);
+        console.log(data,'se emitio el evento a todos lados') // Emitir evento a todos los clientes en la sala del partido
       } catch (error) {
-        callback({ status: 'error', error: 'Error al registrar el evento' });
+        callback({ status: 'error', error: error });
       }
     });
 

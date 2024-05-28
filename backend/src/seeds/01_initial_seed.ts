@@ -34,26 +34,26 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Crear jugadores para equipo 1
   const jugadoresEquipo1 = [
-    { nombre: 'Murillo 1', equipoId: equipo1Id },
-    { nombre: 'Jugador 2', equipoId: equipo1Id },
-    { nombre: 'Jugador 3', equipoId: equipo1Id },
-    { nombre: 'Jugador 4', equipoId: equipo1Id },
-    { nombre: 'Jugador 5', equipoId: equipo3Id },
-    { nombre: 'Jugador 6', equipoId: equipo3Id },
-    { nombre: 'Jugador 7', equipoId: equipo3Id },
+    { nombre: 'Murillo 1', equipoId: equipo1Id , numero : 12 , posicion : 'cortador', fotoUrl: 'sdf' },
+    { nombre: 'Carlos', equipoId: equipo1Id ,numero : 13 , posicion : 'Manejador', fotoUrl: 'sdf'},
+    { nombre: 'Daniel', equipoId: equipo1Id ,numero : 14 , posicion : 'cortador', fotoUrl: 'sdf'},
+    { nombre: 'Felipe', equipoId: equipo1Id ,numero : 15 , posicion : 'Manejador', fotoUrl: 'sdf'},
+    { nombre: 'Cristian', equipoId: equipo3Id ,numero : 32 , posicion : 'cortador', fotoUrl: 'sdf'},
+    { nombre: 'Juan', equipoId: equipo3Id ,numero : 33 , posicion : 'Manejador', fotoUrl: 'sdf'},
+    { nombre: 'Jose', equipoId: equipo3Id ,numero : 34, posicion : 'cortador', fotoUrl: 'sdf'},
   ];
 
   await knex('jugadores').insert(jugadoresEquipo1);
 
   // Crear jugadores para equipo 2
   const jugadoresEquipo2 = [
-    { nombre: 'Jugador 1', equipoId: equipo2Id },
-    { nombre: 'Jugador 2', equipoId: equipo2Id },
-    { nombre: 'Jugador 3', equipoId: equipo2Id },
-    { nombre: 'Jugador 4', equipoId: equipo2Id },
-    { nombre: 'Jugador 5', equipoId: equipo4Id },
-    { nombre: 'Jugador 6', equipoId: equipo4Id },
-    { nombre: 'Jugador 7', equipoId: equipo4Id },
+    { nombre: 'Javier', equipoId: equipo2Id , numero : 12 , posicion : 'cortador', fotoUrl: 'sdf'},
+    { nombre: 'Julian', equipoId: equipo2Id , numero : 13 , posicion : 'cortador', fotoUrl: 'sdf'},
+    { nombre: 'Santiago O', equipoId: equipo2Id , numero : 14 , posicion : 'Manejador', fotoUrl: 'sdf'},
+    { nombre: 'Yolman', equipoId: equipo2Id , numero : 15 , posicion : 'cortador', fotoUrl: 'sdf'},
+    { nombre: 'Jasinto', equipoId: equipo4Id , numero : 16 , posicion : 'cortador', fotoUrl: 'sdf'},
+    { nombre: 'Jerico', equipoId: equipo4Id , numero : 17 , posicion : 'cortador', fotoUrl: 'sdf'},
+    { nombre: 'Fabricio', equipoId: equipo4Id, numero : 19, posicion : 'cortador', fotoUrl: 'sdf' },
   ];
 
   await knex('jugadores').insert(jugadoresEquipo2);

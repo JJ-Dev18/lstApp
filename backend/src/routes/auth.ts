@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: 'Credenciales inválidas' });
+      return res.status(200).json({ error: 'password inválido' });
     }
     const token = jwt.sign({ id: user.id, nombre: user.nombre, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
     res.json({ token });
@@ -78,5 +78,18 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/');
   });
 });
+router.get('/check-token', (req, res) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  console.log(token,"token")
+  if (!token) {
+    return res.status(401).json({ message: 'Token is missing' });
+  }
 
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    return res.status(200).json({ message: 'Token is valid', decoded });
+  } catch (error) {
+    return res.status(401).json({ message: 'Token is invalid or has expired' });
+  }
+});
 export default router;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../api/auth';
+import { signup } from '../../api/auth';
 
 const Register: React.FC = () => {
   const [nombre, setNombre] = useState('');

@@ -9,6 +9,10 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import './config/passport';
 import authRoutes from './routes/auth';
+import jugadoresRoutes from './routes/jugadores';
+import partidosRoutes from './routes/partidos';
+
+
 import { eventRouter, registerEventHandlers } from './routes/events';
 import { Usuario } from '@prisma/client';
 import { PrismaClient } from '@prisma/client'
@@ -45,6 +49,9 @@ app.use(passport.session());
 
 app.use('/auth', authRoutes);
 app.use('/events', eventRouter);
+app.use('/jugadores', jugadoresRoutes)
+app.use('/partidos', partidosRoutes)
+
 
 io.use((socket, next) => {
   const token = socket.handshake.auth.token;
