@@ -10,7 +10,7 @@ interface AuthSlice {
   error : boolean
 }
 
-const createAuthSlice = (set: any, ): AuthSlice => ({
+const createAuthSlice = (set: any, get : any): AuthSlice => ({
   token: localStorage.getItem('token'),
   error : false,
   login: async (email:string,password:string) => {
@@ -21,7 +21,7 @@ const createAuthSlice = (set: any, ): AuthSlice => ({
        
         const token = response.data.token
         localStorage.setItem('token', token);
-        set({ token , error : true});
+        set({ token});
       } else {
         throw new Error(response.data.error || 'Failed to login');
       }
@@ -37,25 +37,30 @@ const createAuthSlice = (set: any, ): AuthSlice => ({
   },
   checkToken: async () => {
     const token = localStorage.getItem('token');
+    const {logout } = get() 
     try {
-      await instance.get('/check-token',{
+      await instance.get('/auth/check-token',{
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       })
+      set({ token });
+      
       
     } catch (error) {
       console.error('Token check error:', error);
-        localStorage.removeItem('token');
-        set({ token: null });
+        
+        // localStorage.removeItem('token');
+        // set({ token: null });
+        logout()
     }
   }
 });
 
 interface Store extends AuthSlice {}
 
-const useStore = create<Store>((set) => ({
-  ...createAuthSlice(set),
+const useStore = create<Store>((set,get) => ({
+  ...createAuthSlice(set,get),
 }));
 
 export default useStore;

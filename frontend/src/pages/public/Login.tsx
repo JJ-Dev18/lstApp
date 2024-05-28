@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Input, FormControl, FormLabel, Heading, VStack, Alert, useToast, useBreakpointValue, useColorMode } from '@chakra-ui/react';
 import useStore from '../../store/store';
@@ -11,12 +11,21 @@ export interface Alert {
 const Login: React.FC = () => {
   const [username, setUsername] = useState('planillero1@example.com');
   const [password, setPassword] = useState('planillero123');
-  const { login : dispatchLogin  } = useStore((state) => state);
+  const { login : dispatchLogin, token  } = useStore((state) => state);
+
+  
   const toast = useToast()
   const {colorMode} = useColorMode()
   const formWidth = useBreakpointValue({ base: '90%', md: '400px' });
   const navigate = useNavigate();
   console.log(login)
+
+  useEffect(() => {
+    if (token) {
+      navigate('/partidos')
+    }
+  }, [token, history]);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
