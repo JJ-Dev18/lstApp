@@ -3,7 +3,7 @@ node_modules/
 **/node_modules/
 
 # Ignorar archivos de dependencias
-package-lock.json
+# package-lock.json
 yarn.lock
 
 # Ignorar archivos de entorno
