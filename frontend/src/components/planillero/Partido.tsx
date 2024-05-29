@@ -6,7 +6,7 @@ import { BorderBeam } from "../ui/BorderBeam";
 
 export const Partido = (props:PartidoType) => {
   const { colorMode} = useColorMode()
-    const { id, equipo1, equipo2,estado ,fecha,categoria} = props
+    const { id, equipo1, equipo2,fecha,categoria} = props
     const navigate = useNavigate()
   return (
     <Flex

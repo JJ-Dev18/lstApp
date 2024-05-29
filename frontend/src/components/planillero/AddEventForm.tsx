@@ -76,7 +76,7 @@ const AddEventForm: React.FC<Props> = ({time,partidoId}) => {
   };
 
   return (
-    <Box  bg={colorMode === 'dark' ? 'gray.800' : 'gray.200'} maxW="md" mx="auto" mt={8} p={6} boxShadow="lg"  borderRadius="md">
+    <Box  bg={colorMode === 'dark' ? 'gray.800' : 'gray.200'}   maxW={{ base: "100%", md: "80%", lg: "1200px" }} mx="auto" mt={8} p={6} boxShadow="lg"  borderRadius="md">
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
           <FormControl id="eventType" isRequired>

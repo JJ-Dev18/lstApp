@@ -55,7 +55,7 @@ const Timer: React.FC<TimerProps> = ({ time ,startTimer,pauseTimer,resetTimer}) 
   // }, [partidoId]);
 
   return (
-    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+    <Box   maxW={{ base: "100%", md: "80%", lg: "1200px" }} mx="auto" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       {/* <h1>{formatTime(time)}</h1> */}
       <Flex justifyContent="center" mt={4}>
         <HStack spacing={8}>

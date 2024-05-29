@@ -33,7 +33,7 @@ const Layout = ({ children }: LayoutProps) => {
     
     <Box minH="100vh" p={4}>
       <Flex justifyContent="space-between" alignItems="center" mb={10}>
-         <Image src={colorMode ==='dark' ? LogoBlanco : Logo}  boxSize={{ base: "80px", md: "50px" }} onClick={() => navigate('/partidos')}
+         <Image src={colorMode ==='dark' ? LogoBlanco : Logo}  boxSize={{ base: "80px", md: "80px" }} onClick={() => navigate('/partidos')}
                   objectFit="contain"/>
         <HStack spacing={4}>
           <ToggleThemeButton />

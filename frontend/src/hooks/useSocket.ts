@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { getToken } from '../api/auth';
-import { EventType, EventoType, PartidoType } from '../interfaces/marcador';
+import { EventoType, PartidoType } from '../interfaces/marcador';
 
 interface ServerToClientEvents {
   // Define aquí los eventos que el servidor puede emitir

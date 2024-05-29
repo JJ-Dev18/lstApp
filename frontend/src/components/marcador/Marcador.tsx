@@ -152,8 +152,11 @@ function Marcador() {
       <Text fontSize={{ base: "2xl", md: "1xl" }} fontWeight="bold" textAlign="center"> {isConnected && 'On'}</Text>
       
       <Timer startTimer={startTimer} pauseTimer={pauseTimer} resetTimer={resetTimer} time={time} />
-      <Box bg={colorMode === 'dark' ? 'gray.300' : 'gray.200'} p={4} mt={6} borderRadius="md" height={200} alignContent="center">
-        <Flex justifyContent="space-between" alignItems="center">
+     
+      <Box
+        maxW={{ base: "100%", md: "80%", lg: "1200px" }} mx="auto" display="flex"
+      bg={colorMode === 'dark' ? 'gray.300' : 'gray.200'} p={4} mt={6} borderRadius="md" height={200} alignContent="center" justifyContent="center">
+        <Flex justifyContent="space-between" alignItems="center" p={{ base: 0, md: 0, lg: 2 }} width={{ base: '100%',md:'50%',  lg: '50%' }}>
           <Box>
             <Image src={Logo} alt="Team 1 "
                   boxSize={{ base: "100px", md: "100px" }}
@@ -162,13 +165,13 @@ function Marcador() {
           <Text fontSize="4xl" fontWeight="bold">{marcador.marcadorEquipo1} - {marcador.marcadorEquipo2}</Text>
           <Box>
             <Image src={Logo} alt="Team2"
-                  boxSize={{ base: "100px", md: "50px" }}
+                  boxSize={{ base: "100px", md: "100px"  }}
                   objectFit="contain" />
           </Box>
         </Flex>
       </Box>
     
-      <VStack align="start" spacing={4} mt={6}>
+      <VStack    maxW={{ base: "100%", md: "80%", lg: "1200px" }} mx="auto"  align="start" spacing={4} mt={6}>
         <Text fontSize="xl" fontWeight="bold">Events</Text>
          {
           events.map( (evento:EventoType) => (
