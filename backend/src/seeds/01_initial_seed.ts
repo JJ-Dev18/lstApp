@@ -3,11 +3,13 @@ import bcrypt from 'bcryptjs';
 
 export async function seed(knex: Knex): Promise<void> {
   // Eliminar todas las tablas existentes
-//   await knex('eventos').del();
-//   await knex('jugadores').del();
-//   await knex('equipos').del();
-//   await knex('categorias').del();
-//   await knex('usuarios').del();
+  // await knex('eventos').del();
+  // await knex('jugadores').del();
+  // await knex('equipos').del();
+  // await knex('categorias').del();
+  // await knex('usuarios').del();
+  // await knex('partidos').del();
+
 
   // Crear categorías
   const categorias = [
@@ -69,8 +71,8 @@ export async function seed(knex: Knex): Promise<void> {
 
   await knex('usuarios').insert(planillero);
   const partidos = [
-    { equipo1Id, equipo2Id, fecha: new Date(), duracion: 120 },
-    { equipo1Id, equipo2Id, fecha: new Date(Date.now() + 86400000), duracion: 120 }, // Partido al día siguiente
+    { equipo1Id, equipo2Id, fecha: new Date(), duracion: 120 , estado : 'SIN_JUGAR',categoriaId: 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0},
+    { equipo1Id, equipo2Id, fecha: new Date(Date.now() + 86400000), duracion: 120,estado : 'SIN_JUGAR',categoriaId : 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0  }, // Partido al día siguiente
   ];
 
   await knex('partidos').insert(partidos);

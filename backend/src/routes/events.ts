@@ -4,32 +4,34 @@ import { Server as SocketIOServer, Socket } from 'socket.io';
 import { Usuario } from '@prisma/client';
 import { AuthenticatedRequest } from '../types/types';
 import prisma from '../config/database';
+import { actualizarEstadisticas } from './estadisticas';
+import { actualizarMarcador } from './partidos';
 
 
 const router = Router();
-const MAX_TIME = 1 * 60; // 120 minutos en segundos
+const MAX_TIME = 1 * 120; // 120 minutos en segundos
 let timerIntervals: { [key: number]: NodeJS.Timeout | undefined } = {};
 let currentTimes: { [key: number]: number } = {};
 
 const registerEventHandlers = (io: SocketIOServer) => {
   io.on('connection', (socket: Socket) => {
     console.log(`Client connected: ${socket.id}`);
-    console.log(socket.data,"socket")
-    socket.on('joinRoom', ({ partidoId }) => {
-      console.log('join')
+    // console.log(socket.data,"socket")
+    socket.on('joinRoom', ({ partidoId } : {partidoId : number}) => {
+      // console.log('join')
       const roomName = `partido_${partidoId}`;
       socket.join(roomName);
-      console.log(`Client with ID ${socket.id} joined room: ${roomName}`);
-
+      
       // Send the current time to the newly connected client
-      socket.emit('timeUpdate', { partidoId, time: currentTimes[partidoId] || 0 });
+      io.to(roomName).emit('timeUpdate', { partidoId, time: currentTimes[partidoId] || 0 });
+      console.log(`Client with ID ${socket.id} joined room: ${roomName}`);
     });
 
-    socket.on('startTimer', ({ partidoId }) => {
+    socket.on('startTimer', ({ partidoId }:{partidoId:number}) => {
       if (!currentTimes[partidoId]) {
         currentTimes[partidoId] = 0;
       }
-
+      
       if (!timerIntervals[partidoId]) {
         timerIntervals[partidoId] = setInterval(() => {
           currentTimes[partidoId]++;
@@ -39,6 +41,7 @@ const registerEventHandlers = (io: SocketIOServer) => {
             io.to(`partido_${partidoId}`).emit('timeUpdate', { partidoId, time: currentTimes[partidoId] });
             io.to(`partido_${partidoId}`).emit('maxTimeReached', { partidoId });
           } else {
+            console.log(currentTimes[partidoId],"partidoDI")
             io.to(`partido_${partidoId}`).emit('timeUpdate', { partidoId, time: currentTimes[partidoId] });
           }
         }, 1000);
@@ -80,11 +83,28 @@ const registerEventHandlers = (io: SocketIOServer) => {
             comentario,
             planilleroId: user.id,
           },
-        });
+          include:{
+            jugador : {
+                include :{
+                    equipo: true
+                }
+            }
+            
+        }
+        })
         const roomName = `partido_${partidoId}`;
-        callback({ status: 'success', data });
-        io.to(roomName).emit('newEvent', data);
-        console.log(data,'se emitio el evento a todos lados') // Emitir evento a todos los clientes en la sala del partido
+        callback({ status: 'success', evento });
+        
+        io.to(roomName).emit('newEvent', evento);
+        await actualizarEstadisticas(tipo,jugadorId,partidoId)
+        await actualizarMarcador(partidoId,jugadorId,tipo,)
+        const partidoActualizado = await prisma.partido.findUnique({
+          where: { id: partidoId },
+        });
+       
+        io.to(roomName).emit('updateScore', partidoActualizado);
+
+        console.log(evento,'se emitio el evento a todos lados') // Emitir evento a todos los clientes en la sala del partido
       } catch (error) {
         callback({ status: 'error', error: error });
       }

@@ -10,7 +10,8 @@ import jwt from 'jsonwebtoken';
 import './config/passport';
 import authRoutes from './routes/auth';
 import jugadoresRoutes from './routes/jugadores';
-import partidosRoutes from './routes/partidos';
+import { RouterPartidos} from './routes/partidos';
+import {EstadisticasRouter} from './routes/estadisticas';
 
 
 import { eventRouter, registerEventHandlers } from './routes/events';
@@ -50,7 +51,10 @@ app.use(passport.session());
 app.use('/auth', authRoutes);
 app.use('/events', eventRouter);
 app.use('/jugadores', jugadoresRoutes)
-app.use('/partidos', partidosRoutes)
+app.use('/partidos', RouterPartidos)
+app.use('/estadisticas', EstadisticasRouter)
+
+
 
 
 io.use((socket, next) => {

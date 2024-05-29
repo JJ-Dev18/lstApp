@@ -5,8 +5,12 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('id').primary();
     table.integer('equipo1Id').references('id').inTable('equipos').notNullable().onDelete('CASCADE');
     table.integer('equipo2Id').references('id').inTable('equipos').notNullable().onDelete('CASCADE');
+    table.integer('categoriaId').references('id').inTable('categorias').notNullable().onDelete('CASCADE'); 
     table.timestamp('fecha').notNullable();
+    table.integer('marcadorEquipo1').notNullable().defaultTo(0);
+    table.integer('marcadorEquipo2').notNullable().defaultTo(0);
     table.integer('duracion').notNullable();
+    table.string('estado').notNullable()
   });
 }
 

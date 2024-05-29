@@ -3,7 +3,9 @@ import { Box, Flex, HStack, IconButton, Image, useColorMode } from "@chakra-ui/r
 import { BellIcon, SunIcon, MoonIcon } from "@chakra-ui/icons";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo  from '../../assets/LOGO-02.png'
+import Logo  from '../../assets/logo.svg'
+import LogoBlanco  from '../../assets/logoblanco.svg'
+
 import { HiMenu } from "react-icons/hi";
 function ToggleThemeButton() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -20,6 +22,7 @@ interface LayoutProps {
     children: ReactNode;
   }
 const Layout = ({ children }: LayoutProps) => {
+    const { colorMode } = useColorMode()
     const navigate = useNavigate()
     const logout = () => {
         localStorage.removeItem('token'); // Asegúrate de limpiar cualquier token de autenticación
@@ -29,8 +32,8 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     
     <Box minH="100vh" p={4}>
-      <Flex justifyContent="space-between" alignItems="center" mb={20}>
-         <Image src={Logo}  boxSize={{ base: "80px", md: "50px" }} onClick={() => navigate('/partidos')}
+      <Flex justifyContent="space-between" alignItems="center" mb={10}>
+         <Image src={colorMode ==='dark' ? LogoBlanco : Logo}  boxSize={{ base: "80px", md: "50px" }} onClick={() => navigate('/partidos')}
                   objectFit="contain"/>
         <HStack spacing={4}>
           <ToggleThemeButton />

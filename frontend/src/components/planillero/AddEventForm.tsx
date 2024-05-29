@@ -10,7 +10,7 @@ import {
   useColorMode,
   useToast,
 } from '@chakra-ui/react';
-import socket from '../../api/socket';
+import useSocket from '../../hooks/useSocket';
 
 type Props = {
   time : string ,
@@ -21,6 +21,8 @@ const AddEventForm: React.FC<Props> = ({time,partidoId}) => {
   const [player, setPlayer] = useState('');
   const { colorMode  } = useColorMode();
   const [comment, setComment] = useState('');
+  const { socket } = useSocket(); 
+
   const toast = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,29 +36,32 @@ const AddEventForm: React.FC<Props> = ({time,partidoId}) => {
       comment,
     };
     try {
+      if(socket){
+        console.log({ eventType, player, comment });
+        socket.emit('register', eventData, (response: { status: string; evento?: any; error?: string }) => {
+          console.log('Evento registrado:', response);
+          if (response.status === 'success' && response.evento) {
+            toast({
+              title: 'Event added.',
+              description: 'The event has been added successfully.',
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+            });
+          } else {
+            toast({
+              title: 'Error adding event.',
+              description: 'There was an error adding the event.',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+            });
+            console.error('Error registrando el evento:', response.error);
+          }
+        });
+      }
+
       // Lógica para enviar el evento a tu API
-      console.log({ eventType, player, comment });
-      socket.emit('register', eventData, (response: { status: string; data?: any; error?: string }) => {
-        console.log('Evento registrado:', response);
-        if (response.status === 'success' && response.data) {
-          toast({
-            title: 'Event added.',
-            description: 'The event has been added successfully.',
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-          });
-        } else {
-          toast({
-            title: 'Error adding event.',
-            description: 'There was an error adding the event.',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-          console.error('Error registrando el evento:', response.error);
-        }
-      });
   
      
     } catch (error) {
@@ -81,10 +86,10 @@ const AddEventForm: React.FC<Props> = ({time,partidoId}) => {
               value={eventType}
               onChange={(e) => setEventType(e.target.value)}
             >
-              <option value="goal">Goal</option>
-              <option value="assist">Assist</option>
-              <option value="foul">Foul</option>
-              <option value="card">Card</option>
+              <option value="gol">Goal</option>
+              <option value="asistencia">Assist</option>
+              <option value="bloqueo">Bloqueo</option>
+              <option value="intercepcion">Card</option>
             </Select>
           </FormControl>
 
@@ -95,9 +100,12 @@ const AddEventForm: React.FC<Props> = ({time,partidoId}) => {
               value={player}
               onChange={(e) => setPlayer(e.target.value)}
             >
-              <option value="1">Player 1</option>
-              <option value="2">Player 2</option>
-              <option value="3">Player 3</option>
+              <option value="1">Player 1 - Equipo 1 </option>
+              <option value="2">Player 2 - Equipo 1</option>
+              <option value="3">Player 3 - Equipo 1</option>
+              <option value="8">Player 1 - Equipo 2</option>
+              <option value="9">Player 2 - Equipo 2</option>
+              <option value="10">Player 3 - Equipo 2</option>
               {/* Aquí puedes cargar la lista de jugadores desde tu API */}
             </Select>
           </FormControl>

@@ -1,40 +1,44 @@
-import { Card, Image,Stack, CardBody, Heading,Text, CardFooter,Button } from '@chakra-ui/react'
+import {  Image,  Heading, Text, Button, Flex, Box, VStack, useColorMode } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom'
 import { PartidoType } from '../../interfaces/marcador'
+import ImagePartido  from '../../assets/partidos/1.webp'
+import { BorderBeam } from "../ui/BorderBeam";
 
 export const Partido = (props:PartidoType) => {
-    const { id } = props
+  const { colorMode} = useColorMode()
+    const { id, equipo1, equipo2,estado ,fecha,categoria} = props
     const navigate = useNavigate()
   return (
-    <Card
-    
-  direction={{ base: 'column', sm: 'row' }}
-  overflow='hidden'
-  variant='outline'
->
-  <Image
-    objectFit='cover'
-    maxW={{ base: '100%', sm: '200px' }}
-    src='https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
-    alt='Caffe Latte'
-  />
+    <Flex
+    direction={{ base: "column", md: "row" }}
+    align="center"
+    justify={{ base: "flex-start", md: "space-between" }}
+    p={4}
+    position="relative"
+    bg={colorMode === 'dark' ? 'gray.800' : 'gray.100'}
+    borderWidth={1}
+    borderRadius="lg"
+  >
 
-  <Stack>
-    <CardBody>
-      <Heading size='md'>The perfect latte</Heading>
-
-      <Text py='2'>
-        Caffè latte is a coffee beverage of Italian origin made with espresso
-        and steamed milk.
-      </Text>
-    </CardBody>
-
-    <CardFooter>
-      <Button variant='solid' colorScheme='blue' onClick={() => navigate(`/partidos/${id}`)}>
-        Ver partido
+    <Box flexShrink={0}>
+      <Image
+        borderRadius="lg"
+        width={{ base: "100%", md: "200px" }}
+        src={ImagePartido}
+        alt={` image`}
+      />
+    <BorderBeam size={250} duration={12} delay={9} />
+    </Box>
+    <VStack w="100%" justifyContent="flex-end"  spacing={2} mt={{ base: 4, md: 0 }} ml={{ md: 6 }}>
+      <Text>{categoria.nombre}</Text>
+      <Heading as="h2" size="md">
+       {equipo1.nombre} vs { equipo2.nombre}
+      </Heading>
+      <Text fontWeight="bold">{'11:30'} { new Date(fecha).toLocaleDateString()}</Text>
+      <Button borderWidth={3} variant="outline" onClick={()=> navigate(`/partidos/${id}`)}>
+        View Game
       </Button>
-    </CardFooter>
-  </Stack>
-</Card>
+    </VStack>
+  </Flex>
   )
 }

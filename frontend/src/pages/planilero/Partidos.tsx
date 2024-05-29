@@ -1,5 +1,5 @@
 import React, {  useEffect, useState } from 'react';
-import { Box} from '@chakra-ui/react';
+import { Box, Heading, Input, Stack} from '@chakra-ui/react';
 import instance from '../../api/axios';
 import { PartidoType } from '../../interfaces/marcador';
 import Layout from '../../components/layout/Layout';
@@ -29,12 +29,20 @@ const Partidos: React.FC = () => {
 
   return (
     <Layout>
-   <Box display="flex" flexWrap="wrap">
+   <Box p={4}>
+      <Heading as="h1" size="xl" mb={4}>
+        Partidos
+      </Heading>
+      <Input placeholder="Buscar partido ..." mb={8} />
+
+      <Stack spacing={8}>
     {
       partidos.map( partido => (
         <Partido key={partido.id} {...partido}/>
       ))
     }
+
+      </Stack>
     
    </Box>
    </Layout>

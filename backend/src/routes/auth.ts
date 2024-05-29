@@ -80,7 +80,7 @@ router.get('/logout', (req, res, next) => {
 });
 router.get('/check-token', (req, res) => {
   const token = req.headers['authorization']?.split(' ')[1];
-  console.log(token,"token")
+  // console.log(token,"token")
   if (!token) {
     return res.status(401).json({ message: 'Token is missing' });
   }

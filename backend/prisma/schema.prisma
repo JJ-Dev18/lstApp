@@ -23,6 +23,7 @@ model Categoria {
   id    Int      @id @default(autoincrement())
   nombre String
   equipos Equipo[]
+  partidos Partido[]
   @@map("categorias")
 }
 
@@ -50,7 +51,12 @@ model Jugador {
   estadisticas Estadistica[]
   @@map("jugadores")
 }
-
+enum EstadoPartido {
+  JUGADO
+  EN_CURSO
+  SUSPENDIDO
+  SIN_JUGAR
+}
 model Partido {
   id         Int       @id @default(autoincrement())
   equipo1    Equipo    @relation("Equipo1", fields: [equipo1Id], references: [id])
@@ -59,6 +65,11 @@ model Partido {
   equipo2Id  Int
   fecha      DateTime
   duracion   Int
+  categoria   Categoria   @relation(fields: [categoriaId], references: [id])
+  categoriaId Int
+  marcadorEquipo1 Int           @default(0) // Campo para almacenar el marcador del equipo 1
+  marcadorEquipo2 Int           @default(0) 
+  estado     EstadoPartido
   eventos    Evento[]
   estadisticas Estadistica[]
   @@map("partidos")

@@ -75,7 +75,7 @@ const components = {
       }),
       outline: (props: StyleFunctionProps) => ({
         bg: "transparent",
-        borderColor: mode("gray.300", "#1E2430")(props),
+        borderColor: mode("blue.700", "blue.700")(props),
         color: mode("black", "white")(props),
         _hover: {
           bg: mode("gray.100", "#2D3748")(props),
