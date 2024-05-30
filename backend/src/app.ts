@@ -17,6 +17,8 @@ import {EstadisticasRouter} from './routes/estadisticas';
 import { eventRouter, registerEventHandlers } from './routes/events';
 import { Usuario } from '@prisma/client';
 import { PrismaClient } from '@prisma/client'
+import { EquiposRouter } from './routes/equipos';
+import { CategoriasRouter } from './routes/categorias';
 
 dotenv.config();
 
@@ -26,14 +28,14 @@ const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   path: '/socket.io',
   cors: {
-    origin: ['https://livescoretracking.online', 'https://www.livescoretracking.online','http://localhost:3000'],
+    origin: process.env.FRONTEND_URL,
     methods: ['GET', 'POST'],
     credentials: true,
   },
 });
 
 app.use(cors({
-  origin: ['https://livescoretracking.online', 'https://www.livescoretracking.online','http://localhost:3000'],
+  origin:process.env.FRONTEND_URL,
   credentials: true,
 }));
 
@@ -53,6 +55,10 @@ app.use('/events', eventRouter);
 app.use('/jugadores', jugadoresRoutes)
 app.use('/partidos', RouterPartidos)
 app.use('/estadisticas', EstadisticasRouter)
+app.use('/equipos', EquiposRouter)
+app.use('/categorias',CategoriasRouter)
+
+
 
 
 

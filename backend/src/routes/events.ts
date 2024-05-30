@@ -131,4 +131,19 @@ router.get('/partido/:partidoId/eventos', ensureAuthenticated, async (req: Authe
   }
 });
 
+router.delete('/:eventoId', async (req,res) => {
+  try {
+      const { eventoId } = req.params
+      const deleteEvento = await prisma.evento.delete({
+          where: {
+            id: Number(eventoId),
+          },
+        })
+      res.status(200).json({message : 'Evento eliminado exitosamente'})  
+  } catch (error) {
+      res.status(500).json({error : error})
+      
+  }
+})
+
 export { router as eventRouter, registerEventHandlers };

@@ -1,8 +1,10 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import prisma from '../config/database';
+import { validarLoginUsuario } from './validations/auth';
+import { validarCampos } from '../middlewares/validar-campos';
 
 const router = express.Router();
 
@@ -42,7 +44,7 @@ router.post('/register', async (req, res) => {
       });
   
       // Generar un token JWT
-      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET!, {
+      const token = jwt.sign({ id: user.id, email: user.email, nombre : user.nombre, rol : user.rol }, process.env.JWT_SECRET!, {
         expiresIn: '1h',
       });
   
@@ -54,7 +56,7 @@ router.post('/register', async (req, res) => {
   
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', validarLoginUsuario, validarCampos ,async (req :Request, res :Response) => {
   const { email, password } = req.body;
   try {
     const user = await prisma.usuario.findUnique({ where: { email } });
@@ -65,8 +67,8 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(200).json({ error: 'password inválido' });
     }
-    const token = jwt.sign({ id: user.id, nombre: user.nombre, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
-    res.json({ token });
+    const token = jwt.sign({ id: user.id, nombre: user.nombre, email: user.email, rol : user.rol }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+    res.json({ user : { nombre : user.nombre , email: user.email, rol : user.rol }, token });
   } catch (error) {
     res.status(500).json({ error: 'Error al iniciar sesión' , error2:error});
   }
@@ -86,8 +88,9 @@ router.get('/check-token', (req, res) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    return res.status(200).json({ message: 'Token is valid', decoded });
+    const decoded :any = jwt.verify(token, process.env.JWT_SECRET!);
+    console.log(decoded,"Decoded")
+    return res.status(200).json({ message: 'Token is valid', user : {email : decoded.email, rol : decoded.rol, nombre : decoded.nombre } });
   } catch (error) {
     return res.status(401).json({ message: 'Token is invalid or has expired' });
   }

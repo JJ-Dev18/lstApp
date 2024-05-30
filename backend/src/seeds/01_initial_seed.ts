@@ -68,8 +68,18 @@ export async function seed(knex: Knex): Promise<void> {
     password: hashedPassword,
     rol: 'planillero',
   };
+  const hashedPasswordAdmin = await bcrypt.hash('admin123', 10);
+
+  const admin = {
+    nombre: 'Admin',
+    email: 'admin@example.com',
+    password: hashedPasswordAdmin,
+    rol: 'administrador',
+  };
 
   await knex('usuarios').insert(planillero);
+  await knex('usuarios').insert(admin);
+
   const partidos = [
     { equipo1Id, equipo2Id, fecha: new Date(), duracion: 120 , estado : 'SIN_JUGAR',categoriaId: 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0},
     { equipo1Id, equipo2Id, fecha: new Date(Date.now() + 86400000), duracion: 120,estado : 'SIN_JUGAR',categoriaId : 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0  }, // Partido al día siguiente

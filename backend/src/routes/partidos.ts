@@ -1,10 +1,11 @@
 import express from 'express';
 import prisma from '../config/database';
+import { ensureAuthenticated } from '../middlewares/auth';
 
 
 const router = express.Router();
 
-router.get('/', async  (req,res) => {
+router.get('/', ensureAuthenticated, async  (req,res) => {
     const partidos = await prisma.partido.findMany({
         include: {
          equipo1 : true ,
@@ -39,6 +40,20 @@ router.get('/:partidoId', async  (req,res) => {
       })
     res.json(partido)
 });
+
+
+router.post( '/' , async (req,res) => {
+  try {
+      const { ...data } = req.body
+      const equipo = await prisma.partido.create({
+          data : data 
+      })
+      res.status(200).json(equipo)
+  } catch (error) {
+      res.status(500).json({error : error})
+  }
+
+})
 
 async function actualizarMarcador(partidoId:number, jugadorId:number, tipo:string) {
    try {
