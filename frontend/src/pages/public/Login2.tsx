@@ -45,7 +45,7 @@ export default function Login2() {
     }, [token]);
     
     const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault()
+      e.preventDefault()  
       
         try {
           await dispatchLogin(username,password);
