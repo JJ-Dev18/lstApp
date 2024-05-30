@@ -61,7 +61,7 @@ export default function Login2() {
               navigate('/espectador');
               break;
             default:
-              navigate('/public');
+              navigate('/inicio');
               break;
           }
         } catch (error:any) {
