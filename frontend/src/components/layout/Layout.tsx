@@ -1,23 +1,14 @@
 // Layout.js
 import { Box, Flex, HStack, IconButton, Image, useColorMode } from "@chakra-ui/react";
-import { BellIcon, SunIcon, MoonIcon } from "@chakra-ui/icons";
+import { BellIcon} from "@chakra-ui/icons";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo  from '../../assets/logo.svg'
 import LogoBlanco  from '../../assets/logoblanco.svg'
 
 import { HiMenu } from "react-icons/hi";
-function ToggleThemeButton() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <IconButton
-      icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-      onClick={toggleColorMode}
-      variant="ghost"
-      aria-label="Toggle Theme"
-    />
-  );
-}
+import ToggleThemeButton from "./ToggleThemeButton";
+
 interface LayoutProps {
     children: ReactNode;
   }
@@ -30,9 +21,13 @@ const Layout = ({ children }: LayoutProps) => {
       };
     
   return (
-    
+  
     <Box minH="100vh" p={4}>
+       
+
       <Flex justifyContent="space-between" alignItems="center" mb={10}>
+       
+         
          <Image src={colorMode ==='dark' ? LogoBlanco : Logo}  boxSize={{ base: "80px", md: "80px" }} onClick={() => navigate('/partidos')}
                   objectFit="contain"/>
         <HStack spacing={4}>
@@ -43,6 +38,7 @@ const Layout = ({ children }: LayoutProps) => {
       </Flex>
       { children }
     </Box>
+  
   );
 };
 

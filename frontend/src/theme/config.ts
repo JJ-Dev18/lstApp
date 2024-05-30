@@ -12,6 +12,7 @@ const styles = {
 };
 
 const components = {
+  
   Select: {
     baseStyle: (props: StyleFunctionProps) => ({
       field: {

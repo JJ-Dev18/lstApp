@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Input, FormControl, FormLabel, Heading, VStack, Alert, useToast, useBreakpointValue, useColorMode } from '@chakra-ui/react';
 import useStore from '../../store/store';
-import { login } from '../../api/auth';
 
 export interface Alert {
   visible : boolean;
@@ -11,28 +10,55 @@ export interface Alert {
 const Login: React.FC = () => {
   const [username, setUsername] = useState('planillero1@example.com');
   const [password, setPassword] = useState('planillero123');
-  const { login : dispatchLogin, token  } = useStore((state) => state);
+  const { login : dispatchLogin, token , user } = useStore((state) => state);
 
   
   const toast = useToast()
   const {colorMode} = useColorMode()
   const formWidth = useBreakpointValue({ base: '90%', md: '400px' });
   const navigate = useNavigate();
-  console.log(login)
+ 
 
   useEffect(() => {
     if (token) {
-      navigate('/partidos')
+      console.log('hay token')
+      switch (user?.rol) {
+        case 'administrador':
+          navigate('/admin/dashboard');
+          break;
+        case 'planillero':
+          navigate('/planillero');
+          break;
+        case 'espectador':
+          navigate('/espectador');
+          break;
+        default:
+          navigate('/public');
+          break;
+      }
     }
-  }, [token, history]);
+    
+  }, [token]);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
       try {
-        await dispatchLogin(username,password);
-       
-        navigate('/partidos'); 
+       const user =  await dispatchLogin(username,password);
+       switch (user?.rol) {
+        case 'administrador':
+          navigate('/admin/dashboard');
+          break;
+        case 'planillero':
+          navigate('/planillero');
+          break;
+        case 'espectador':
+          navigate('/espectador');
+          break;
+        default:
+          navigate('/public');
+          break;
+      }
       } catch (error:any) {
         console.log(error)
         toast({
