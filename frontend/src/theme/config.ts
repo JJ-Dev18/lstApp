@@ -1,99 +1,102 @@
-// theme.js
-import { extendTheme, ThemeConfig, ThemeOverride } from "@chakra-ui/react";
-import { mode, StyleFunctionProps } from "@chakra-ui/theme-tools";
-
-const styles = {
-  global: (props: StyleFunctionProps) => ({
-    body: {
-      bg: mode("white", "#121721")(props),
-      color: mode("black", "white")(props),
-    },
-  }),
-};
-
-const components = {
-  
-  Select: {
-    baseStyle: (props: StyleFunctionProps) => ({
-      field: {
-        bg: mode("gray.200", "#1E2430")(props),
-        borderColor: mode("gray.300", "#1E2430")(props),
-        color: mode("black", "white")(props),
-        _hover: {
-          borderColor: mode("gray.400", "#2D3748")(props),
-        },
-        _focus: {
-          borderColor: mode("gray.400", "#2D3748")(props),
-          boxShadow: "none",
-        },
-      },
-    }),
-    sizes: {
-      md: {
-        field: {
-          h: "48px",
-          fontSize: "lg",
-        },
-      },
-    },
-    variants: {
-      filled: (props: StyleFunctionProps) => ({
-        field: {
-          bg: mode("gray.200", "#1E2430")(props),
-          _hover: {
-            bg: mode("gray.300", "#2D3748")(props),
-          },
-          _focus: {
-            bg: mode("gray.300", "#2D3748")(props),
-            borderColor: mode("gray.400", "#2D3748")(props),
-          },
-        },
-      }),
-    },
-  },
-  Button: {
-    baseStyle: {
-      fontWeight: "bold",
-      borderRadius: "md",
-    },
-    sizes: {
-      md: {
-        h: "48px",
-        fontSize: "lg",
-        px: "32px",
-      },
-    },
-    variants: {
-      solid: (props: StyleFunctionProps) => ({
-        bg: mode("blue.500", "#2563EB")(props),
-        color: "white",
-        _hover: {
-          bg: mode("blue.600", "#1E40AF")(props),
-        },
-        _active: {
-          bg: mode("blue.700", "#1E3A8A")(props),
-        },
-      }),
-      outline: (props: StyleFunctionProps) => ({
-        bg: "transparent",
-        borderColor: mode("blue.700", "blue.700")(props),
-        color: mode("black", "white")(props),
-        _hover: {
-          bg: mode("gray.100", "#2D3748")(props),
-        },
-        _active: {
-          bg: mode("gray.200", "#1E3A8A")(props),
-        },
-      }),
-    },
-  },
-};
+import {  extendTheme, ThemeConfig } from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
 
 const config: ThemeConfig = {
   initialColorMode: "dark",
   useSystemColorMode: false,
 };
 
-const theme: ThemeOverride = extendTheme({ styles, components, config });
+const styles = {
+  global: (props: any) => ({
+    body: {
+      bg: mode('gray.100', 'gray.900')(props),
+      color: mode('gray.800', 'whiteAlpha.900')(props),
+    },
+    a: {
+      color: mode('teal.600', 'teal.300')(props),
+      _hover: {
+        textDecoration: 'underline',
+      },
+    },
+  }),
+};
 
-export default theme;
+const colors = {
+  brand: {
+    50: '#f5f7ff',
+    100: '#e4e9ff',
+    200: '#c9ccff',
+    300: '#a7aaff',
+    400: '#7f7fff',
+    500: '#5f5fff',
+    600: '#4a4acc',
+    700: '#3b3b99',
+    800: '#2c2c66',
+    900: '#1e1e40',
+  },
+};
+
+const components = {
+  Link: {
+    baseStyle: (props: any) => ({
+      color: mode('teal.400', 'teal.300')(props),
+      textDecoration: 'none',
+      _hover: {
+        textDecoration: 'none',
+        color: mode('white', 'white')(props),
+        background: mode('teal.700', 'teal.400')(props),
+      },
+    }),
+  },
+  Button: {
+    baseStyle: {
+      _focus: {
+        boxShadow: 'none',
+      },
+    },
+    variants: {
+      solid: (props: any) => ({
+        bg: mode('brand.500', 'brand.200')(props),
+        color: mode('white', 'gray.800')(props),
+        _hover: {
+          bg: mode('brand.600', 'brand.300')(props),
+        },
+      }),
+      ghost: (props: any) => ({
+        bg: mode('transparent', 'transparent')(props),
+        color: mode('gray.800', 'whiteAlpha.900')(props),
+        _hover: {
+          bg: mode('gray.200', 'whiteAlpha.200')(props),
+        },
+      }),
+    },
+  },
+  Card: {
+    baseStyle: (props: any) => ({
+      bg: mode('gray.100', 'gray.800')(props),
+      color: mode('gray.800', 'whiteAlpha.900')(props),
+      boxShadow: 'lg',
+      borderRadius: 'md',
+    }),
+  },
+  Heading: {
+    baseStyle: (props: any) => ({
+      color: mode('gray.800', 'whiteAlpha.900')(props),
+    }),
+  },
+  Text: {
+    baseStyle: (props: any) => ({
+      color: mode('gray.600', 'gray.400')(props),
+    }),
+  },
+  Box: {
+    baseStyle: (props: any) => ({
+      bg: mode('gray.100', 'gray.900')(props),
+      color: mode('gray.800', 'whiteAlpha.900')(props),
+    }),
+  },
+};
+
+const customTheme = extendTheme({ config, styles, colors, components });
+
+export default customTheme;

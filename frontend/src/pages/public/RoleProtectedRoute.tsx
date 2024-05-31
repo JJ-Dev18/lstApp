@@ -30,7 +30,7 @@ const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({ allowedRoles })
   }
 
   if (!token) {
-    return <Navigate to="/login" state={{ from: location }} />;
+    return <Navigate to="/inicio" state={{ from: location }} />;
   }
 
   if (user && !allowedRoles.includes(user.rol)) {

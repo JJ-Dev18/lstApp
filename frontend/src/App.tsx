@@ -8,9 +8,9 @@ import RoleProtectedRoute from './pages/public/RoleProtectedRoute';
 import UnauthorizedPage from './pages/public/UnAuthorized';
 import { Role } from './interfaces/auth';
 import Home from './pages/public/Home';
-import Dashboard from './pages/admin/Dashboard';
 import LayoutAdministrador from './components/layout/LayoutAdministrado';
 import Login2 from './pages/public/Login2';
+import DashboardContent from './pages/admin/components/DashboardContent';
 
 const App: React.FC = () => {
   const checkToken = useStore((state) => state.checkToken);
@@ -48,7 +48,7 @@ const App: React.FC = () => {
         </Route> */}
           <Route element={<RoleProtectedRoute allowedRoles={[Role.ADMIN]} />}>
           <Route  element={<LayoutAdministrador />}>
-            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/dashboard" element={<DashboardContent />} />
             <Route path="/admin" element={<Navigate to="/admin/dashboard" />}/>
           </Route>
         </Route>

@@ -1,7 +1,7 @@
 // LayoutEspectador.tsx
 import { Box, Flex } from '@chakra-ui/react';
 import Header from './Header';
-import Sidebar from './Sidebar';
+import Sidebar from './SidebarAdmin';
 import { ReactNode } from 'react';
 type Props = {
     children : ReactNode

@@ -1,17 +1,13 @@
 import { Box, Flex, Grid, Text, Button, useBreakpointValue } from '@chakra-ui/react';
-// import { FaHome, FaUsers, FaChartLine, FaCogs, FaQuestionCircle, FaCommentDots } from 'react-icons/fa';
 import StatsCard from './components/StatsCard';
 import MatchesChart from './components/MatchesChart';
-import MatchesTable from './components/MatchesTable';
 
-function Dashboard() {
+
+const Dashboard = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
-  
-
-    <Flex direction={{ base: 'column', md: 'row' }} height="100vh">
-   
+    <Flex direction={{ base: 'column', md: 'row' }} height="100vh" p={4}>
       <Box flex="1" p="4">
         <Text fontSize="2xl" fontWeight="bold">Welcome to your dashboard</Text>
         <Text mb="4">You have 2 teams, 12 matches and 24 players. Need help? Check out the help center.</Text>
@@ -26,7 +22,7 @@ function Dashboard() {
         </Box>
         <Box mt="8">
           <Text fontSize="lg" mb="2">Recent matches</Text>
-          <MatchesTable />
+          {/* <ResponsiveTable /> */}
         </Box>
         {!isMobile && (
           <Button position="fixed" bottom="4" right="4" colorScheme="blue">
@@ -35,7 +31,6 @@ function Dashboard() {
         )}
       </Box>
     </Flex>
-
   );
 }
 

@@ -1,26 +1,19 @@
-import { Card, CardBody } from "@chakra-ui/react";
-import { FC } from "react";
+import { Card, CardBody, Image, Heading, Text } from "@chakra-ui/react";
 
-type Props = {
-    imageSrc? : string,
-    title : string , 
-    description? : string
+interface FeatureCardProps {
+  image: string;
+  title: string;
+  description: string;
 }
 
-const FeatureCard:FC<Props> = ({ imageSrc, title, description }) => {
-  return (
-    <Card className="bg-[#1e293b]">
+const FeatureCard: React.FC<FeatureCardProps> = ({ image, title, description }) => (
+  <Card>
     <CardBody>
-      <img
-        alt={title}
-        className="w-full h-48 md:h-64 object-cover"
-        src={imageSrc}
-      />
-      <h4 className="text-xl md:text-2xl font-semibold mt-4">{title}</h4>
-      <p className="text-sm md:text-lg">{description}</p>
+      <Image src={image} alt={title} w={{base : '100%'}}/>
+      <Heading as="h4" size="md" mt={4}>{title}</Heading>
+      <Text fontSize="lg">{description}</Text>
     </CardBody>
   </Card>
-  );
-};
+);
 
 export default FeatureCard;

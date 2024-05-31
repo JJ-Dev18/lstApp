@@ -1,141 +1,182 @@
-import { Button, FormLabel, Input, Link } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {  Alert, useToast, } from '@chakra-ui/react';
+import {  useToast } from '@chakra-ui/react';
 import useStore from '../../store/store';
-import ImgLogin from '../../assets/login/login.webp'
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Input,
+  Button,
+  VStack,
+  InputGroup,
+  InputLeftElement,
+} from '@chakra-ui/react';
+import { EmailIcon, LockIcon } from '@chakra-ui/icons';
+import { BorderBeam } from '../../components/ui/BorderBeam';
 
-export interface Alert {
-  visible : boolean;
-  message : string 
-}
+const Login2 = () => {
+  // const overlayColor = useColorModeValue('rgba(44, 62, 80, 0.7)', 'rgba(255, 255, 255, 0.7)');
+  const [username, setUsername] = useState('admin@example.com');
+  const [password, setPassword] = useState('admin123');
+  const { login : dispatchLogin, token , user } = useStore((state) => state);
 
-
-export default function Login2() {
-    const [username , setUsername] = useState('planillero1@example.com');
-    const [password, setPassword ] = useState('planillero123');
-    const { login : dispatchLogin, token , user } = useStore((state) => state);
   
-    
-    const toast = useToast()
-    // const {colorMode} = useColorMode()
-    // const formWidth = useBreakpointValue({ base: '90%', md: '400px' });
-    const navigate = useNavigate();
-   
-  
-    useEffect(() => {
-      if (token) {
-        console.log('hay token')
-        switch (user?.rol) {
-          case 'administrador':
-            navigate('/admin/dashboard');
-            break;
-          case 'planillero':
-            navigate('/planillero');
-            break;
-          case 'espectador':
-            navigate('/espectador');
-            break;
-          default:
-            navigate('/inicio');
-            break;
-        }
+  const toast = useToast()
+  const navigate = useNavigate();
+ 
+
+  useEffect(() => {
+    if (token) {
+      console.log('hay token')
+      switch (user?.rol) {
+        case 'administrador':
+          navigate('/admin/dashboard');
+          break;
+        case 'planillero':
+          navigate('/planillero');
+          break;
+        case 'espectador':
+          navigate('/espectador');
+          break;
+        default:
+          navigate('/inicio');
+          break;
       }
-      
-    }, [token]);
+    }
     
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault()  
-      
-        try {
-          await dispatchLogin(username,password);
-         
-          switch (user?.rol) {
-            case 'administrador':
-              navigate('/admin/dashboard');
-              break;
-            case 'planillero':
-              navigate('/planillero');
-              break;
-            case 'espectador':
-              navigate('/espectador');
-              break;
-            default:
-              navigate('/inicio');
-              break;
-          }
-        } catch (error:any) {
-          console.log(error)
-          toast({
-            title: 'Login failed',
-            description: error.message || 'Invalid username or password.',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-        }
+  }, [token]);
   
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     
-    };
+      try {
+       const user =  await dispatchLogin(username,password);
+       console.log(user,"user handle")
+      //  switch (user?.rol) {
+      //   case 'administrador':
+      //     navigate('/admin/dashboard');
+      //     break;
+      //   case 'planillero':
+      //     navigate('/planillero');
+      //     break;
+      //   case 'espectador':
+      //     navigate('/espectador');
+      //     break;
+      //   default:
+      //     navigate('/inicio');
+      //     break;
+      // }
+      } catch (error:any) {
+        console.log(error)
+        toast({
+          title: 'Login failed',
+          description: error.message || 'Invalid username or password.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+
+  
+  };
   return (
-    <div className="grid min-h-[100dvh] grid-cols-1 lg:grid-cols-2">
-      <div className="flex flex-col items-center justify-center bg-gradient-to-br from-[#4b6cb7] to-[#182848] px-6 py-12 sm:px-12 lg:px-20">
-        <div className="mx-auto w-full max-w-md space-y-6">
-          <div className="space-y-2 text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">Bienvenido de vuelta</h1>
-            <p className="text-lg text-gray-300">Inicia sesión para acceder a tu cuenta.</p>
-          </div>
-          <form onSubmit={handleSubmit}className="space-y-4">
-            <div  className="space-y-2">
-              <FormLabel className="text-gray-300" htmlFor="username">
-                Usuario
-              </FormLabel>
+    
+      <Flex
+        height="100vh"
+        alignItems="center"
+        justifyContent="center"
+        backgroundImage="url('/src/assets/login/login.webp')"
+        backgroundSize="cover"
+        backgroundPosition="center"
+        position="relative"
+        p={4}
+      >
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          background='rgba(44, 62, 80, 0.7)'
+        />
+        <Box
+          zIndex="1"
+          maxW={{ base: '90%', md: 'md' }}
+          w="full"
+          p={8}
+          bg="rgba(255, 255, 255, 0.1)"
+          boxShadow="0 0 20px rgba(0, 0, 0, 0.5)"
+          borderRadius="lg"
+          border="1px solid rgba(255, 255, 255, 0.5)"
+          backdropFilter="blur(10px)"
+          position="relative"
+          overflow="hidden"
+        >
+          <Heading mb={4} textAlign="center" color="teal.300" fontSize="2xl" fontWeight="bold">
+            Bienvenido de vuelta
+          </Heading>
+          <Text mb={6} textAlign="center" color="white" fontSize="md">
+            Inicia sesión para acceder a tu cuenta
+          </Text>
+          <BorderBeam duration={3}/>
+          <form onSubmit={handleSubmit}>
+
+          <VStack spacing={4}>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                children={<EmailIcon color="gray.300" />}
+              />
               <Input
-                className="bg-gray-800 text-white placeholder:text-gray-400"
-                id="username"
-                placeholder="Ingresa tu usuario"
-                type="text"
+                placeholder="Usuario"
+                type="email"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                bg="rgba(255, 255, 255, 0.2)"
+                variant="filled"
+                _hover={{ bg: 'rgba(255, 255, 255, 0.3)' }}
+                _focus={{ bg: 'rgba(255, 255, 255, 0.3)' }}
+                border="1px solid rgba(255, 255, 255, 0.5)"
+                color="white"
               />
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <FormLabel className="text-gray-300" htmlFor="password">
-                  Contraseña
-                </FormLabel>
-                <Link className="text-sm font-medium text-[#00d8ff] hover:underline" href="#">
-                  ¿Olvidaste tu contraseña?
-                </Link>
-              </div>
+            </InputGroup>
+            <InputGroup>
+              <InputLeftElement
+                pointerEvents="none"
+                children={<LockIcon color="gray.300" />}
+              />
               <Input
-                className="bg-gray-800 text-white placeholder:text-gray-400"
-                id="password"
+                placeholder="Contraseña"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Ingresa tu contraseña"
-                type="password"
+                bg="rgba(255, 255, 255, 0.2)"
+                variant="filled"
+                _hover={{ bg: 'rgba(255, 255, 255, 0.3)' }}
+                _focus={{ bg: 'rgba(255, 255, 255, 0.3)' }}
+                border="1px solid rgba(255, 255, 255, 0.5)"
+                color="white"
               />
-            </div>
-            <Button  className="w-full bg-[#00d8ff] text-gray-900 hover:bg-[#00b7d8]" type="submit">
+            </InputGroup>
+            <Button
+              colorScheme="teal"
+              variant="solid"
+              width="full"
+              bg="teal.400"
+              type='submit'
+              _hover={{ bg: 'teal.500' }}
+              boxShadow="0 0 10px teal"
+            >
               Iniciar sesión
             </Button>
+          </VStack>
           </form>
-        </div>
-      </div>
-      <div className="hidden lg:block">
-        <img
-          alt="Imagen futurista"
-          className="h-full w-full object-cover"
-          height="800"
-          src={ImgLogin}
-          style={{
-            aspectRatio: "800/800",
-            objectFit: "cover",
-          }}
-          width="800"
-        />
-      </div>
-    </div>
-  )
-}
+        </Box>
+      </Flex>
+    
+  );
+};
+
+export default Login2;
