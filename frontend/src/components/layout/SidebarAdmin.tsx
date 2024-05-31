@@ -17,8 +17,7 @@ const SidebarAdmin: React.FC = () => {
     { href: "/customers", label: "Customers", icon: FaUsers },
     { href: "/reports", label: "Reports", icon: FaChartBar },
     { href: "/settings", label: "Settings", icon: FaCog },
-    { href: "/logout", label: "Log out", icon: FaSignOutAlt }
-
+   
   ];
 
 
@@ -35,9 +34,9 @@ const SidebarAdmin: React.FC = () => {
     p={5}
     display={{ base: 'none', md: 'block' }}
   >
-        <BorderBeam duration={10}/>
 
-    <VStack spacing={4} align="stretch">
+    <VStack spacing={4} align="stretch" >
+        {/* <BorderBeam duration={10}/> */}
     {
           links.map( link =>(
             <Link 

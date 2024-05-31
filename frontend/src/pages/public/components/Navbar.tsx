@@ -47,18 +47,19 @@ const Navbar: React.FC = () => {
     <Box  bg={bgColor} position="fixed" top={0} zIndex={999} width='100vw'
     transition="background-color 0.3s ease" as="nav" display="flex" justifyContent="space-between" alignItems="center" py={4} px={8}>
       <Heading as="h1" size="lg" cursor="pointer">
-      <Image src={logoColor}  boxSize={{ base: "80px", md: "60px" }} onClick={() => navigate('/partidos')}
+      <Image src={logoColor}  boxSize={{ base: "60px", md: "60px" }} onClick={() => navigate('/partidos')}
                   objectFit="contain"/>
       </Heading>
       <HStack spacing={4} display={{ base: "none", md: "flex" }}>
-        <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Tournaments</Link>
+        {/* <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Tournaments</Link>
         <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Teams</Link>
         <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Matches</Link>
-        <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Stats</Link>
+        <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Stats</Link> */}
         <ToggleThemeButton/>
-        <Button variant="ghost" color={textLogin} fontSize="lg" onClick={() => navigate('/login')}>Log In</Button>
-        <Button bg="brand.300" fontSize="lg">Sign Up</Button>
+        <Button bg="brand.300"variant="ghost" color={textLogin} fontSize="lg" onClick={() => navigate('/login')}>Log In</Button>
+        {/* <Button bg="brand.300" fontSize="lg">Sign Up</Button> */}
       </HStack>
+     
       <IconButton
         aria-label="Open Menu"
         icon={<HamburgerIcon />}
@@ -66,18 +67,22 @@ const Navbar: React.FC = () => {
         onClick={onOpen}
         variant="ghost"
       />
+      
       <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
           <DrawerBody>
-            <Link href="#" fontSize="lg" display="block" mb={2} _hover={{ color: "brand.300" }} onClick={onClose}>Tournaments</Link>
+            {/* <Link href="#" fontSize="lg" display="block" mb={2} _hover={{ color: "brand.300" }} onClick={onClose}>Tournaments</Link>
             <Link href="#" fontSize="lg" display="block" mb={2} _hover={{ color: "brand.300" }} onClick={onClose}>Teams</Link>
             <Link href="#" fontSize="lg" display="block" mb={2} _hover={{ color: "brand.300" }} onClick={onClose}>Matches</Link>
-            <Link href="#" fontSize="lg" display="block" mb={2} _hover={{ color: "brand.300" }} onClick={onClose}>Stats</Link>
-            <Button variant="ghost" fontSize="lg" display="block" mb={2} onClick={onClose}>Log In</Button>
-            <Button bg="brand.300" fontSize="lg" display="block" onClick={onClose}>Sign Up</Button>
+            <Link href="#" fontSize="lg" display="block" mb={2} _hover={{ color: "brand.300" }} onClick={onClose}>Stats</Link> */}
+            <ToggleThemeButton/>
+            
+            <Button variant="ghost" fontSize="lg" display="block" mb={2} onClick={() => navigate('/login')}>Log In</Button>
+
+            {/* <Button bg="brand.300" fontSize="lg" display="block" onClick={onClose}>Sign Up</Button> */}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

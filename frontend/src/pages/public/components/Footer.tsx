@@ -10,17 +10,17 @@ const Footer: React.FC = () => {
     <Box as="footer" py={8} px={8} bg={bgColor}>
       <Box display="flex" flexDirection={{ base: "column", md: "row" }} justifyContent="space-between" alignItems="center">
         <VStack spacing={2} alignItems={{ base: "center", md: "flex-start" }} mb={{ base: 4, md: 0 }}>
-          <Link href="#" color={linkColor} _hover={{ color: linkHoverColor }}>Privacy Policy</Link>
-          <Link href="#" color={linkColor} _hover={{ color: linkHoverColor }}>Terms of Service</Link>
+          <Link href="/privacidad" color={linkColor} _hover={{ color: linkHoverColor }}>Politica de privacidad</Link>
+          <Link href="/politicas" color={linkColor} _hover={{ color: linkHoverColor }}>Terminos de servicio</Link>
         </VStack>
         <HStack spacing={4} mb={{ base: 4, md: 0 }}>
-          <Link href="#" color={linkColor} _hover={{ color: linkHoverColor }}>
+          <Link href="/twitter" color={linkColor} _hover={{ color: linkHoverColor }}>
             <FaTwitter size={24} />
           </Link>
-          <Link href="#" color={linkColor} _hover={{ color: linkHoverColor }}>
+          <Link href="/facebook" color={linkColor} _hover={{ color: linkHoverColor }}>
             <FaFacebook size={24} />
           </Link>
-          <Link href="#" color={linkColor} _hover={{ color: linkHoverColor }}>
+          <Link href="/instagram" color={linkColor} _hover={{ color: linkHoverColor }}>
             <FaInstagram size={24} />
           </Link>
         </HStack>
