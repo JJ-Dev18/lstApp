@@ -1,7 +1,7 @@
 import { Box, Heading, Text, Button } from "@chakra-ui/react";
 
 const Header = () => (
-  <Box textAlign="center" position="relative" bgPosition={{ base: "center",md : 'center 0px 10px' }} py={{ base :24 , md :32 , lg : 80}} bgImage="url(/src/assets/inicio/header.webp)" bgSize="cover" >
+  <Box textAlign="center" position="relative" bgPosition={{ base: "center",md : 'center 0px 10px' }} py={{ base :24 , md :32 , lg : 80}} bgImage="url(/assets/inicio/header.webp)" bgSize="cover" >
    <Box
       position="absolute"
       top={0}

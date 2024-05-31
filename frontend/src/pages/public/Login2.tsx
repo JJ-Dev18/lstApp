@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 import { BorderBeam } from '../../components/ui/BorderBeam';
-
 const Login2 = () => {
   // const overlayColor = useColorModeValue('rgba(44, 62, 80, 0.7)', 'rgba(255, 255, 255, 0.7)');
   const [username, setUsername] = useState('admin@example.com');
@@ -87,7 +86,7 @@ const Login2 = () => {
         height="100vh"
         alignItems="center"
         justifyContent="center"
-        backgroundImage="url('/src/assets/login/login.webp')"
+        backgroundImage="url('/assets/login/login.webp')"
         backgroundSize="cover"
         backgroundPosition="center"
         position="relative"
