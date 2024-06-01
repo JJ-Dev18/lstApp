@@ -3,7 +3,6 @@ import { Box, VStack, Link, Icon, Flex, Text, useColorModeValue } from '@chakra-
 import { FaUsers, FaGamepad, FaChartBar, FaSignOutAlt, FaHome, FaBox, FaCog } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import useStore from '../../store/store';
-import { BorderBeam } from '../ui/BorderBeam';
 
 const SidebarAdmin: React.FC = () => {
   const location = useLocation();
