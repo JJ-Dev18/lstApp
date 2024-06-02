@@ -12,7 +12,7 @@ const Layout: React.FC = () => {
       <Flex flex="1" p={{ base: 0, md: 20 }} ml={{ base: 0, md: '200px' }} mt={{base :20 , md : 0}} >
         
         <SidebarAdmin />
-        <Box flex="1" p={4} position="relative">
+        <Box flex="1" p={6} position="relative">
         
          <Outlet/>
         </Box>

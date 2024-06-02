@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, SimpleGrid, Heading, Text, useColorModeValue } from '@chakra-ui/react';
-import ResponsiveTable from './ResponsiveTable';
-import MatchesChart from './MatchesChart';
+import ResponsiveTable from './components/ResponsiveTable';
+import MatchesChart from './components/MatchesChart';
 
 // const partidosData = [
 //   { fecha: "22/06/2022", equipo1: "Equipo A", equipo2: "Equipo B", grupo: "Grupo A" },

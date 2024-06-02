@@ -6,37 +6,37 @@ const reviews = [
   {
     name: "Jack",
     username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
+    body: "Nunca he visto algo así antes. Es increíble. Me encanta.",
     img: "https://avatar.vercel.sh/jack",
   },
   {
     name: "Jill",
     username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
+    body: "No sé qué decir. Estoy sin palabras. Esto es increíble.",
     img: "https://avatar.vercel.sh/jill",
   },
   {
     name: "John",
     username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    body: "Estoy sin palabras. Esto es increíble. Me encanta.",
     img: "https://avatar.vercel.sh/john",
   },
   {
     name: "Jane",
     username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    body: "Estoy sin palabras. Esto es increíble. Me encanta.",
     img: "https://avatar.vercel.sh/jane",
   },
   {
     name: "Jenny",
     username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    body: "Estoy sin palabras. Esto es increíble. Me encanta.",
     img: "https://avatar.vercel.sh/jenny",
   },
   {
     name: "James",
     username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
+    body: "Estoy sin palabras. Esto es increíble. Me encanta.",
     img: "https://avatar.vercel.sh/james",
   },
 ];

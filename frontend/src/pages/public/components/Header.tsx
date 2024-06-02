@@ -19,7 +19,7 @@ const Header = () => (
       La mejor manera de realizar un seguimiento de tus juegos, torneos y ligas de Ultimate Frisbee en tiempo real.
       </Text>
       <Button bg="teal.400" fontSize={{ base: "md", md: "lg" }}>
-        Start tracking now
+       Empieza ahora !
       </Button>
     </Box>
   </Box>

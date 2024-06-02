@@ -26,13 +26,13 @@ const data = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
   datasets: [
     {
-      label: "Desktop",
+      label: "Escritorio",
       data: [43, 137, 61, 145, 26, 154],
       borderColor: "#4FD1C5",
       backgroundColor: "rgba(37, 99, 235, 0.2)",
     },
     {
-      label: "Mobile",
+      label: "Celular",
       data: [60, 48, 177, 78, 96, 204],
       borderColor: "#a7aaff",
       backgroundColor: "rgba(225, 29, 72, 0.2)",
@@ -49,7 +49,7 @@ const options = {
     },
     title: {
       display: true,
-      text: "User Statistics",
+      text: "Estadisticas de torneos",
     },
   },
 };

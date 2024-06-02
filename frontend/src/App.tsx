@@ -10,7 +10,12 @@ import { Role } from './interfaces/auth';
 import Home from './pages/public/Home';
 import LayoutAdministrador from './components/layout/LayoutAdministrado';
 import Login2 from './pages/public/Login2';
-import DashboardContent from './pages/admin/components/DashboardContent';
+import DashboardContent from './pages/admin/DashboardContent';
+import CrudTable from './pages/admin/components/CrudTable';
+import { apiEndpoints, columnsAdminCrud } from './utils/crudActionsAdmin';
+import ChatComponent from './pages/admin/ChatComponent';
+
+
 
 const App: React.FC = () => {
   const checkToken = useStore((state) => state.checkToken);
@@ -48,14 +53,21 @@ const App: React.FC = () => {
         </Route> */}
           <Route element={<RoleProtectedRoute allowedRoles={[Role.ADMIN]} />}>
           <Route  element={<LayoutAdministrador />}>
-            <Route path="/admin/dashboard" element={<DashboardContent />} />
-            <Route path="/admin" element={<Navigate to="/admin/dashboard" />}/>
+          <Route path="/admin/dashboard" element={<DashboardContent />} />
+          <Route path="/admin/usuarios" element={<CrudTable apiEndpoint={apiEndpoints.usuarios} columns={columnsAdminCrud.usuarios} model="Usuario" />} />
+          <Route path="/admin/categorias" element={<CrudTable apiEndpoint={apiEndpoints.categorias} columns={columnsAdminCrud.categorias} model="Categoria" />} />
+          <Route path="/admin/equipos" element={<CrudTable apiEndpoint={apiEndpoints.equipos} columns={columnsAdminCrud.equipos} model="Equipo" />} />
+          <Route path="/admin/jugadores" element={<CrudTable apiEndpoint={apiEndpoints.jugadores} columns={columnsAdminCrud.jugadores} model="Jugador" />} />
+          <Route path="/admin/partidos" element={<CrudTable apiEndpoint={apiEndpoints.partidos} columns={columnsAdminCrud.partidos} model="Partido" />} />
+          <Route path="/admi/neventos" element={<CrudTable apiEndpoint={apiEndpoints.eventos} columns={columnsAdminCrud.eventos} model="Evento" />} />
+          <Route path="/admin/grupos" element={<CrudTable apiEndpoint={apiEndpoints.grupos} columns={columnsAdminCrud.grupos} model="GrupoClasificacion" />} />
+          <Route path="/admin/estadisticas" element={<CrudTable apiEndpoint={apiEndpoints.estadisticas} columns={columnsAdminCrud.estadisticas} model="Estadistica" />} />
+          <Route path="/admin/chat" element={<ChatComponent/>}/>
+        
+          <Route path="/admin" element={<Navigate to="/admin/dashboard" />}/>
           </Route>
         </Route>
-        
-        {/* <Route element={<RoleProtectedRoute allowedRoles={['espectador']} />}>
-          <Route path="/espectador" element={<EspectadorPage />} />
-        </Route> */}
+    
         
         <Route path="*" element={<NotFound />} />
       </Routes>

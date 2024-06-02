@@ -37,12 +37,12 @@ const Navbar: React.FC = () => {
     return LogoBlanco;
   }, [scrollY, colorMode]);
 
-  const textLogin = useMemo(() => {
-    if (scrollY > 50) {
-      return colorMode === 'light' ? 'black' : 'white';
-    }
-    return 'white';
-  }, [scrollY, colorMode]);
+  // const textLogin = useMemo(() => {
+  //   if (scrollY > 50) {
+  //     return colorMode === 'light' ? 'black' : 'white';
+  //   }
+  //   return 'white';
+  // }, [scrollY, colorMode]);
   return (
     <Box  bg={bgColor} position="fixed" top={0} zIndex={999} width='100vw'
     transition="background-color 0.3s ease" as="nav" display="flex" justifyContent="space-between" alignItems="center" py={4} px={8}>
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
         <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Matches</Link>
         <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Stats</Link> */}
         <ToggleThemeButton/>
-        <Button bg="brand.300"variant="ghost" color={textLogin} fontSize="lg" onClick={() => navigate('/login')}>Log In</Button>
+        <Button bg="brand.500" variant="ghost"  color="white" fontSize="lg" onClick={() => navigate('/login')}>Iniciar</Button>
         {/* <Button bg="brand.300" fontSize="lg">Sign Up</Button> */}
       </HStack>
      
@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
             <Link href="#" fontSize="lg" display="block" mb={2} _hover={{ color: "brand.300" }} onClick={onClose}>Stats</Link> */}
             <ToggleThemeButton/>
             
-            <Button variant="ghost" fontSize="lg" display="block" mb={2} onClick={() => navigate('/login')}>Log In</Button>
+            <Button variant="ghost" fontSize="lg" display="block" mb={2} onClick={() => navigate('/login')}>Iniciar</Button>
 
             {/* <Button bg="brand.300" fontSize="lg" display="block" onClick={onClose}>Sign Up</Button> */}
           </DrawerBody>

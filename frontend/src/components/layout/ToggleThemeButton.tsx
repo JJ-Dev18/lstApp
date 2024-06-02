@@ -8,6 +8,7 @@ function ToggleThemeButton() {
     <IconButton
       icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       onClick={toggleColorMode}
+     
       variant="ghost"
       aria-label="Toggle Theme"
     />

@@ -8,6 +8,7 @@ interface ServerToClientEvents {
   newEvent: (event: EventoType) => void;
   timeUpdate: (data: { partidoId: number; time: number }) => void;
   updateScore : (partido:PartidoType) => void
+  likeCount : (count:number) => void
   // basicEmit: (a: number, b: string, c: Buffer) => void;
   // withAck: (d: string, callback: (e: number) => void) => void;
 }
@@ -19,7 +20,8 @@ interface ClientToServerEvents {
   startTimer : ({partidoId } :{partidoId :string | undefined }) => void
   pauseTimer : ({partidoId } :{partidoId :string  | undefined }) => void
   resetTimer : ({partidoId } :{partidoId :string  | undefined }) => void
-
+  like : () => void
+  
  
 }
 

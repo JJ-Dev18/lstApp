@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import useStore from '../../store/store';
 import { Role } from '../../interfaces/auth';
+import { Progress } from '@chakra-ui/react';
 
 interface RoleProtectedRouteProps {
   allowedRoles: Role[];
@@ -26,7 +27,7 @@ const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({ allowedRoles })
   }, [checkToken]);
 
   if (loading) {
-    return <div>Loading...</div>; // Puedes reemplazar esto con un spinner o cualquier componente de carga
+    return <Progress size='xs' isIndeterminate />; // Puedes reemplazar esto con un spinner o cualquier componente de carga
   }
 
   if (!token) {

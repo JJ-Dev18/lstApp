@@ -22,6 +22,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "postcss.config.js"],
+  "include": ["src", "postcss.config.js", "src/pages/admin/components/.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

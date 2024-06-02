@@ -16,6 +16,7 @@ import RealTime from '../../../assets/inicio/realtime.webp'
 import estadisticas from '../../../assets/inicio/estadisticas.webp'
 import Highlight from '../../../assets/inicio/highlight.webp'
 import Tournament from '../../../assets/inicio/tournament.webp'
+import LikeButton from "./LikeButton";
 
 
 
@@ -62,9 +63,9 @@ const MainContent: React.FC = () => (
       />
       <Heading as="h3" size="xl" mb={8}>Torneos destacados</Heading>
       <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={8}>
-        <FeatureCard image={Torneo1} title="USA Ultimate National Championships" description="Men's, Women's, and Mixed club divisions." />
-        <FeatureCard image={Torneo3} title="World Flying Disc Federation World Championships" description="The highest level of international competition." />
-        <FeatureCard image={Torneo2} title="Premier Ultimate League Championship" description="The top professional women's ultimate teams." />
+        <FeatureCard image={Torneo1} title="USA Ultimate National Championships" description="Divisiones masculina,femenina, y mixta." />
+        <FeatureCard image={Torneo3} title="World Flying Disc Federation World Championships" description="El nivel mas alto de ultimate internacional." />
+        <FeatureCard image={Torneo2} title="Premier Ultimate League Championship" description="Los equipos profesionales de ultimate femenino mas elites." />
       </Grid>
     </Box>
     <Box py={16} px={8} >
@@ -123,6 +124,7 @@ const MainContent: React.FC = () => (
       
         <CurvedlineChart />
       </Box>
+      <LikeButton/>
     </Box>
   </>
 );
