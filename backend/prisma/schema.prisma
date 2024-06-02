@@ -110,7 +110,13 @@ model Like {
   @@map("likes")
 
 }
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  comments  String
+  createdAt DateTime @default(now())
+  @@map("feedback")
 
+}
 model Estadistica {
   id           Int       @id @default(autoincrement())
   jugador      Jugador   @relation(fields: [jugadorId], references: [id])

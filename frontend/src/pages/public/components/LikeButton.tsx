@@ -4,21 +4,17 @@ import { IconButton, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
+import useSocketPublic from '../../../hooks/useSocketPublic';
 
 
 const MotionIconButton = motion(IconButton);
 const MotionText = motion(Text);
-const newSocket = io(import.meta.env.VITE_API_URL_SOCKET, {
-    withCredentials: true,
-    path: '/socket.io',
-    transports: ['websocket'],
-  
-  });
+
 const LikeButton: React.FC = () => {
   const [likeCount, setLikeCount] = useState<number>(0);
   const [liked, setLiked] = useState<boolean>(false);
   const textColor = useColorModeValue('gray.700', '#FFFFFF');
-
+  const { socket : newSocket } = useSocketPublic()
   useEffect(() => {
     if(newSocket){
         newSocket.on('likeCount', (count: number) => {

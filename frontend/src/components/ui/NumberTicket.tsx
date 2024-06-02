@@ -1,5 +1,3 @@
-
-
 import { cn } from "../../lib/utils";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
@@ -24,23 +22,26 @@ export default function NumberTicker({
   const isInView = useInView(ref, { once: true, margin: "0px" });
 
   useEffect(() => {
-    isInView &&
-      setTimeout(() => {
+    if (isInView) {
+      const timeout = setTimeout(() => {
         motionValue.set(direction === "down" ? 0 : value);
       }, delay * 1000);
+      return () => clearTimeout(timeout);
+    }
   }, [motionValue, isInView, delay, value, direction]);
 
-  useEffect(
-    () =>
-      springValue.on("change", (latest) => {
-        if (ref.current) {
-          ref.current.textContent = Intl.NumberFormat("en-US").format(
-            latest.toFixed(0),
-          );
-        }
-      }),
-    [springValue],
-  );
+  useEffect(() => {
+    const updateTextContent = () => {
+      if (ref.current) {
+        ref.current.textContent = Intl.NumberFormat("en-US").format(
+          springValue.get().toFixed(0)
+        );
+      }
+    };
+
+    const unsubscribe = springValue.onChange(updateTextContent);
+    return () => unsubscribe();
+  }, [springValue]);
 
   return (
     <span
