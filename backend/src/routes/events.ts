@@ -5,7 +5,7 @@ import { Usuario } from '@prisma/client';
 import { AuthenticatedRequest } from '../types/types';
 import prisma from '../config/database';
 import { actualizarEstadisticas } from './estadisticas';
-import { actualizarMarcador } from './partidos';
+import { actualizarMarcador } from '../utils/marcador';
 
 
 const router = Router();
@@ -97,7 +97,7 @@ const registerEventHandlers = (io: SocketIOServer) => {
         
         io.to(roomName).emit('newEvent', evento);
         await actualizarEstadisticas(tipo,jugadorId,partidoId)
-        await actualizarMarcador(partidoId,jugadorId,tipo,)
+        await actualizarMarcador(partidoId,jugadorId,tipo)
         const partidoActualizado = await prisma.partido.findUnique({
           where: { id: partidoId },
         });

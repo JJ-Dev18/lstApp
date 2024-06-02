@@ -84,6 +84,15 @@ export async function seed(knex: Knex): Promise<void> {
     { equipo1Id, equipo2Id, fecha: new Date(), duracion: 120 , estado : 'SIN_JUGAR',categoriaId: 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0},
     { equipo1Id, equipo2Id, fecha: new Date(Date.now() + 86400000), duracion: 120,estado : 'SIN_JUGAR',categoriaId : 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0  }, // Partido al día siguiente
   ];
+  await knex('grupos_clasificacion').insert([
+    { nombre: 'Grupo A' },
+    { nombre: 'Grupo B' }
+  ]);
+  await knex('equipos_grupos').insert([
+    { equipoId: 1, grupoId : 1  },
+    { equipoId: 2, grupoId : 2 }
+  ]);
+
 
   await knex('partidos').insert(partidos);
 }

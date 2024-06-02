@@ -9,16 +9,17 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import './config/passport';
 import authRoutes from './routes/auth';
-import jugadoresRoutes from './routes/jugadores';
-import { RouterPartidos} from './routes/partidos';
-import {EstadisticasRouter} from './routes/estadisticas';
 
-
+import jugadorRoutes from './routes/jugadorRoutes'
+import partidoRoutes from './routes/partidoRoutes'
+import usuarioRoutes from './routes/usuarioRoutes'
+import categoriaRoutes from './routes/categoriaRoute'
+import equipoRoutes from './routes/equipoRoutes'
+import grupoClasificacionRoutes from './routes/grupoClasificacionRoutes'
 import { eventRouter, registerEventHandlers } from './routes/events';
 import { Usuario } from '@prisma/client';
 import { PrismaClient } from '@prisma/client'
-import { EquiposRouter } from './routes/equipos';
-import { CategoriasRouter } from './routes/categorias';
+import registrarLikes from './routes/likes';
 
 dotenv.config();
 
@@ -51,33 +52,36 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRoutes);
-app.use('/events', eventRouter);
-app.use('/jugadores', jugadoresRoutes)
-app.use('/partidos', RouterPartidos)
-app.use('/estadisticas', EstadisticasRouter)
-app.use('/equipos', EquiposRouter)
-app.use('/categorias',CategoriasRouter)
+// app.use('/events', eventRouter);
+app.use('/usuarios', usuarioRoutes)
+app.use('/categorias', categoriaRoutes)
+app.use('/equipos', equipoRoutes)
+app.use('/eventos', eventRouter)
+app.use('/grupos', grupoClasificacionRoutes)
+app.use('/jugadores', jugadorRoutes)
+app.use('/partidos', partidoRoutes)
 
 
 
 
 
 
-io.use((socket, next) => {
-  const token = socket.handshake.auth.token;
-  if (!token) {
-    return next(new Error('Authentication error'));
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultSecret') as Usuario;
-    socket.data.user = decoded;
-    next();
-  } catch (err) {
-    next(new Error('Authentication error'));
-  }
-});
+// io.use((socket, next) => {
+//   const token = socket.handshake.auth.token;
+//   if (!token) {
+//     return next(new Error('Authentication error'));
+//   }
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultSecret') as Usuario;
+//     socket.data.user = decoded;
+//     next();
+//   } catch (err) {
+//     next(new Error('Authentication error'));
+//   }
+// });
 
 registerEventHandlers(io);
+registrarLikes(io)
 
 // io.on('connection', (socket) => {
 //   console.log('New client connected');

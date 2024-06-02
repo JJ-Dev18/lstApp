@@ -104,6 +104,12 @@ model EquiposGrupos {
   @@id([equipoId, grupoId])
   @@map("equipos_grupos")
 }
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  @@map("likes")
+
+}
 
 model Estadistica {
   id           Int       @id @default(autoincrement())
