@@ -10,12 +10,34 @@ export async function seed(knex: Knex): Promise<void> {
   // await knex('usuarios').del();
   // await knex('partidos').del();
 
-
+  
   // Crear categorías
+  
+
+  // Crear un planillero
+  const hashedPassword = await bcrypt.hash('planillero123', 10);
+  const planillero = {
+    nombre: 'Planillero 1',
+    email: 'planillero1@example.com',
+    password: hashedPassword,
+    rol: 'planillero',
+  };
+  const hashedPasswordAdmin = await bcrypt.hash('admin123', 10);
+
+  const admin = {
+    nombre: 'Admin',
+    email: 'admin@example.com',
+    password: hashedPasswordAdmin,
+    rol: 'administrador',
+  };
+  await knex('usuarios').insert(planillero);
+  const adminCreado =  await knex('usuarios').insert(admin).returning('id');;
+  const torneo = { nombre : 'jjmb' , usuarioId :adminCreado[0].id}
+  const torneoCreado =  await knex('torneos').insert(torneo).returning('id');
   const categorias = [
-    { nombre: 'Mixta' },
-    { nombre: 'Femenina' },
-    { nombre: 'Masculina' },
+    { nombre: 'Mixta', torneoId :torneoCreado[0].id  },
+    { nombre: 'Femenina' ,torneoId :torneoCreado[0].id },
+    { nombre: 'Masculina' ,torneoId :torneoCreado[0].id },
   ];
 
   const categoriaIds = await knex('categorias').insert(categorias).returning('id');
@@ -24,10 +46,10 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Crear equipos
   const equipos = [
-    { nombre: 'Oru', categoriaId: masculinaId },
-    { nombre: 'Orulous', categoriaId: masculinaId },
-    { nombre: 'Castella', categoriaId: masculinaId },
-    { nombre: 'Perico', categoriaId: masculinaId },
+    { nombre: 'Oru', categoriaId: masculinaId ,  torneoId :torneoCreado[0].id    },
+    { nombre: 'Orulous', categoriaId: masculinaId , torneoId :torneoCreado[0].id  },
+    { nombre: 'Castella', categoriaId: masculinaId,  torneoId :torneoCreado[0].id   },
+    { nombre: 'Perico', categoriaId: masculinaId ,  torneoId :torneoCreado[0].id  },
 
   ];
 
@@ -59,27 +81,6 @@ export async function seed(knex: Knex): Promise<void> {
   ];
 
   await knex('jugadores').insert(jugadoresEquipo2);
-
-  // Crear un planillero
-  const hashedPassword = await bcrypt.hash('planillero123', 10);
-  const planillero = {
-    nombre: 'Planillero 1',
-    email: 'planillero1@example.com',
-    password: hashedPassword,
-    rol: 'planillero',
-  };
-  const hashedPasswordAdmin = await bcrypt.hash('admin123', 10);
-
-  const admin = {
-    nombre: 'Admin',
-    email: 'admin@example.com',
-    password: hashedPasswordAdmin,
-    rol: 'administrador',
-  };
-
-  await knex('usuarios').insert(planillero);
-  await knex('usuarios').insert(admin);
-
   const partidos = [
     { equipo1Id, equipo2Id, fecha: new Date(), duracion: 120 , estado : 'SIN_JUGAR',categoriaId: 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0},
     { equipo1Id, equipo2Id, fecha: new Date(Date.now() + 86400000), duracion: 120,estado : 'SIN_JUGAR',categoriaId : 1 , marcadorEquipo1: 0 ,marcadorEquipo2:0  }, // Partido al día siguiente
