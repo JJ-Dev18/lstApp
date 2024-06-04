@@ -8,7 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('password').notNullable();
     table.string('rol').notNullable();
     table.string('googleId').nullable().unique();
-    table.timestamps(true, true); // created_at and updated_at timestamps
+    table.timestamps(true, true);  // created_at and updated_at timestamps
   });
 }
 

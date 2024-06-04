@@ -31,13 +31,16 @@ export async function seed(knex: Knex): Promise<void> {
     rol: 'administrador',
   };
   await knex('usuarios').insert(planillero);
-  const adminCreado =  await knex('usuarios').insert(admin).returning('id');;
-  const torneo = { nombre : 'jjmb' , usuarioId :adminCreado[0].id}
+  const adminCreado =  await knex('usuarios').insert(admin).returning('id');
+  const [ adminId ] = adminCreado.map(admin => admin.id);
+  const torneo = { nombre : 'jjmb' , usuarioId : adminId}
   const torneoCreado =  await knex('torneos').insert(torneo).returning('id');
+  const [torneoId] = torneoCreado.map(torneo => torneo.id);
+
   const categorias = [
-    { nombre: 'Mixta', torneoId :torneoCreado[0].id  },
-    { nombre: 'Femenina' ,torneoId :torneoCreado[0].id },
-    // { nombre: 'Masculina' ,torneoId :torneoCreado[0].id },
+    { nombre: 'Mixta', torneoId :torneoId  },
+    { nombre: 'Femenina' ,torneoId :torneoId },
+    { nombre: 'Masculina' ,torneoId :torneoCreado[0].id },
   ];
 
   const categoriaIds = await knex('categorias').insert(categorias).returning('id');
@@ -46,10 +49,10 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Crear equipos
   const equipos = [
-    { nombre: 'Oru', categoriaId: masculinaId ,  torneoId :torneoCreado[0].id    },
-    { nombre: 'Orulous', categoriaId: masculinaId , torneoId :torneoCreado[0].id  },
-    { nombre: 'Castella', categoriaId: masculinaId,  torneoId :torneoCreado[0].id   },
-    { nombre: 'Perico', categoriaId: masculinaId ,  torneoId :torneoCreado[0].id  },
+    { nombre: 'Oru', categoriaId: masculinaId ,  torneoId :torneoId   },
+    { nombre: 'Orulous', categoriaId: masculinaId , torneoId :torneoId },
+    { nombre: 'Castella', categoriaId: masculinaId,  torneoId :torneoId  },
+    { nombre: 'Perico', categoriaId: masculinaId ,  torneoId :torneoId },
 
   ];
 
