@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 
 export const getCategorias = async (req: Request, res: Response) => {
   try {
+    
     const categorias = await prisma.categoria.findMany()
     res.json(categorias)
   } catch (error) {

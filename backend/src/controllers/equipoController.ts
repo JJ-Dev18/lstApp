@@ -5,7 +5,11 @@ const prisma = new PrismaClient()
 
 export const getEquipos = async (req: Request, res: Response) => {
   try {
-    const equipos = await prisma.equipo.findMany()
+    const equipos = await prisma.equipo.findMany({
+      where :{
+        
+      }
+    })
     res.json(equipos)
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' })

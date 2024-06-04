@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon, AddIcon, SearchIcon } from '@chakra-ui/icons'
 import instance from '../../../api/axios'
+import useStore from '../../../store/store'
 
 interface CrudTableProps {
   apiEndpoint: string
@@ -19,6 +20,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
   const [data, setData] = useState<any[]>([])
   const [filteredData, setFilteredData] = useState<any[]>([])
   const [isOpen, setIsOpen] = useState(false)
+  const user = useStore( ( state ) => state.user)
   const [formData, setFormData] = useState<any>({})
   const [editingId, setEditingId] = useState<number | null>(null)
   const [filter, setFilter] = useState<string>('')
@@ -26,7 +28,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
 
   const fetchData = async () => {
     try {
-      const response :any = await instance.get(apiEndpoint)
+      const response :any = await instance.get(`${apiEndpoint}/${user?.id}`)
       if(response.data.length > 0){
         setData(response.data)
       }else{
@@ -103,6 +105,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
 
   const handleDelete = async (id: number) => {
     try {
+      console.log(id,"id")
       await instance.delete(`${apiEndpoint}/${id}`)
       toast({
         title: `${model} deleted successfully.`,

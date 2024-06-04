@@ -3,7 +3,7 @@ import { getEquipos, getEquipo, createEquipo, updateEquipo, deleteEquipo } from 
 
 const router = Router()
 
-router.get('/', getEquipos)
+router.get('/:userId', getEquipos)
 router.get('/:id', getEquipo)
 router.post('/', createEquipo)
 router.put('/:id', updateEquipo)

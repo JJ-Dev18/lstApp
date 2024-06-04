@@ -59,7 +59,10 @@ router.post('/register', async (req, res) => {
 router.post('/login', validarLoginUsuario, validarCampos ,async (req :Request, res :Response) => {
   const { email, password } = req.body;
   try {
-    const user = await prisma.usuario.findUnique({ where: { email } });
+    const user = await prisma.usuario.findUnique({ where: { email }, include :{
+      torneos: true 
+    } });
+    console.log(user,"user")
     if (!user || !user.password) {
       return res.status(200).json({ error: 'Credenciales inválidas' });
     }
@@ -67,8 +70,8 @@ router.post('/login', validarLoginUsuario, validarCampos ,async (req :Request, r
     if (!isMatch) {
       return res.status(200).json({ error: 'password inválido' });
     }
-    const token = jwt.sign({ id: user.id, nombre: user.nombre, email: user.email, rol : user.rol }, process.env.JWT_SECRET!, { expiresIn: '1h' });
-    res.json({ user : { nombre : user.nombre , email: user.email, rol : user.rol }, token });
+    const token = jwt.sign({ id: user.id, nombre: user.nombre, email: user.email, rol : user.rol, torneos : user.torneos.length }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+    res.json({ user : { id:user.id, nombre : user.nombre , email: user.email, rol : user.rol, torneos : user.torneos.length }, token });
   } catch (error) {
     res.status(500).json({ error: 'Error al iniciar sesión' , error2:error});
   }
@@ -80,7 +83,7 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/');
   });
 });
-router.get('/check-token', (req, res) => {
+router.get('/check-token', async (req, res) => {
   const token = req.headers['authorization']?.split(' ')[1];
   // console.log(token,"token")
   if (!token) {
@@ -89,8 +92,11 @@ router.get('/check-token', (req, res) => {
 
   try {
     const decoded :any = jwt.verify(token, process.env.JWT_SECRET!);
-    console.log(decoded,"Decoded")
-    return res.status(200).json({ message: 'Token is valid', user : {email : decoded.email, rol : decoded.rol, nombre : decoded.nombre } });
+    const user = await prisma.usuario.findFirst({
+      where : { id : decoded.id},
+      include: { torneos : true }
+    })
+    return res.status(200).json({ message: 'Token is valid', user : { ...user, torneos : user?.torneos.length} });
   } catch (error) {
     return res.status(401).json({ message: 'Token is invalid or has expired' });
   }

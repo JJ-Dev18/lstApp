@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, SimpleGrid, Heading, Text, useColorModeValue } from '@chakra-ui/react';
-import ResponsiveTable from './components/ResponsiveTable';
+// import ResponsiveTable from './components/ResponsiveTable';
 import MatchesChart from './components/MatchesChart';
 
 // const partidosData = [
@@ -11,11 +11,11 @@ import MatchesChart from './components/MatchesChart';
 //   { fecha: "26/06/2022", equipo1: "Equipo I", equipo2: "Equipo J", grupo: "Grupo E" },
 // ];
 
-const gruposData = [
-  { nombre: "Grupo A", partidos: 6, equipos: 4 },
-  { nombre: "Grupo B", partidos: 6, equipos: 4 },
-  { nombre: "Grupo C", partidos: 6, equipos: 4 },
-];
+// const gruposData = [
+//   { nombre: "Grupo A", partidos: 6, equipos: 4 },
+//   { nombre: "Grupo B", partidos: 6, equipos: 4 },
+//   { nombre: "Grupo C", partidos: 6, equipos: 4 },
+// ];
 
 // const equiposData = [
 //   { nombre: "Team 1", grupo: "A", jugados: 3, ganados: 2, empatados: 0, perdidos: 1, golesFavor: 5 },
@@ -32,11 +32,11 @@ const gruposData = [
 //   { Header: 'Grupo', accessor: 'grupo' },
 // ];
 
-const gruposColumns = [
-  { Header: 'Nombre', accessor: 'nombre' },
-  { Header: 'Partidos', accessor: 'partidos' },
-  { Header: 'Equipos', accessor: 'equipos' },
-];
+// const gruposColumns = [
+//   { Header: 'Nombre', accessor: 'nombre' },
+//   { Header: 'Partidos', accessor: 'partidos' },
+//   { Header: 'Equipos', accessor: 'equipos' },
+// ];
 
 // const equiposColumns = [
 //   { Header: 'Nombre', accessor: 'nombre' },
@@ -80,7 +80,7 @@ const DashboardContent: React.FC = () => {
       </Box>
       <Box mb={8}>
         <Heading as="h3" size="lg" mb={4}>Grupos</Heading>
-        <ResponsiveTable columns={gruposColumns} data={gruposData} />
+        {/* <ResponsiveTable columns={gruposColumns} data={gruposData} /> */}
       </Box>
       {/* <Box mb={8}>
         <Heading as="h3" size="lg" mb={4}>Partidos</Heading>

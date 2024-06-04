@@ -47,6 +47,13 @@ export const columnsAdminCrud = {
       { name: 'bloqueos', type: 'number' },
       { name: 'intercepciones', type: 'number' },
       { name: 'asistencias', type: 'number' }
+    ],
+    torneos : [
+      { name : 'nombre'  , type : 'string'},
+      { name : "categorias"  , type : 'string'},
+      { name : "partidos"  , type : 'string'},
+      { name : "equipos"  , type : 'string'},
+      { name : "jugadores"  , type : 'string'},
     ]
   }
 
@@ -59,5 +66,6 @@ export const columnsAdminCrud = {
     partidos: '/partidos',
     eventos: '/eventos',
     grupos: '/grupos',
-    estadisticas: '/estadisticas'
+    estadisticas: '/estadisticas',
+    torneos : '/torneos'
   }

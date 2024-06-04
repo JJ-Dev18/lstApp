@@ -8,6 +8,7 @@ generator client {
 }
 
 
+
 model Usuario {
   id        Int     @id @default(autoincrement())
   nombre    String
@@ -16,7 +17,20 @@ model Usuario {
   rol       String
   googleId  String? @unique
   eventos  Evento[] @relation("PlanilleroEventos")
+  torneos  Torneo[]  
  @@map("usuarios")
+}
+model Torneo {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  categorias  Categoria[]  
+  equipos     Equipo[]     
+  partidos    Partido[]   
+  usuario     Usuario      @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  @@map("torneos")
 }
 
 model Categoria {
@@ -24,6 +38,8 @@ model Categoria {
   nombre String
   equipos Equipo[]
   partidos Partido[]
+  torneo   Torneo? @relation(fields: [torneoId], references: [id])
+  torneoId Int?
   @@map("categorias")
 }
 
@@ -32,6 +48,8 @@ model Equipo {
   nombre      String
   categoria   Categoria   @relation(fields: [categoriaId], references: [id])
   categoriaId Int
+  torneo      Torneo?     @relation(fields: [torneoId], references: [id])
+  torneoId    Int?
   jugadores   Jugador[]
   grupos      EquiposGrupos[]
   equipo1     Partido[]   @relation("Equipo1")
@@ -72,6 +90,8 @@ model Partido {
   estado     EstadoPartido
   eventos    Evento[]
   estadisticas Estadistica[]
+  torneo   Torneo? @relation(fields: [torneoId], references: [id])
+  torneoId Int?
   @@map("partidos")
 }
 
