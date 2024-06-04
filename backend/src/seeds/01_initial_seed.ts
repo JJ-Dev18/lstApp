@@ -37,7 +37,7 @@ export async function seed(knex: Knex): Promise<void> {
   const categorias = [
     { nombre: 'Mixta', torneoId :torneoCreado[0].id  },
     { nombre: 'Femenina' ,torneoId :torneoCreado[0].id },
-    { nombre: 'Masculina' ,torneoId :torneoCreado[0].id },
+    // { nombre: 'Masculina' ,torneoId :torneoCreado[0].id },
   ];
 
   const categoriaIds = await knex('categorias').insert(categorias).returning('id');
