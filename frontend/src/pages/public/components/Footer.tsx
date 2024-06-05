@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
           <Link href="/facebook" color={linkColor} _hover={{ color: linkHoverColor }}>
             <FaFacebook size={24} />
           </Link>
-          <Link href="/instagram" color={linkColor} _hover={{ color: linkHoverColor }}>
+          <Link href="/instagram"  color={linkColor} _hover={{ color: linkHoverColor }}>
             <FaInstagram size={24} />
           </Link>
         </HStack>

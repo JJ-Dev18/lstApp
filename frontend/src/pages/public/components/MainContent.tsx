@@ -52,8 +52,8 @@ const MainContent: React.FC = () => (
         <Grid templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }} gap={8}>
           <FeatureCard image={RealTime} title="Seguimiento de puntuaciones en tiempo real" description="Puntuación de juegos a medida que ocurren, desde cualquier lugar" />
           <FeatureCard image={Highlight} title="Destaca tus mejores juegos" description="Sigue juegos de todo el mundo" />
-          <FeatureCard image={Tournament} title="Crea tus propios torneos" description="Gestiona tu torneo con facilidad." />
-          <FeatureCard image={estadisticas} title="Hermoso panel de estadisticas" description="Gestiona tus estadisticas" />
+          <FeatureCard image={Tournament} title="Crea tus propios torneos" description="Gestiona tu torneo con facilidad." lazy="lazy"/>
+          <FeatureCard image={estadisticas} title="Hermoso panel de estadisticas" description="Gestiona tus estadisticas" lazy="lazy"/>
         </Grid>
       </Suspense>
     </Box>
@@ -63,9 +63,9 @@ const MainContent: React.FC = () => (
       <Heading as="h3" size="xl" mb={8}>Torneos destacados</Heading>
       <Suspense fallback={<Skeleton height="200px" />}>
         <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={8}>
-          <FeatureCard image={Torneo1} title="USA Ultimate National Championships" description="Divisiones masculina, femenina, y mixta." />
-          <FeatureCard image={Torneo3} title="World Flying Disc Federation World Championships" description="El nivel mas alto de ultimate internacional." />
-          <FeatureCard image={Torneo2} title="Premier Ultimate League Championship" description="Los equipos profesionales de ultimate femenino mas elites." />
+          <FeatureCard image={Torneo1} title="USA Ultimate National Championships" description="Divisiones masculina, femenina, y mixta." lazy="lazy" />
+          <FeatureCard image={Torneo3} title="World Flying Disc Federation World Championships" description="El nivel mas alto de ultimate internacional." lazy="lazy" />
+          <FeatureCard image={Torneo2} title="Premier Ultimate League Championship" description="Los equipos profesionales de ultimate femenino mas elites."  lazy="lazy" />
         </Grid>
       </Suspense>
     </Box>
@@ -74,9 +74,9 @@ const MainContent: React.FC = () => (
       <Heading as="h3" size="xl" mb={8}>Equipos destacados</Heading>
       <Suspense fallback={<Skeleton height="200px" />}>
         <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={8}>
-          <FeatureCard image={EquipoImg} title="Revolver" description="San Francisco, CA" />
-          <FeatureCard image={Equipo2Img} title="Brute Squad" description="Boston, MA" />
-          <FeatureCard image={Equipo3Img} title="Truck Stop" description="Washington, DC" />
+          <FeatureCard image={EquipoImg} title="Revolver" description="San Francisco, CA" lazy="lazy"/>
+          <FeatureCard image={Equipo2Img} title="Brute Squad" description="Boston, MA" lazy="lazy"/>
+          <FeatureCard image={Equipo3Img} title="Truck Stop" description="Washington, DC" lazy="lazy"/>
         </Grid>
       </Suspense>
     </Box>
