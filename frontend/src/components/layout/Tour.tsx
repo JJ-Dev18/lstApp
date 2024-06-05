@@ -39,7 +39,7 @@ const Tour: React.FC = () => {
 
           await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el modal esté abierto
       }
-      if (steps[nextIndex]?.target === '#torneos' || steps[nextIndex]?.target === '#torneos-mobile') {
+      if (steps[nextIndex]?.target === '#torneos' ) {
         await crearTorneo( {
             nombre : 'prueba torneo',
             numCategorias: 2,
@@ -47,9 +47,20 @@ const Tour: React.FC = () => {
             numJugadores: 2
         })
         setOpenForm(false);
-        setNavbarOpen(true)
+        // setNavbarOpen(true)
         await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el modal esté abierto
     }
+    if (steps[nextIndex]?.target === '#torneos-mobile') {
+      await crearTorneo( {
+          nombre : 'prueba torneo',
+          numCategorias: 2,
+          numEquipos: 2,
+          numJugadores: 2
+      })
+      setOpenForm(false);
+      setNavbarOpen(true)
+      await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el modal esté abierto
+  }
     if (steps[nextIndex]?.target === '#select-0'){
       setNavbarOpen(false)
     }

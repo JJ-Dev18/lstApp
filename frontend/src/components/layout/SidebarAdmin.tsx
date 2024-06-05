@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React  from 'react';
 import { Box, VStack, Link as ChakraLink, Icon, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import {  FaSignOutAlt, FaHome, FaBox } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
@@ -31,10 +31,11 @@ const SidebarAdmin: React.FC = () => {
   const logout = useStore( (state)=> state.logout)
   const torneo = useStore( (state)=> state.torneo)
   const user = useStore( (state)=> state.user)
-  const setNavbarOpen = useStore( (state) => state.setNavbarOpen)
-  useEffect(() => {
-   setNavbarOpen(false)
-  }, [location])
+  // const setNavbarOpen = useStore( (state) => state.setNavbarOpen)
+
+  // useEffect(() => {
+  //  setNavbarOpen(false)
+  // }, [location])
   
    
   

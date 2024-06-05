@@ -1,24 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes ,Navigate } from 'react-router-dom';
-import NotFound from './pages/public/NotFound';
-import Partidos from './pages/planilero/Partidos';
-import Marcador from './components/marcador/Marcador';
 import useStore from './store/store';
-import RoleProtectedRoute from './pages/public/RoleProtectedRoute';
-import UnauthorizedPage from './pages/public/UnAuthorized';
-import { Role } from './interfaces/auth';
-import Home from './pages/public/Home';
-import LayoutAdministrador from './components/layout/LayoutAdministrado';
-import Login2 from './pages/public/Login2';
-// import DashboardContent from './pages/admin/DashboardContent';
-import CrudTable from './pages/admin/components/CrudTable';
 import { apiEndpoints, columnsAdminCrud } from './utils/crudActionsAdmin';
-import ChatComponent from './pages/admin/ChatComponent';
-// import CreateTournamentForm from './pages/admin/CreateTournamentForm';
-import TournamentsList from './pages/admin/TournamentsLists';
-import Dashboard from './pages/admin/DashboardContent';
-import Welcome from './pages/admin/Welcome';
-import Register from './pages/public/Register';
+import { Role } from './interfaces/auth';
+import { Skeleton } from '@chakra-ui/react';
+const NotFound = lazy(() => import('./pages/public/NotFound'));
+const Partidos = lazy(() => import('./pages/planilero/Partidos'));
+const Marcador = lazy(() => import('./components/marcador/Marcador'));
+const RoleProtectedRoute = lazy(() => import('./pages/public/RoleProtectedRoute'));
+const UnauthorizedPage = lazy(() => import('./pages/public/UnAuthorized'));
+const Home = lazy(() => import('./pages/public/Home'));
+const LayoutAdministrador = lazy(() => import('./components/layout/LayoutAdministrado'));
+const Login2 = lazy(() => import('./pages/public/Login2'));
+const CrudTable = lazy(() => import('./pages/admin/components/CrudTable'));
+const ChatComponent = lazy(() => import('./pages/admin/ChatComponent'));
+const TournamentsList = lazy(() => import('./pages/admin/TournamentsLists'));
+const Dashboard = lazy(() => import('./pages/admin/DashboardContent'));
+const Welcome = lazy(() => import('./pages/admin/Welcome'));
+const Register = lazy(() => import('./pages/public/Register'));
+
 
 
 
@@ -33,6 +33,8 @@ const App: React.FC = () => {
   }, [checkToken]);
   return (
     <Router>
+      <Suspense fallback={<Skeleton />}>
+
       <Routes>
          <Route path="/" element={<Navigate to="/inicio" />} />
          <Route path="/inicio" element={<Home />} />
@@ -81,6 +83,7 @@ const App: React.FC = () => {
         
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </Suspense>
     </Router>
   );
 };

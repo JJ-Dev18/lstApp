@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
               {colorMode === 'light' ? 'Modo Oscuro' : 'Modo Claro'}
             </Button>
             
-            <Button variant="ghost" fontSize="lg" display="block" mb={2} onClick={() => navigate('/login')}>Iniciar</Button>
+            <Button fontWeight="bold" variant="ghost" fontSize="lg" display="block" mb={2} onClick={() => navigate('/login')}>Iniciar</Button>
 
             {/* <Button bg="brand.300" fontSize="lg" display="block" onClick={onClose}>Sign Up</Button> */}
           </DrawerBody>
