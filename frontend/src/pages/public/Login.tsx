@@ -24,7 +24,7 @@ const Login: React.FC = () => {
       console.log('hay token')
       switch (user?.rol) {
         case 'administrador':
-          navigate('/admin/dashboard');
+          navigate('/admin/inicio');
           break;
         case 'planillero':
           navigate('/planillero');

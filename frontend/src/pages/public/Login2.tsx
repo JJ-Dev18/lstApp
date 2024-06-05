@@ -18,7 +18,7 @@ const Login2 = () => {
     if (token) {
       switch (user?.rol) {
         case 'administrador':
-          navigate('/admin/dashboard');
+          navigate('/admin/inicio');
           break;
         case 'planillero':
           navigate('/planillero');

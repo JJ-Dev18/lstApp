@@ -1,77 +1,25 @@
-import { create } from 'zustand';
-import instance from '../api/axios';
-import { User } from '../interfaces/auth';
+import { StateCreator, create } from 'zustand';
+import { AuthSlice, createAuthSlice } from './slices/AuthSlice';
+import { UserSlice, createUserSlice } from './slices/UserSlice';
+import { TorneoSlice, createTorneoSlice } from './slices/TorneoSlice';
+import { devtools } from 'zustand/middleware'
+import { TourState, createTourSlice } from './slices/TourSlice';
+import { SearchSlice, createSearchSlice } from './slices/SearchSlice';
+import { UISlice, createUIslice } from './slices/UiSlice';
 
+interface Store extends AuthSlice,UserSlice,TorneoSlice,TourState,SearchSlice,UISlice {}
 
-interface AuthSlice {
-  token: string | null;
-  login: (username: string, password: string) => Promise<User>;
-  logout: () => void;
-  checkToken: () => Promise<void>;
-  error : boolean,
-  user: User | null,
-  setUser: (user:User) => void
-}
-
-const createAuthSlice = (set: any, get : any): AuthSlice => ({
-  user: null,
-  setUser: (user) => set({ user }),
-  token: localStorage.getItem('token'),
-  error : false,
-  login: async (email:string,password:string) => {
-    try {
-      const response = await instance.post('/auth/login', { email, password });
-       const {setUser } = get() 
-      
-      console.log(response.data.error,"respoinse")
-      if(!response.data.error){
-       
-        const token = response.data.token
-        const user = response.data.user
-        localStorage.setItem('token', token);
-        set({ token});
-        setUser(user)
-        return user;
-      } else {
-        throw new Error(response.data.error || 'Failed to login');
-      }
-      
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
-    }
-  },
-  logout: () => {
-    localStorage.removeItem('token');
-    set({ token: null });
-  },
-  checkToken: async () => {
-    const token = localStorage.getItem('token');
-    const {logout, setUser } = get() 
-    try {
-     const response =  await instance.get('/auth/check-token',{
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      })
-      set({ token });
-      setUser(response.data.user)
-      
-      
-    } catch (error) {
-      console.error('Token check error:', error);
-        
-        // localStorage.removeItem('token');
-        // set({ token: null });
-        logout()
-    }
-  }
+const createStore: StateCreator<Store> = (set, get) => ({
+  ...createAuthSlice(set,get),
+  ...createUserSlice(set),
+  ...createTorneoSlice(set,get),
+  ...createTourSlice(set),
+  ...createSearchSlice(set),
+  ...createUIslice(set)
 });
 
-interface Store extends AuthSlice {}
+const useStore = create<Store>()(
+  devtools(createStore) )
 
-const useStore = create<Store>((set,get) => ({
-  ...createAuthSlice(set,get),
-}));
 
 export default useStore;

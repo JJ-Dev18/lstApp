@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, VStack, Link as ChakraLink, Icon, Flex, Text, useColorModeValue } from '@chakra-ui/react';
-import { FaUsers, FaGamepad, FaChartBar, FaSignOutAlt, FaHome, FaBox, FaCog } from 'react-icons/fa';
+import {  FaSignOutAlt, FaHome, FaBox } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import useStore from '../../store/store';
 import { Link } from 'react-router-dom';
+import { GiSoccerField } from "react-icons/gi";
+import { MdCategory } from "react-icons/md";
 
+export const links = [
+  // { href: "/admin/torneos", label: "Torneos", icon: FaHome },
+  // { href: "/admin/dashboard", label: "Dashboard", icon: FaHome },
+  { href: "/admin/equipos", label: "Equipos", icon: FaBox },
+  { href: "/admin/categorias", label: "Categorias", icon: MdCategory },
+
+  // { href: "/admin/partidos", label: "Partidos", icon: FaGamepad },
+  // { href: "/admin/jugadores", label: "Jugadores", icon: FaUsers },
+  // { href: "/admin/estadísticas", label: "Estadísticas", icon: FaChartBar },
+  // { href: "/admin/grupos", label: "Grupos", icon: FaCog },
+  // { href: "/admin/clasificación", label: "Clasificación", icon: FaCog },
+
+ 
+];
 const SidebarAdmin: React.FC = () => {
   const location = useLocation();
   const linkBg = useColorModeValue('teal.500', 'teal.700');
-  const linkText = useColorModeValue('white', 'white');
-
+  const linkText = useColorModeValue('black', 'white');
+  
 
   // const linkHoverBg = useColorModeValue('gray.200', 'gray.600');
   const logout = useStore( (state)=> state.logout)
+  const torneo = useStore( (state)=> state.torneo)
   const user = useStore( (state)=> state.user)
-
-  const links = [
-    { href: "/admin/torneos", label: "Torneos", icon: FaHome },
-    // { href: "/admin/dashboard", label: "Dashboard", icon: FaHome },
-    { href: "/admin/equipos", label: "Equipos", icon: FaBox },
-    { href: "/admin/partidos", label: "Partidos", icon: FaGamepad },
-    { href: "/admin/jugadores", label: "Jugadores", icon: FaUsers },
-    { href: "/admin/estadísticas", label: "Estadísticas", icon: FaChartBar },
-    { href: "/admin/grupos", label: "Grupos", icon: FaCog },
-    { href: "/admin/clasificación", label: "Clasificación", icon: FaCog },
-
+  const setNavbarOpen = useStore( (state) => state.setNavbarOpen)
+  useEffect(() => {
+   setNavbarOpen(false)
+  }, [location])
+  
    
-  ];
   
   // useMemo(() => first, [colorMode])
 
@@ -46,20 +56,42 @@ const SidebarAdmin: React.FC = () => {
  
     <VStack spacing={4} align="stretch" >
     <ChakraLink 
+         id='inicio'
          as={Link}
-         to="/admin/dashboard"
-         bg={location.pathname === "/admin/dashboard" ? linkBg : 'transparent'}
-         color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
+         to="/admin/inicio"
+         bg={location.pathname === "/admin/inicio" ? linkBg : 'transparent'}
+        //  color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
          
         className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
-        <Flex align="center">
-          <Icon as={FaSignOutAlt} />
-          <Text className='hover:text-white dark:hover:text-white' 
-             color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
+        <Flex align="center" className='hover:text-white dark:hover:text-white' >
+          <Icon as={FaHome} />
+          <Text 
+             color={location.pathname === "/admin/inicio" ? 'white' : linkText}
           
-          ml={2}>Dashboard</Text>
+          ml={2}>Inicio</Text>
         </Flex>
       </ChakraLink>
+      {
+        user?.torneos && user?.torneos > 0  && (
+          <ChakraLink 
+         id='torneos'
+         as={Link}
+         to="/admin/torneos"
+         bg={location.pathname === "/admin/torneos" ? linkBg : 'transparent'}
+        //  color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
+         
+        className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
+        <Flex align="center" className='hover:text-white dark:hover:text-white' >
+          <Icon as={GiSoccerField} />
+          <Text 
+             color={location.pathname === "/admin/torneos" ? 'white' : linkText}
+          
+          ml={2}>Torneos</Text>
+        </Flex>
+      </ChakraLink>
+        )
+      }
+      
      {/* <ChakraLink 
          as={Link}
          to="/admin/torneos"
@@ -72,8 +104,9 @@ const SidebarAdmin: React.FC = () => {
         </Flex>
       </ChakraLink> */}
     {
-        (user?.torneos && user.torneos > 0) &&  links.map( link =>(
+        (torneo) &&  links.map( link =>(
             <ChakraLink 
+            id={link.label}
             as={Link}
             key={link.href}
             to={link.href}
@@ -82,7 +115,7 @@ const SidebarAdmin: React.FC = () => {
             <Flex align="center" className='hover:text-white dark:hover:text-white'>
               <Icon as={link.icon} className='hover:text-white' />
               <Text 
-             color={location.pathname === link.href ? linkText : 'transparent'}
+             color={location.pathname === link.href ? 'white' : linkText}
               
               ml={2}>{link.label}</Text>
             </Flex>
@@ -94,11 +127,12 @@ const SidebarAdmin: React.FC = () => {
            onClick={() => logout()}
            
             className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
-            <Flex align="center">
+            <Flex align="center"  className='hover:text-white dark:hover:text-white'>
               <Icon as={FaSignOutAlt} />
               <Text 
+               color={location.pathname === 'link.href' ? 'white' : linkText}
               //  color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
-              className='hover:text-white dark:hover:text-white' ml={2}>Cerrar sesion</Text>
+              ml={2}>Cerrar sesion</Text>
             </Flex>
           </ChakraLink>
     </VStack>

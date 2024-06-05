@@ -18,7 +18,7 @@ import { Suspense, lazy } from "react";
 
 const FeatureCard = lazy(() => import('./FeatureCard'));
 const CurvedlineChart = lazy(() => import("./CurvedLineChart"));
-const Estadisticas = lazy(() => import("./Estadisticas"));
+// const Estadisticas = lazy(() => import("./Estadisticas"));
 const Testimonials = lazy(() => import("./Testimonials"));
 const LikeButton = lazy(() => import("./LikeButton"));
 const FeedbackForm = lazy(() => import("./FeedbackForm"));
@@ -27,20 +27,20 @@ const FeedbackForm = lazy(() => import("./FeedbackForm"));
 
 
 
-const stats = [
-    {
-      title: "Juegos Totales",
-      value: "120",
-    },
-    {
-      title: "Escores Totales",
-      value: "2400",
-    },
-    {
-      title: "Asistencias Totales",
-      value: "350",
-    },
-  ];
+// const stats = [
+//     {
+//       title: "Juegos Totales",
+//       value: "120",
+//     },
+//     {
+//       title: "Escores Totales",
+//       value: "2400",
+//     },
+//     {
+//       title: "Asistencias Totales",
+//       value: "350",
+//     },
+//   ];
 const MainContent: React.FC = () => (
   <>
     <Box py={16} px={8}>
@@ -81,7 +81,7 @@ const MainContent: React.FC = () => (
       </Suspense>
     </Box>
 
-    <Box py={16} px={8} position="relative">
+    {/* <Box py={16} px={8} position="relative">
       <Suspense fallback={<Skeleton height="200px" />}>
         <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={8}>
           {stats.map(stat => (
@@ -89,7 +89,7 @@ const MainContent: React.FC = () => (
           ))}
         </Grid>
       </Suspense>
-    </Box>
+    </Box> */}
 
     <Box py={16} px={8} position="relative">
       <Suspense fallback={<Skeleton height="200px" />}>

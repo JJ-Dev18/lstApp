@@ -1,9 +1,10 @@
 import { Box, Heading, Text, Button, Skeleton } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate()
   useEffect(() => {
     const img = new Image();
     img.src = "/assets/inicio/header.webp";
@@ -42,7 +43,7 @@ const Header: React.FC = () => {
         <Text fontSize={{ base: "lg", md: "xl" }} mb={6} color="white">
           La mejor manera de realizar un seguimiento de tus juegos, torneos y ligas de Ultimate Frisbee en tiempo real.
         </Text>
-        <Button bg="teal.400" fontSize={{ base: "md", md: "lg" }}>
+        <Button bg="teal.400" fontSize={{ base: "md", md: "lg" }} onClick={()=> navigate('/register')}>
           ¡Empieza ahora!
         </Button>
       </Box>

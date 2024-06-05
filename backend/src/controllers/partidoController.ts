@@ -18,7 +18,25 @@ export const getPartidos = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 }
-
+export const getPartidosPorTorneo = async (req: Request, res: Response) => {
+  try {
+    const { torneoId } = req.params
+    const partidos = await prisma.partido.findMany({
+      where : {
+         torneoId : Number(torneoId)
+      },
+        include: {
+         equipo1 : true ,
+         equipo2 : true ,
+         categoria: true ,
+         eventos: true,
+        },
+      })
+    res.json(partidos)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+}
 export const getPartido = async (req: Request, res: Response) => {
   const { id } = req.params
   try {

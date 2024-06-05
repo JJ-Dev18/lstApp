@@ -3,10 +3,10 @@ import { getCategorias, getCategoria, createCategoria, updateCategoria, deleteCa
 
 const router = Router()
 
-router.get('/', getCategorias)
+router.get('/torneo/:torneoId', getCategorias)
 router.get('/:id', getCategoria)
-router.post('/', createCategoria)
-router.put('/:id', updateCategoria)
-router.delete('/:id', deleteCategoria)
+router.post('/torneo/:torneoId', createCategoria)
+router.put('/torneo/:id', updateCategoria)
+router.delete('/torneo/:id', deleteCategoria)
 
 export default router

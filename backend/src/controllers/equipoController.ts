@@ -4,10 +4,11 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export const getEquipos = async (req: Request, res: Response) => {
+  const { torneoId } = req.params 
   try {
     const equipos = await prisma.equipo.findMany({
       where :{
-        
+        torneoId : Number(torneoId)
       }
     })
     res.json(equipos)

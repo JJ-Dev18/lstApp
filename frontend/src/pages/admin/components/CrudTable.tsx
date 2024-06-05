@@ -20,7 +20,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
   const [data, setData] = useState<any[]>([])
   const [filteredData, setFilteredData] = useState<any[]>([])
   const [isOpen, setIsOpen] = useState(false)
-  const user = useStore( ( state ) => state.user)
+  const torneo = useStore( ( state ) => state.torneo)
   const [formData, setFormData] = useState<any>({})
   const [editingId, setEditingId] = useState<number | null>(null)
   const [filter, setFilter] = useState<string>('')
@@ -28,7 +28,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
 
   const fetchData = async () => {
     try {
-      const response :any = await instance.get(`${apiEndpoint}/${user?.id}`)
+      const response :any = await instance.get(`${apiEndpoint}/${torneo?.id}`)
       if(response.data.length > 0){
         setData(response.data)
       }else{
@@ -82,7 +82,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
           isClosable: true,
         })
       } else {
-        await instance.post(apiEndpoint, formData)
+        await instance.post(`${apiEndpoint}/${torneo?.id}`, formData)
         toast({
           title: `${model} created successfully.`,
           status: 'success',
@@ -108,7 +108,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
       console.log(id,"id")
       await instance.delete(`${apiEndpoint}/${id}`)
       toast({
-        title: `${model} deleted successfully.`,
+        title: `${model} Eliminado Correctamente.`,
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -116,7 +116,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
       fetchData()
     } catch (error) {
       toast({
-        title: `Error deleting ${model}.`,
+        title: `Error Eliminando ${model}.`,
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -146,7 +146,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
               <SearchIcon color="gray.300" />
             </InputLeftElement>
             <Input 
-              placeholder={`Search ${model}`} 
+              placeholder={`Buscar ${model}`} 
               value={filter} 
               onChange={handleFilterChange} 
             />
@@ -160,14 +160,14 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
               {columns.map((col) => (
                 <Th key={col.name}>{col.name}</Th>
               ))}
-              <Th>Actions</Th>
+              <Th>Acciones</Th>
             </Tr>
           </Thead>
           <Tbody>
           {filteredData.length === 0 ? (
               <Tr>
                 <Td colSpan={columns.length + 1}>
-                  <Text textAlign="center">No data available</Text>
+                  <Text textAlign="center">No informacion disponible</Text>
                 </Td>
               </Tr>
             ) : (
@@ -178,13 +178,13 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
                   ))}
                   <Td>
                     <IconButton
-                      aria-label="Edit"
+                      aria-label="Editar"
                       icon={<EditIcon />}
                       onClick={() => handleOpenModal(item)}
                       mr="2"
                     />
                     <IconButton
-                      aria-label="Delete"
+                      aria-label="Eliminar"
                       icon={<DeleteIcon />}
                       onClick={() => handleDelete(item.id)}
                     />
@@ -199,7 +199,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
       <IconButton 
         icon={<AddIcon />} 
         colorScheme="teal" 
-        aria-label={`Add ${model}`} 
+        aria-label={`Agregar ${model}`} 
         size="lg" 
         position="fixed" 
         bottom="20px" 
@@ -211,7 +211,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
       <Modal isOpen={isOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{editingId ? `Edit ${model}` : `Add New ${model}`}</ModalHeader>
+          <ModalHeader>{editingId ? `Editar ${model}` : `Agregar  ${model}`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {columns.map((col) => (
@@ -236,9 +236,9 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model }) =>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-              Save
+              Guardar
             </Button>
-            <Button variant="ghost" onClick={handleCloseModal}>Cancel</Button>
+            <Button variant="ghost" onClick={handleCloseModal}>Cancelar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

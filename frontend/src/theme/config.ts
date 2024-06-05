@@ -37,6 +37,7 @@ const colors = {
 };
 
 const components = {
+  
   Link: {
     baseStyle: (props: any) => ({
       color: mode('teal.400', 'teal.300')(props),

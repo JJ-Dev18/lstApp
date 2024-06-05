@@ -2,7 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Estilo para desactivar clics en todo el cuerpo excepto en el área del tutorial */
+body.disable-clicks {
+  pointer-events: none;
+}
 
+/* Permitir clics dentro de los tooltips y overlays de react-joyride */
+.react-joyride__tooltip,
+.react-joyride__overlay {
+  pointer-events: auto;
+}
 body {
   font-family: Arial, sans-serif;
   background-color: #121721;

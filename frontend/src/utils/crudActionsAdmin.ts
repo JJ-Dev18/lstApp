@@ -60,10 +60,10 @@ export const columnsAdminCrud = {
 
   export const apiEndpoints = {
     usuarios: '/usuarios',
-    categorias: '/categorias',
-    equipos: '/equipos',
+    categorias: '/categorias/torneo',
+    equipos: '/equipos/torneo',
     jugadores: '/jugadores',
-    partidos: '/partidos',
+    partidos: '/partidos/Torneo',
     eventos: '/eventos',
     grupos: '/grupos',
     estadisticas: '/estadisticas',

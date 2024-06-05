@@ -3,10 +3,10 @@ import { getEquipos, getEquipo, createEquipo, updateEquipo, deleteEquipo } from 
 
 const router = Router()
 
-router.get('/:userId', getEquipos)
+router.get('/torneo/:torneoId', getEquipos)
 router.get('/:id', getEquipo)
 router.post('/', createEquipo)
-router.put('/:id', updateEquipo)
-router.delete('/:id', deleteEquipo)
+router.put('/torneo/:id', updateEquipo)
+router.delete('/torneo/:id', deleteEquipo)
 
 export default router

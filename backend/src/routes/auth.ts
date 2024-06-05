@@ -39,16 +39,16 @@ router.post('/register', async (req, res) => {
           email,
           password: hashedPassword,
           nombre,
-          rol: 'usuario', // O el rol que desees por defecto
+          rol: 'administrador', // O el rol que desees por defecto
         },
       });
-  
+     console.log(user)
       // Generar un token JWT
       const token = jwt.sign({ id: user.id, email: user.email, nombre : user.nombre, rol : user.rol }, process.env.JWT_SECRET!, {
         expiresIn: '1h',
       });
   
-      res.status(201).json({ token });
+      res.status(201).json({user , token });
     } catch (error) {
       res.status(500).json({ error: 'Error al registrar el usuario' , error2 : error});
       console.log(error)
@@ -96,7 +96,7 @@ router.get('/check-token', async (req, res) => {
       where : { id : decoded.id},
       include: { torneos : true }
     })
-    return res.status(200).json({ message: 'Token is valid', user : { ...user, torneos : user?.torneos.length} });
+    return res.status(200).json({ message: 'Token is valid', user : {  id: user?.id, nombre: user?.nombre, email: user?.email, rol : user?.rol, torneos : user?.torneos.length} });
   } catch (error) {
     return res.status(401).json({ message: 'Token is invalid or has expired' });
   }

@@ -1,97 +1,108 @@
-import React from 'react';
-import { Box, SimpleGrid, Heading, Text, useColorModeValue } from '@chakra-ui/react';
-// import ResponsiveTable from './components/ResponsiveTable';
-import MatchesChart from './components/MatchesChart';
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Heading,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  Flex,
+  Spinner,
+  SimpleGrid,
 
-// const partidosData = [
-//   { fecha: "22/06/2022", equipo1: "Equipo A", equipo2: "Equipo B", grupo: "Grupo A" },
-//   { fecha: "23/06/2022", equipo1: "Equipo C", equipo2: "Equipo D", grupo: "Grupo B" },
-//   { fecha: "24/06/2022", equipo1: "Equipo E", equipo2: "Equipo F", grupo: "Grupo C" },
-//   { fecha: "25/06/2022", equipo1: "Equipo G", equipo2: "Equipo H", grupo: "Grupo D" },
-//   { fecha: "26/06/2022", equipo1: "Equipo I", equipo2: "Equipo J", grupo: "Grupo E" },
-// ];
+} from '@chakra-ui/react';
 
-// const gruposData = [
-//   { nombre: "Grupo A", partidos: 6, equipos: 4 },
-//   { nombre: "Grupo B", partidos: 6, equipos: 4 },
-//   { nombre: "Grupo C", partidos: 6, equipos: 4 },
-// ];
+const Dashboard: React.FC = () => {
+  const [data, setData] = useState({
+    tournaments: 0,
+    players: 0,
+    matches: 0,
+    teams: 0,
+    stats: {
+      totalGoals: 0,
+      averageGoalsPerMatch: 0,
+    },
+  });
+  const [loading, setLoading] = useState(true);
 
-// const equiposData = [
-//   { nombre: "Team 1", grupo: "A", jugados: 3, ganados: 2, empatados: 0, perdidos: 1, golesFavor: 5 },
-//   { nombre: "Team 2", grupo: "B", jugados: 3, ganados: 1, empatados: 1, perdidos: 1, golesFavor: 4 },
-//   { nombre: "Team 3", grupo: "C", jugados: 3, ganados: 0, empatados: 2, perdidos: 1, golesFavor: 2 },
-//   { nombre: "Team 4", grupo: "D", jugados: 3, ganados: 3, empatados: 0, perdidos: 0, golesFavor: 7 },
-//   { nombre: "Team 5", grupo: "E", jugados: 3, ganados: 1, empatados: 2, perdidos: 0, golesFavor: 5 },
-// ];
+  useEffect(() => {
+    // Simulación de llamada a API para obtener datos del dashboard
+    setTimeout(() => {
+      const fetchedData = {
+        tournaments: 5,
+        players: 120,
+        matches: 45,
+        teams: 10,
+        stats: {
+          totalGoals: 230,
+          averageGoalsPerMatch: 5.1,
+        },
+      };
+      setData(fetchedData);
+      setLoading(false);
+    }, 1000);
+  }, []);
 
-// const partidosColumns = [
-//   { Header: 'Fecha', accessor: 'fecha' },
-//   { Header: 'Equipo 1', accessor: 'equipo1' },
-//   { Header: 'Equipo 2', accessor: 'equipo2' },
-//   { Header: 'Grupo', accessor: 'grupo' },
-// ];
+  if (loading) {
+    return (
+      <Flex justifyContent="center" alignItems="center" height="100vh">
+        <Spinner size="xl" />
+      </Flex>
+    );
+  }
 
-// const gruposColumns = [
-//   { Header: 'Nombre', accessor: 'nombre' },
-//   { Header: 'Partidos', accessor: 'partidos' },
-//   { Header: 'Equipos', accessor: 'equipos' },
-// ];
-
-// const equiposColumns = [
-//   { Header: 'Nombre', accessor: 'nombre' },
-//   { Header: 'Grupo', accessor: 'grupo' },
-//   { Header: 'Jugados', accessor: 'jugados' },
-//   { Header: 'Ganados', accessor: 'ganados' },
-//   { Header: 'Empatados', accessor: 'empatados' },
-//   { Header: 'Perdidos', accessor: 'perdidos' },
-//   { Header: 'Goles a favor', accessor: 'golesFavor' },
-// ];
-
-const DashboardContent: React.FC = () => {
   return (
-    <Box>
-      <Heading as="h2" size="xl" mb={4}>
-        Resumen
-      </Heading>
-      <Text fontSize="2xl" fontWeight="bold">Welcome to your dashboard</Text>
-        <Text mb="4">You have 2 teams, 12 matches and 24 players. Need help? Check out the help center.</Text>
-      <SimpleGrid columns={{ base: 1, md: 4 }} spacing={4} mb={8}>
-        <Box bg={useColorModeValue('gray.100', 'gray.800')} p={4} borderRadius="md" shadow="md">
-          <Heading as="h3" size="lg">Partidos</Heading>
-          <Text fontSize="2xl">24</Text>
+    <Box p={4}>
+      <Heading as="h1" mb={4}>Dashboard</Heading>
+      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing="8" mb={8}>
+        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
+          <Stat>
+            <StatLabel>Total de Torneos</StatLabel>
+            <StatNumber>{data.tournaments}</StatNumber>
+            <StatHelpText>Actualizado recientemente</StatHelpText>
+          </Stat>
         </Box>
-        <Box bg={useColorModeValue('gray.100', 'gray.800')} p={4} borderRadius="md" shadow="md">
-          <Heading as="h3" size="lg">Grupos</Heading>
-          <Text fontSize="2xl">6</Text>
+        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
+          <Stat>
+            <StatLabel>Total de Jugadores</StatLabel>
+            <StatNumber>{data.players}</StatNumber>
+            <StatHelpText>Actualizado recientemente</StatHelpText>
+          </Stat>
         </Box>
-        <Box bg={useColorModeValue('gray.100', 'gray.800')} p={4} borderRadius="md" shadow="md">
-          <Heading as="h3" size="lg">Equipos</Heading>
-          <Text fontSize="2xl">12</Text>
+        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
+          <Stat>
+            <StatLabel>Total de Partidos</StatLabel>
+            <StatNumber>{data.matches}</StatNumber>
+            <StatHelpText>Actualizado recientemente</StatHelpText>
+          </Stat>
         </Box>
-        <Box bg={useColorModeValue('gray.100', 'gray.800')} p={4} borderRadius="md" shadow="md">
-          <Heading as="h3" size="lg">Usuarios</Heading>
-          <Text fontSize="2xl">200</Text>
+        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
+          <Stat>
+            <StatLabel>Total de Equipos</StatLabel>
+            <StatNumber>{data.teams}</StatNumber>
+            <StatHelpText>Actualizado recientemente</StatHelpText>
+          </Stat>
         </Box>
       </SimpleGrid>
-      <Box mb={8}>
-        <Heading as="h3" size="lg" mb={4}>Partidos por dia</Heading>
-        <MatchesChart/>
-      </Box>
-      <Box mb={8}>
-        <Heading as="h3" size="lg" mb={4}>Grupos</Heading>
-        {/* <ResponsiveTable columns={gruposColumns} data={gruposData} /> */}
-      </Box>
-      {/* <Box mb={8}>
-        <Heading as="h3" size="lg" mb={4}>Partidos</Heading>
-        <ResponsiveTable columns={partidosColumns} data={gruposData} />
-      </Box>
-      <Box mb={8}>
-        <Heading as="h3" size="lg" mb={4}>Equipos</Heading>
-        <ResponsiveTable columns={equiposColumns} data={equiposData} />
-      </Box> */}
+      <Heading as="h2" size="lg" mb={4}>Estadísticas</Heading>
+      <SimpleGrid columns={{ sm: 1, md: 2 }} spacing="8">
+        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
+          <Stat>
+            <StatLabel>Total de Goles</StatLabel>
+            <StatNumber>{data.stats.totalGoals}</StatNumber>
+            <StatHelpText>Actualizado recientemente</StatHelpText>
+          </Stat>
+        </Box>
+        <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
+          <Stat>
+            <StatLabel>Promedio de Goles por Partido</StatLabel>
+            <StatNumber>{data.stats.averageGoalsPerMatch}</StatNumber>
+            <StatHelpText>Actualizado recientemente</StatHelpText>
+          </Stat>
+        </Box>
+      </SimpleGrid>
     </Box>
   );
 };
 
-export default DashboardContent;
+export default Dashboard;

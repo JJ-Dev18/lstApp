@@ -69,8 +69,30 @@ router.post('/:usuarioId', async (req, res) => {
           connect: { id: Number(usuarioId) },
         },
       },
+      include: {
+        categorias: {
+          select: {
+            _count: true
+          }
+        },
+        partidos: {
+          select: {
+            _count: true
+          }
+        },
+        equipos: {
+          select: {
+            _count: true,
+            jugadores: {
+              select: {
+                _count: true
+              }
+            }
+          }
+        },
+      },
     });
-
+    console.log(torneo,"torneo")
     // Crear categorías y obtener su ID
     const categorias = [];
     for (let i = 0; i < numCategorias; i++) {
@@ -114,7 +136,7 @@ router.post('/:usuarioId', async (req, res) => {
       }
     }
 
-    res.status(200).json({ message: 'Torneo creado con éxito' });
+    res.status(200).json({...torneo, categorias : torneo.categorias.length, equipos : torneo.equipos.length, partidos : torneo.partidos.length});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al crear el torneo' });

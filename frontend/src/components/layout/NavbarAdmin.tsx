@@ -1,21 +1,25 @@
 import React from 'react';
-import { Box, Flex, IconButton, useColorMode, useColorModeValue, Input, InputGroup, InputLeftElement, Avatar, AvatarBadge, Drawer, DrawerBody, DrawerOverlay, DrawerContent, DrawerCloseButton, VStack, Link, Image } from '@chakra-ui/react';
-import { MoonIcon, SunIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { Box, Flex, IconButton, useColorMode, useColorModeValue, Link as ChakraLink, Avatar, AvatarBadge, Drawer, DrawerBody, DrawerOverlay, DrawerContent, DrawerCloseButton,  Image , Text, DrawerHeader, Icon} from '@chakra-ui/react';
+import { MoonIcon, SunIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { FaHome, FaSignOutAlt } from 'react-icons/fa';
 import Logo  from '../../assets/logo.svg'
 import LogoBlanco  from '../../assets/logoblanco.svg'
 import useStore from '../../store/store';
 import { BorderBeam } from '../ui/BorderBeam';
+import SearchInput from '../../pages/admin/components/SearchInput';
+import { GiSoccerField } from 'react-icons/gi';
+import { Link } from 'react-router-dom';
+import { links } from './SidebarAdmin';
 const Navbar: React.FC = () => {
   const { toggleColorMode } = useColorMode();
   const colorModeIcon = useColorModeValue(<MoonIcon />, <SunIcon />);
   const { colorMode }= useColorMode()
-  const [isDrawerOpen, setDrawerOpen] = React.useState(false);
-
-  const toggleDrawer = () => setDrawerOpen(!isDrawerOpen);
-
+  const user = useStore( (state)=> state.user)
+  const navbarOpen = useStore( (state) => state.navbarOpen)
+  const setNavbarOpen = useStore( (state) => state.setNavbarOpen)
   const logout = useStore( (state) => state.logout)
-
+  const torneo = useStore ( (state ) => state.torneo)
+  
   return (
     <>
       <Flex
@@ -37,11 +41,18 @@ const Navbar: React.FC = () => {
                   objectFit="contain"/>
            {/* <Text as="h3" size="lg" > Administrador </Text>       */}
         </Box>
+        {torneo && (
+          
+              <Text id='torneo-name' fontSize={{base : 'xs' , md : 'md'}} fontWeight="bold">Torneo: {torneo.nombre}</Text>
+              
+           
+          )}
         <Flex align="center">
-          <InputGroup marginRight={4} display={{ base: 'none', md: 'flex' }} width="auto">
+          {/* <InputGroup marginRight={4} display={{ base: 'none', md: 'flex' }} width="auto">
             <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.300" />} />
             <Input type="text" placeholder="Search..." />
-          </InputGroup>
+          </InputGroup> */}
+          <SearchInput className="hidden md:block"/>
           <IconButton
             aria-label="Toggle Color Mode"
             icon={colorModeIcon}
@@ -52,7 +63,7 @@ const Navbar: React.FC = () => {
           <IconButton
             aria-label="Open Menu"
             icon={<HamburgerIcon />}
-            onClick={toggleDrawer}
+            onClick={()=> setNavbarOpen(true)}
             variant="ghost"
             display={{ base: "block", md: "none" }}
           />
@@ -61,41 +72,84 @@ const Navbar: React.FC = () => {
           </Avatar>
         </Flex>
       </Flex>
-      <Drawer
-        isOpen={isDrawerOpen}
+     
+      <Drawer isOpen={navbarOpen}
         placement="left"
-        onClose={toggleDrawer}
-      >
+        onClose={()=> setNavbarOpen(false)}  >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton />
+          <DrawerCloseButton color={colorMode == 'dark' ? 'white' : 'black'}/>
+          <DrawerHeader borderBottomWidth="1px">Menu</DrawerHeader>
           <DrawerBody>
-            <VStack spacing={4} align="stretch">
-              <Link href="#">
-                Equipos
-              </Link>
-              <Link href="#">
-                Partidos
-              </Link>
-              <Link href="#">
-                Jugadores
-              </Link>
-              <Link href="#">
-                Estadísticas
-              </Link>
-              <Link href="#">
-                Grupos
-              </Link>
-              <Link href="#">
-                Clasificación
-              </Link>
-              <Link onClick={()=> logout()}>
-                <Flex align="center">
-                  <FaSignOutAlt />
-                  <Box ml={2}>Logout</Box>
-                </Flex>
-              </Link>
-            </VStack>
+            <SearchInput />
+          <ChakraLink 
+         id='inicio'
+         as={Link}
+         to="/admin/inicio"
+        //  bg={location.pathname === "/admin/inicio" ? linkBg : 'transparent'}
+        //  color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
+         
+        className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
+        <Flex align="center" className='hover:text-white dark:hover:text-white' >
+          <Icon as={FaHome} />
+          <Text 
+            //  color={location.pathname === "/admin/inicio" ? 'white' : linkText}
+          
+          ml={2}>Inicio</Text>
+        </Flex>
+      </ChakraLink>
+      {
+        user?.torneos && user?.torneos > 0  && (
+          <ChakraLink 
+         id='torneos-mobile'
+         as={Link}
+         to="/admin/torneos"
+        //  bg={location.pathname === "/admin/torneos" ? linkBg : 'transparent'}
+        //  color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
+         
+        className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
+        <Flex align="center" className='hover:text-white dark:hover:text-white' >
+          <Icon as={GiSoccerField} />
+          <Text 
+            //  color={location.pathname === "/admin/torneos" ? 'white' : linkText}
+          
+          ml={2}>Torneos</Text>
+        </Flex>
+      </ChakraLink>
+        )
+      }
+      {
+        (torneo) &&  links.map( link =>(
+            <ChakraLink 
+            id={`${link.label}-mobile`}
+            as={Link}
+            key={link.href}
+            to={link.href}
+            // bg={location.pathname === link.href ? linkBg : 'transparent'}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
+            <Flex align="center" className='hover:text-white dark:hover:text-white'>
+              <Icon as={link.icon} className='hover:text-white' />
+              <Text 
+            //  color={location.pathname === link.href ? 'white' : linkText}
+              
+              ml={2}>{link.label}</Text>
+            </Flex>
+          </ChakraLink>
+          ))
+        }
+         <ChakraLink 
+       
+           onClick={() => logout()}
+           
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800">
+            <Flex align="center"  className='hover:text-white dark:hover:text-white'>
+              <Icon as={FaSignOutAlt} />
+              <Text 
+              //  color={location.pathname === 'link.href' ? 'white' : linkText}
+              //  color={location.pathname === "/admin/dashboard" ? linkText : 'transparent'}
+              ml={2}>Cerrar sesion</Text>
+            </Flex>
+          </ChakraLink>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

@@ -5,8 +5,12 @@ const prisma = new PrismaClient()
 
 export const getCategorias = async (req: Request, res: Response) => {
   try {
-    
-    const categorias = await prisma.categoria.findMany()
+    const { torneoId } = req.params
+    const categorias = await prisma.categoria.findMany({
+       where : {
+        torneoId : Number(torneoId)
+       }
+    })
     res.json(categorias)
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' })
@@ -29,8 +33,9 @@ export const getCategoria = async (req: Request, res: Response) => {
 export const createCategoria = async (req: Request, res: Response) => {
   try {
     const { nombre } = req.body
+    const { torneoId } = req.params
     const newCategoria = await prisma.categoria.create({
-      data: { nombre }
+      data: { nombre , torneoId : Number(torneoId) }
     })
     res.status(201).json(newCategoria)
   } catch (error) {
