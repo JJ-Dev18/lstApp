@@ -9,6 +9,12 @@ export const getEquipos = async (req: Request, res: Response) => {
     const equipos = await prisma.equipo.findMany({
       where :{
         torneoId : Number(torneoId)
+      },
+      select :{
+        nombre : true,
+        categoria : {
+          select :{ nombre : true}
+        }
       }
     })
     res.json(equipos)

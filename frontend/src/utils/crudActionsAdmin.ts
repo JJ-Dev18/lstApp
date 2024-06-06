@@ -10,7 +10,7 @@ export const columnsAdminCrud = {
     ],
     equipos: [
       { name: 'nombre', type: 'string' },
-      { name: 'categoriaId', type: 'number' }
+      { name: 'categoria', type: 'select', dataEndpoint: '/categorias/torneo', mapData: (data: any[]) => data.map(item => ({ id: item.id, name: item.nombre })) }
     ],
     jugadores: [
       { name: 'nombre', type: 'string' },
