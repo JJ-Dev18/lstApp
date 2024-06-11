@@ -11,6 +11,8 @@ export async function up(knex: Knex): Promise<void> {
     table.integer('marcadorEquipo2').notNullable().defaultTo(0);
     table.integer('duracion').notNullable();
     table.string('estado').notNullable()
+     table.integer('planilleroId').unsigned();
+     table.foreign('planilleroId').references('id').inTable('planilleros');
     table.integer('torneoId').unsigned().references('id').inTable('torneos').onDelete('CASCADE');
   });
 }

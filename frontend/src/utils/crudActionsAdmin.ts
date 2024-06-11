@@ -1,16 +1,22 @@
 
 export const columnsAdminCrud = {
     usuarios: [
-      { name: 'nombre', type: 'string' },
+      { name: 'nombre', type: 'string', mapData: (data: any[]) => data.map(item => ({ id: item.id, name: item.nombre })) },
       { name: 'email', type: 'string' },
       { name: 'rol', type: 'string' }
+    ],
+    planilleros : [
+    
+      { name : 'nombre', type : "string"},
+      { name: 'email', type: 'string'},
+      { name: 'password', type: 'string'},
     ],
     categorias: [
       { name: 'nombre', type: 'string' }
     ],
     equipos: [
       { name: 'nombre', type: 'string' },
-      { name: 'categoria', type: 'select', dataEndpoint: '/categorias/torneo', mapData: (data: any[]) => data.map(item => ({ id: item.id, name: item.nombre })) }
+      { name: 'categoria', type: 'select', dataEndpoint: '/categorias/torneo', mapData: (data: any[]) => data.map(item => ({ id: item.id, name: item.nombre })), nested: 'nombre' }
     ],
     jugadores: [
       { name: 'nombre', type: 'string' },
@@ -62,6 +68,7 @@ export const columnsAdminCrud = {
     usuarios: '/usuarios',
     categorias: '/categorias/torneo',
     equipos: '/equipos/torneo',
+    planilleros : '/planilleros',
     jugadores: '/jugadores',
     partidos: '/partidos/Torneo',
     eventos: '/eventos',
@@ -69,3 +76,4 @@ export const columnsAdminCrud = {
     estadisticas: '/estadisticas',
     torneos : '/torneos'
   }
+ 

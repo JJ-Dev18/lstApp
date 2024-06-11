@@ -1,9 +1,11 @@
 import { Router } from 'express'
-import { getCategorias, getCategoria, createCategoria, updateCategoria, deleteCategoria } from '../controllers/categoriaController'
+import { getCategorias, getCategoria, createCategoria, updateCategoria, deleteCategoria, getGruposCategoria } from '../controllers/categoriaController'
 
 const router = Router()
 
 router.get('/torneo/:torneoId', getCategorias)
+router.get('/grupos/:categoriaId', getGruposCategoria)
+
 router.get('/:id', getCategoria)
 router.post('/torneo/:torneoId', createCategoria)
 router.put('/torneo/:id', updateCategoria)

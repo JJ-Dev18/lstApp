@@ -15,9 +15,10 @@ model Usuario {
   email     String  @unique
   password  String
   rol       String
+  planilleros Planillero[]
   googleId  String? @unique
-  eventos  Evento[] @relation("PlanilleroEventos")
   torneos  Torneo[]  
+ 
  @@map("usuarios")
 }
 model Torneo {
@@ -25,21 +26,32 @@ model Torneo {
   nombre      String
   categorias  Categoria[]  
   equipos     Equipo[]     
-  partidos    Partido[]   
+  partidos    Partido[] 
+  planilleros Planillero[]  
   usuario     Usuario      @relation(fields: [usuarioId], references: [id])
   usuarioId   Int
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   @@map("torneos")
 }
-
+model Planillero {
+  id          Int      @id @default(autoincrement())
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  torneo      Torneo   @relation(fields: [torneoId], references: [id])
+  torneoId    Int
+  Partidos  Partido[]
+  eventos  Evento[] 
+  @@map("planilleros")
+}
 model Categoria {
   id    Int      @id @default(autoincrement())
   nombre String
   equipos Equipo[]
   partidos Partido[]
-  torneo   Torneo? @relation(fields: [torneoId], references: [id])
-  torneoId Int?
+  grupos   GrupoClasificacion[]
+  torneo   Torneo  @relation(fields: [torneoId], references: [id])
+  torneoId Int
   @@map("categorias")
 }
 
@@ -87,11 +99,13 @@ model Partido {
   categoriaId Int
   marcadorEquipo1 Int           @default(0) // Campo para almacenar el marcador del equipo 1
   marcadorEquipo2 Int           @default(0) 
-  estado     EstadoPartido
+  estado     String
   eventos    Evento[]
   estadisticas Estadistica[]
-  torneo   Torneo? @relation(fields: [torneoId], references: [id])
-  torneoId Int?
+  torneo   Torneo @relation(fields: [torneoId], references: [id])
+  torneoId Int
+  planillero     Planillero   @relation( fields: [planilleroId], references: [id])
+  planilleroId   Int
   @@map("partidos")
 }
 
@@ -103,7 +117,7 @@ model Evento {
   tiempo      String
   jugador     Jugador   @relation(fields: [jugadorId], references: [id])
   jugadorId   Int
-  planillero  Usuario   @relation("PlanilleroEventos", fields: [planilleroId], references: [id])
+  planillero  Planillero   @relation( fields: [planilleroId], references: [id])
   planilleroId Int
   comentario  String?
   @@map("eventos")
@@ -112,6 +126,8 @@ model Evento {
 model GrupoClasificacion {
   id     Int            @id @default(autoincrement())
   nombre String
+  categoriaId  Int
+  categoria    Categoria        @relation(fields: [categoriaId], references: [id])
   equiposGrupos EquiposGrupos[]
   @@map("grupos_clasificacion")
 }

@@ -7,6 +7,7 @@ import { Console, count } from 'console';
 const prisma = new PrismaClient();
 const router = Router();
  
+
 router.get('/:usuarioId' , async ( req , res ) => {
   const { usuarioId } = req.params
   try {
@@ -55,7 +56,15 @@ router.get('/:usuarioId' , async ( req , res ) => {
     res.status(500).json({ error: 'Error al crear el torneo' });
   }
 })
-
+router.put( '/:id', async ( req, res ) => {
+  const { id } = req.params
+  const { nombre } =  req.body
+  const actualizado = await prisma.torneo.update({
+    where : { id : Number(id)},
+    data : { nombre }
+  })
+  res.status(200).json(actualizado)
+})
 router.post('/:usuarioId', async (req, res) => {
   const { nombre, numEquipos, numJugadores, numCategorias } = req.body;
   const { usuarioId } = req.params
@@ -121,19 +130,7 @@ router.post('/:usuarioId', async (req, res) => {
         },
       });
 
-      for (let j = 0; j < numJugadores; j++) {
-        await prisma.jugador.create({
-          data: {
-            nombre: `Jugador ${j + 1}`,
-            equipo: {
-              connect: { id: equipo.id },
-            },
-            numero: j + 1,
-            posicion: 'Posición',
-            fotoUrl: 'https://via.placeholder.com/150',
-          },
-        });
-      }
+     
     }
 
     res.status(200).json({...torneo, categorias : torneo.categorias.length, equipos : torneo.equipos.length, partidos : torneo.partidos.length});
@@ -149,6 +146,9 @@ router.delete('/:id', async (req, res) => {
     const torneoEliminado = await prisma.torneo.delete({
       where: { id: Number(id) },
     });
+    // const categoriasEliminar  = await prisma.categoria.delete({
+     
+    // })
 
     res.status(200).json(torneoEliminado);
   } catch (error) {

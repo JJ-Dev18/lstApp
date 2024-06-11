@@ -17,6 +17,8 @@ import categoriaRoutes from './routes/categoriaRoute'
 import equipoRoutes from './routes/equipoRoutes'
 import feedbackRoutes  from './routes/feedbackRoutes'
 import torneosRoutes from './routes/tournamentRoutes'
+import planillerosRoutes from './routes/planilleroRoutes'
+
 import grupoClasificacionRoutes from './routes/grupoClasificacionRoutes'
 import { eventRouter, registerEventHandlers } from './routes/events';
 import { Usuario } from '@prisma/client';
@@ -64,6 +66,10 @@ app.use('/jugadores', jugadorRoutes)
 app.use('/partidos', partidoRoutes)
 app.use('/feedback', feedbackRoutes)
 app.use('/torneos', torneosRoutes)
+app.use('/planilleros', planillerosRoutes)
+
+// app.use('/grupos', grupoClasificacionRoutes)
+
 
 
 

@@ -1,11 +1,16 @@
 import { Request, Response } from 'express'
-import { PrismaClient } from '@prisma/client'
+import { Jugador, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
 export const getJugadores = async (req: Request, res: Response) => {
   try {
-    const jugadores = await prisma.jugador.findMany()
+    const { equipoId } = req.params
+    const jugadores = await prisma.jugador.findMany({
+      where  : {
+        equipoId : Number(equipoId)
+      }
+    })
     res.json(jugadores)
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' })
@@ -27,12 +32,31 @@ export const getJugador = async (req: Request, res: Response) => {
 
 export const createJugador = async (req: Request, res: Response) => {
   try {
-    const { nombre, equipoId, numero, posicion, fotoUrl } = req.body
-    const newJugador = await prisma.jugador.create({
-      data: { nombre, equipoId, numero, posicion, fotoUrl }
-    })
-    res.status(201).json(newJugador)
+    const arrayJugadores = req.body
+    arrayJugadores.forEach( async (jugador : Jugador )=> {
+         if(jugador.id){
+            await prisma.jugador.update({
+              data : {...jugador,numero : Number(jugador.numero)},
+              where: { id : jugador.id}
+            })
+         }
+         else {
+           await prisma.jugador.create({
+            data : {...jugador,numero : Number(jugador.numero)}
+           })
+         }
+    });
+    // const jugadores = await  prisma.jugador.createMany({
+    //   data : arrayJugadores,
+      
+    // })
+ 
+    // const newJugador = await prisma.jugador.create({
+    //   data: { nombre, equipoId, numero, posicion, fotoUrl }
+    // })
+    res.status(201).json({ message : 'jugadores agregados'})
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 }

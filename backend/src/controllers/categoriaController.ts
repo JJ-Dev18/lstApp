@@ -16,6 +16,18 @@ export const getCategorias = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 }
+export const getGruposCategoria = async (req: Request, res: Response) => {
+  const { categoriaId } = req.params;
+  try {
+    const grupos = await prisma.grupoClasificacion.findMany({
+      where: { categoriaId: Number(categoriaId) },
+      include: { equiposGrupos: { include: { equipo: true } } },
+    });
+    res.json(grupos);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching groups' });
+  }
+}
 
 export const getCategoria = async (req: Request, res: Response) => {
   const { id } = req.params

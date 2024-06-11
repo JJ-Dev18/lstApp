@@ -1,9 +1,14 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes ,Navigate } from 'react-router-dom';
 import useStore from './store/store';
-import { apiEndpoints, columnsAdminCrud } from './utils/crudActionsAdmin';
 import { Role } from './interfaces/auth';
 import { Skeleton } from '@chakra-ui/react';
+import EquiposPage from './pages/admin/EquiposPage';
+import CategoriasPage from './pages/admin/CategoriasPage';
+import { JugadoresPage } from './pages/admin/JugadoresPage';
+import { GruposPage } from './pages/admin/GruposPage';
+import PlanillerosPage from './pages/admin/PlanillerosPage';
+import PartidosPage from './pages/admin/PartidosPage';
 const NotFound = lazy(() => import('./pages/public/NotFound'));
 const Partidos = lazy(() => import('./pages/planilero/Partidos'));
 const Marcador = lazy(() => import('./components/marcador/Marcador'));
@@ -12,8 +17,6 @@ const UnauthorizedPage = lazy(() => import('./pages/public/UnAuthorized'));
 const Home = lazy(() => import('./pages/public/Home'));
 const LayoutAdministrador = lazy(() => import('./components/layout/LayoutAdministrado'));
 const Login2 = lazy(() => import('./pages/public/Login2'));
-const CrudTable = lazy(() => import('./pages/admin/components/CrudTable'));
-const ChatComponent = lazy(() => import('./pages/admin/ChatComponent'));
 const TournamentsList = lazy(() => import('./pages/admin/TournamentsLists'));
 const Dashboard = lazy(() => import('./pages/admin/DashboardContent'));
 const Welcome = lazy(() => import('./pages/admin/Welcome'));
@@ -65,16 +68,17 @@ const App: React.FC = () => {
           <Route path="/admin/inicio" element={<Welcome />} />
           <Route path="/admin/dashboard" element={<Dashboard/>} />
          
-          <Route path="/admin/usuarios" element={<CrudTable apiEndpoint={apiEndpoints.usuarios} columns={columnsAdminCrud.usuarios} model="Usuario" />} />
-          <Route path="/admin/categorias" element={<CrudTable apiEndpoint={apiEndpoints.categorias} columns={columnsAdminCrud.categorias} model="Categoria" />} />
-          <Route path="/admin/equipos" element={<CrudTable apiEndpoint={apiEndpoints.equipos} columns={columnsAdminCrud.equipos} model="Equipo" />} />
-          <Route path="/admin/partidos" element={<CrudTable apiEndpoint={apiEndpoints.partidos} columns={columnsAdminCrud.partidos} model="Partido" />} />
+          <Route path="/admin/planilleros" element={<PlanillerosPage/>} />
+          <Route path="/admin/categorias" element={<CategoriasPage/>} />
+          <Route path="/admin/equipos" element={<EquiposPage/>} />
+          <Route path="/admin/equipos/:equipoId/jugadores" element={<JugadoresPage/>} />
+         
+          <Route path="/admin/partidos" element={<PartidosPage/>} />
           {/* <Route path="/admi/neventos" element={<CrudTable apiEndpoint={apiEndpoints.eventos} columns={columnsAdminCrud.eventos} model="Evento" />} /> */}
-          <Route path="/admin/grupos" element={<CrudTable apiEndpoint={apiEndpoints.grupos} columns={columnsAdminCrud.grupos} model="GrupoClasificacion" />} />
+          <Route path="/admin/grupos" element={<GruposPage/>}/>
           {/* <Route path="/admin/estadisticas" element={<CrudTable apiEndpoint={apiEndpoints.estadisticas} columns={columnsAdminCrud.estadisticas} model="Estadistica" />} /> */}
           <Route path="/admin/torneos" element={<TournamentsList/>} />
           
-          <Route path="/admin/chat" element={<ChatComponent/>}/>
         
           <Route path="/admin" element={<Navigate to="/admin/inicio" />}/>
           </Route>

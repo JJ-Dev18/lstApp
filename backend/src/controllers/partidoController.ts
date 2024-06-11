@@ -30,11 +30,21 @@ export const getPartidosPorTorneo = async (req: Request, res: Response) => {
          equipo2 : true ,
          categoria: true ,
          eventos: true,
+         planillero : {
+           include : {
+             usuario :{
+              select : {
+                nombre : true 
+              }
+             }
+           }
+         },
         },
       })
-    res.json(partidos)
+    res.status(200).json(partidos)
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error s' })
   }
 }
 export const getPartido = async (req: Request, res: Response) => {
@@ -66,12 +76,26 @@ export const getPartido = async (req: Request, res: Response) => {
 
 export const createPartido = async (req: Request, res: Response) => {
   try {
-    const { equipo1Id, equipo2Id, fecha, duracion, categoriaId, marcadorEquipo1, marcadorEquipo2, estado } = req.body
+    const { equipo1Id, equipo2Id, fecha, duracion, categoriaId, marcadorEquipo1, marcadorEquipo2, estado, planilleroId , torneoId} = req.body;
+    const formattedFecha = new Date(fecha).toISOString();
+
     const newPartido = await prisma.partido.create({
-      data: { equipo1Id, equipo2Id, fecha, duracion, categoriaId, marcadorEquipo1, marcadorEquipo2, estado }
-    })
+      data: {
+        equipo1Id,
+        equipo2Id,
+        fecha: formattedFecha,
+        duracion,
+        categoriaId,
+        marcadorEquipo1: marcadorEquipo1 || 0,
+        marcadorEquipo2: marcadorEquipo2 || 0,
+        estado,
+        planilleroId,
+        torneoId : torneoId
+      }
+    });
     res.status(201).json(newPartido)
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 }

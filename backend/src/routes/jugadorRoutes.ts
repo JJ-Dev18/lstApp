@@ -3,9 +3,9 @@ import { getJugadores, getJugador, createJugador, updateJugador, deleteJugador }
 
 const router = Router()
 
-router.get('/', getJugadores)
+router.get('/equipo/:equipoId', getJugadores)
 router.get('/:id', getJugador)
-router.post('/', createJugador)
+router.post('/equipo/:equipoId', createJugador)
 router.put('/:id', updateJugador)
 router.delete('/:id', deleteJugador)
 

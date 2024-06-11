@@ -1,6 +1,6 @@
 import React  from 'react';
 import { Box, VStack, Link as ChakraLink, Icon, Flex, Text, useColorModeValue } from '@chakra-ui/react';
-import {  FaSignOutAlt, FaHome, FaBox } from 'react-icons/fa';
+import {  FaSignOutAlt, FaHome, FaBox, FaCog, FaUsers, FaGamepad } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import useStore from '../../store/store';
 import { Link } from 'react-router-dom';
@@ -13,10 +13,10 @@ export const links = [
   { href: "/admin/equipos", label: "Equipos", icon: FaBox },
   { href: "/admin/categorias", label: "Categorias", icon: MdCategory },
 
-  // { href: "/admin/partidos", label: "Partidos", icon: FaGamepad },
-  // { href: "/admin/jugadores", label: "Jugadores", icon: FaUsers },
+  { href: "/admin/partidos", label: "Partidos", icon: FaGamepad },
+  { href: "/admin/planilleros", label: "Planilleros", icon: FaUsers },
   // { href: "/admin/estadísticas", label: "Estadísticas", icon: FaChartBar },
-  // { href: "/admin/grupos", label: "Grupos", icon: FaCog },
+  { href: "/admin/grupos", label: "Grupos", icon: FaCog },
   // { href: "/admin/clasificación", label: "Clasificación", icon: FaCog },
 
  

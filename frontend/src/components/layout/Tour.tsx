@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../../store/store';
-import CreateTournamentForm from '../../pages/admin/CreateTournamentForm';
+import CreateTournamentForm from '../../pages/admin/components/torneos/CreateTournamentForm';
 
 const Tour: React.FC = () => {
   const navigate = useNavigate();

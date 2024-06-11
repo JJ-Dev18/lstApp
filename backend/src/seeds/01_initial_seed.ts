@@ -15,13 +15,13 @@ export async function seed(knex: Knex): Promise<void> {
   
 
   // Crear un planillero
-  const hashedPassword = await bcrypt.hash('planillero123', 10);
-  const planillero = {
-    nombre: 'Planillero 1',
-    email: 'planillero1@example.com',
-    password: hashedPassword,
-    rol: 'planillero',
-  };
+  // const hashedPassword = await bcrypt.hash('planillero123', 10);
+  // const planillero = {
+  //   nombre: 'Planillero 1',
+  //   email: 'planillero1@example.com',
+  //   password: hashedPassword,
+  //   rol: 'planillero',
+  // };
   const hashedPasswordAdmin = await bcrypt.hash('admin123', 10);
 
   const admin = {
@@ -30,7 +30,7 @@ export async function seed(knex: Knex): Promise<void> {
     password: hashedPasswordAdmin,
     rol: 'administrador',
   };
-  await knex('usuarios').insert(planillero);
+  // await knex('usuarios').insert(planillero);
   const adminCreado =  await knex('usuarios').insert(admin).returning('id');
   const [ adminId ] = adminCreado.map(admin => admin.id);
   // const torneo = { nombre : 'jjmb' , usuarioId : adminId}
