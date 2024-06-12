@@ -77,12 +77,12 @@ router.post('/login', validarLoginUsuario, validarCampos ,async (req :Request, r
   }
 });
 
-router.get('/logout', (req, res, next) => {
-  req.logout((err) => {
-    if (err) { return next(err); }
-    res.redirect('/');
-  });
-});
+// router.get('/logout', (req, res, next) => {
+//   req.logout((err) => {
+//     if (err) { return next(err); }
+//     res.redirect('/');
+//   });
+// });
 router.get('/check-token', async (req, res) => {
   const token = req.headers['authorization']?.split(' ')[1];
   // console.log(token,"token")
@@ -98,7 +98,7 @@ router.get('/check-token', async (req, res) => {
     })
     return res.status(200).json({ message: 'Token is valid', user : {  id: user?.id, nombre: user?.nombre, email: user?.email, rol : user?.rol, torneos : user?.torneos.length} });
   } catch (error) {
-    return res.status(401).json({ message: 'Token is invalid or has expired' });
+    return res.status(401).json({ error: 'Token is invalid or has expired' });
   }
 });
 export default router;

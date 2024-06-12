@@ -89,9 +89,7 @@ export const createEquipo = async (req: Request, res: Response) => {
 
 
     // const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
-    const imageUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/uploads/equipos/${encodeURIComponent(file.filename)}`;
+    const imageUrl = `${process.env.HOST}/uploads/equipos/${encodeURIComponent(file.filename)}`;
 
     const newEquipo = await prisma.equipo.create({
       data: {
