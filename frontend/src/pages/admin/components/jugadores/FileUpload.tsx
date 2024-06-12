@@ -45,7 +45,7 @@ const FileUpload: FC<FileUploadProps> = ({ onFileUpload }) => {
         const worksheet = workbook.Sheets[sheetName];
         
         const rows: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        console.log(rows)
+        
         if (rows[0].length === 0) {
           toast({
             title: 'Error de formato u ',
@@ -56,7 +56,7 @@ const FileUpload: FC<FileUploadProps> = ({ onFileUpload }) => {
           });
           return;
         }
-        const expectedColumns = ['nombre', 'posicion', 'numero'];
+        const expectedColumns = ['nombre', 'posicion', 'numero','edad','celular','eps','documento'];
         const headers = rows[0];
         const isValid = headers.every((header: string, index: number) => expectedColumns.includes(header) && header === expectedColumns[index]);
 
@@ -77,6 +77,11 @@ const FileUpload: FC<FileUploadProps> = ({ onFileUpload }) => {
           numero: Number(row[2]),
           posicion: row[1],
           fotoUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+          edad :row[3],
+          celular:row[4],
+          eps	:row[5],
+          documento :row[6],
+
         }));
         console.log(newPlayers,"new")
         onFileUpload(newPlayers);

@@ -39,6 +39,8 @@ import FileUpload from './FileUpload';
 import { Jugador } from '../../../../interfaces/jugador';
 import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa';
 import { createPlayers, deletePlayer, fetchPlayers } from '../../../../api/admin/jugadores';
+import { SiMicrosoftexcel } from 'react-icons/si';
+import axios from 'axios';
 
 
 
@@ -243,6 +245,23 @@ const EditableTable: FC = () => {
     }
     onClose();
   };
+  const descargarPlantilla = () => {
+    const url = '/assets/plantilla.xlsx';  // Ruta de la plantilla de archivo Excel
+
+    axios.get(url, { responseType: 'blob' })
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'plantilla.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+      .catch((error) => {
+        console.error('Error al descargar la plantilla:', error);
+      });
+  }
   const renderSortIcon = (isSorted: string | false) => {
     if (isSorted === 'asc') return <FaSortUp />;
     if (isSorted === 'desc') return <FaSortDown />;
@@ -271,6 +290,9 @@ const EditableTable: FC = () => {
       </Button>
       <Button colorScheme="blue" onClick={handleSubmit}>
         Enviar Datos
+      </Button>
+      <Button leftIcon={<SiMicrosoftexcel />} onClick={descargarPlantilla}>
+       Descargar plantilla
       </Button>
     </HStack>
        <FileUpload onFileUpload={handleFileUpload} />
