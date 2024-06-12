@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
     <Box  bg={bgColor} position="fixed" top={0} zIndex={999} width='100vw'
     transition="background-color 0.3s ease" as="nav" display="flex" justifyContent="space-between" alignItems="center" py={4} px={8}>
       <Heading as="h1" size="lg" cursor="pointer">
-      <Image src={logoColor} alt="Logo LST" boxSize={{ base: "60px", md: "60px" }} onClick={() => navigate('/partidos')}
+      <Image src={logoColor} alt="Logo LST" boxSize={{ base: "60px", md: "60px" }} onClick={() => navigate('/')}
                   objectFit="contain"/>
       </Heading>
       <HStack spacing={4} display={{ base: "none", md: "flex" }}>
