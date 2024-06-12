@@ -37,7 +37,7 @@ const Tour: React.FC = () => {
       if (steps[nextIndex]?.target === '#torneoSubmit') {
           setOpenForm(true);
 
-          await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el modal esté abierto
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Esperar para asegurar que el modal esté abierto
       }
       if (steps[nextIndex]?.target === '#torneos' ) {
         await crearTorneo( {
@@ -48,7 +48,7 @@ const Tour: React.FC = () => {
         })
         setOpenForm(false);
         // setNavbarOpen(true)
-        await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el modal esté abierto
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Esperar para asegurar que el modal esté abierto
     }
     if (steps[nextIndex]?.target === '#torneos-mobile') {
       await crearTorneo( {
@@ -59,7 +59,7 @@ const Tour: React.FC = () => {
       })
       setOpenForm(false);
       setNavbarOpen(true)
-      await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el modal esté abierto
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Esperar para asegurar que el modal esté abierto
   }
     if (steps[nextIndex]?.target === '#select-0'){
       setNavbarOpen(false)

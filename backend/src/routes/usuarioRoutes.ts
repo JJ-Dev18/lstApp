@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import { getUsuario, getUsuarios, createUsuario, updateUsuario,deleteUsuario } from '../controllers/usuarioController'
+import { ensureAuthenticated } from '../middlewares/auth'
 
 const router = Router()
 
-router.get('/', getUsuarios)
-router.get('/:id', getUsuario)
-router.post('/', createUsuario)
-router.put('/:id', updateUsuario)
-router.delete('/:id', deleteUsuario)
+router.get('/', ensureAuthenticated,getUsuarios)
+router.get('/:id', ensureAuthenticated,getUsuario)
+router.post('/', ensureAuthenticated,createUsuario)
+router.put('/:id',ensureAuthenticated, updateUsuario)
+router.delete('/:id',ensureAuthenticated, deleteUsuario)
 
 export default router

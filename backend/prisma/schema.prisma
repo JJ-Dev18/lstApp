@@ -58,6 +58,7 @@ model Categoria {
 model Equipo {
   id          Int         @id @default(autoincrement())
   nombre      String
+  logo  String?
   categoria   Categoria   @relation(fields: [categoriaId], references: [id])
   categoriaId Int
   torneo      Torneo?     @relation(fields: [torneoId], references: [id])

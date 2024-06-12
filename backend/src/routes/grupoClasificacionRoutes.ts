@@ -1,20 +1,21 @@
 import { Router } from 'express'
 import { getGruposClasificacion, getGrupoClasificacion, createGrupoClasificacion, updateGrupoClasificacion, deleteGrupoClasificacion, asociarEquipoGrupo, getGruposPorCategoria, eliminarAsociacionEquipo } from '../controllers/grupoClasificacionController'
 import { getEquiposDisponibles, getEquiposGrupo } from '../controllers/gruposController'
+import { ensureAuthenticated } from '../middlewares/auth'
 
 const router = Router()
 
-router.get('/', getGruposClasificacion)
-router.get('/:id', getGrupoClasificacion)
-router.get('/equipo/:grupoId', getEquiposGrupo)
-router.get('/equipos-disponibles/:categoriaId',getEquiposDisponibles );
+router.get('/', ensureAuthenticated,getGruposClasificacion)
+router.get('/:id',ensureAuthenticated, getGrupoClasificacion)
+router.get('/equipo/:grupoId',ensureAuthenticated, getEquiposGrupo)
+router.get('/equipos-disponibles/:categoriaId',ensureAuthenticated,getEquiposDisponibles );
   
-router.get('/:categoriaId', getGruposPorCategoria)
-router.post('/equipos-grupos', asociarEquipoGrupo )
-router.post('/:categoriaId', createGrupoClasificacion)
-router.put('/:id', updateGrupoClasificacion)
-router.delete('/equipos-grupos/:equipoId/:grupoId', eliminarAsociacionEquipo )
-router.delete('/:id', deleteGrupoClasificacion)
+router.get('/:categoriaId', ensureAuthenticated,getGruposPorCategoria)
+router.post('/equipos-grupos',ensureAuthenticated, asociarEquipoGrupo )
+router.post('/:categoriaId', ensureAuthenticated,createGrupoClasificacion)
+router.put('/:id',ensureAuthenticated, updateGrupoClasificacion)
+router.delete('/equipos-grupos/:equipoId/:grupoId',ensureAuthenticated, eliminarAsociacionEquipo )
+router.delete('/:id', ensureAuthenticated,deleteGrupoClasificacion)
 
 
 

@@ -1,14 +1,14 @@
 import { Box, Heading, Text, Grid, Skeleton } from "@chakra-ui/react";
 
-import DotPattern from "../../../components/ui/DotPattern";
+// import DotPattern from "../../../components/ui/DotPattern";
 import {cn} from '../../../lib/utils'
 import GridPattern from "../../../components/ui/GridPattern";
-import EquipoImg from '../../../assets/inicio/equipo.webp'
-import Equipo2Img from '../../../assets/inicio/equipo2.webp'
-import Equipo3Img from '../../../assets/inicio/equipo3.webp'
-import Torneo1 from '../../../assets/inicio/torneo1.webp'
-import Torneo2 from '../../../assets/inicio/torneo2.webp'
-import Torneo3 from '../../../assets/inicio/torneo3.webp'
+// import EquipoImg from '../../../assets/inicio/equipo.webp'
+// import Equipo2Img from '../../../assets/inicio/equipo2.webp'
+// import Equipo3Img from '../../../assets/inicio/equipo3.webp'
+// import Torneo1 from '../../../assets/inicio/torneo1.webp'
+// import Torneo2 from '../../../assets/inicio/torneo2.webp'
+// import Torneo3 from '../../../assets/inicio/torneo3.webp'
 import RealTime from '/assets/inicio/realtime.webp'
 import estadisticas from '../../../assets/inicio/estadisticas.webp'
 import Highlight from '../../../assets/inicio/highlight.webp'
@@ -17,7 +17,7 @@ import { Suspense, lazy } from "react";
 
 
 const FeatureCard = lazy(() => import('./FeatureCard'));
-const CurvedlineChart = lazy(() => import("./CurvedLineChart"));
+// const CurvedlineChart = lazy(() => import("./CurvedLineChart"));
 // const Estadisticas = lazy(() => import("./Estadisticas"));
 const Testimonials = lazy(() => import("./Testimonials"));
 const LikeButton = lazy(() => import("./LikeButton"));
@@ -58,7 +58,7 @@ const MainContent: React.FC = () => (
       </Suspense>
     </Box>
 
-    <Box py={16} px={8}>
+    {/* <Box py={16} px={8}>
       <DotPattern className={cn("[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]")} />
       <Heading as="h3" size="xl" mb={8}>Torneos destacados</Heading>
       <Suspense fallback={<Skeleton height="200px" />}>
@@ -79,7 +79,7 @@ const MainContent: React.FC = () => (
           <FeatureCard image={Equipo3Img} title="Truck Stop" description="Washington, DC" lazy="lazy"/>
         </Grid>
       </Suspense>
-    </Box>
+    </Box> */}
 
     {/* <Box py={16} px={8} position="relative">
       <Suspense fallback={<Skeleton height="200px" />}>
@@ -113,12 +113,12 @@ const MainContent: React.FC = () => (
     </Box>
 
     <Box py={16} px={8}>
-      <Heading as="h3" size="xl" mb={8}>Estadisticas</Heading>
+      {/* <Heading as="h3" size="xl" mb={8}>Estadisticas</Heading>
       <Box width="full" height="500px" position="relative">
         <Suspense fallback={<Skeleton height="500px" />}>
           <CurvedlineChart />
         </Suspense>
-      </Box>
+      </Box> */}
       <Suspense fallback={<Skeleton height="200px" />}>
         <FeedbackForm />
         <LikeButton />

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { actualizarPlanillero, createPlanillero, eliminarPlanillero, obtenerPlanillero, obtenerPlanilleros, obtenerPlanillerosPorTorneo } from "../controllers/planilleroController";
+import { ensureAuthenticated } from "../middlewares/auth";
 
 const express = require('express');
 const router = express.Router();
@@ -7,14 +8,14 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 // Crear un planillero
-router.post('/:torneoId', createPlanillero);
+router.post('/:torneoId',ensureAuthenticated, createPlanillero);
 
 // Obtener todos los planilleros
-router.get('/:torneoId', obtenerPlanillerosPorTorneo);
-router.get('/', obtenerPlanilleros);
-router.delete('/:id', eliminarPlanillero);
-router.get('/:id',obtenerPlanillero);
-router.put('/:id', actualizarPlanillero);
+router.get('/:torneoId', ensureAuthenticated,obtenerPlanillerosPorTorneo);
+router.get('/',ensureAuthenticated, obtenerPlanilleros);
+router.delete('/:id', ensureAuthenticated,eliminarPlanillero);
+router.get('/:id',ensureAuthenticated,obtenerPlanillero);
+router.put('/:id',ensureAuthenticated, actualizarPlanillero);
 
 // Obtener un planillero por ID
 

@@ -1,6 +1,6 @@
 export interface Equipment {
-    id: string;
-    logo: string;
+    id: string ;
+    logo: any;
     nombre: string;
     jugadores: number;
     categoriaId: string;

@@ -6,8 +6,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  NumberInput,
-  NumberInputField,
   VStack,
   Modal,
   ModalOverlay,
@@ -38,8 +36,8 @@ const CreateTournamentForm: React.FC<Props> = ({ isOpen, onClose }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     defaultValues: {
       nombre: 'prueba torneo',
-      numCategorias: 2,
-      numEquipos: 2,
+      // numCategorias: 2,
+      // numEquipos: 2,
     }
   });
 
@@ -98,7 +96,7 @@ const CreateTournamentForm: React.FC<Props> = ({ isOpen, onClose }) => {
                   />
                   {errors.nombre && <p>{errors.nombre.message}</p>}
                 </FormControl>
-                <FormControl id="numEquipos" isInvalid={!!errors.numEquipos}>
+                {/* <FormControl id="numEquipos" isInvalid={!!errors.numEquipos}>
                   <FormLabel>Número de Equipos</FormLabel>
                   <NumberInput min={2}>
                     <NumberInputField
@@ -125,7 +123,7 @@ const CreateTournamentForm: React.FC<Props> = ({ isOpen, onClose }) => {
                     />
                   </NumberInput>
                   {errors.numCategorias && <p>{errors.numCategorias.message}</p>}
-                </FormControl>
+                </FormControl> */}
                 <Button id="torneoSubmit" type="submit" colorScheme="teal" width="full" isLoading={mutation.isPending}>
                   Crear Torneo
                 </Button>

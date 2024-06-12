@@ -6,8 +6,8 @@ import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 import { BorderBeam } from '../../components/ui/BorderBeam';
 
 const Login2 = () => {
-  const [username, setUsername] = useState('admin@example.com');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { login: dispatchLogin, token, user } = useStore((state) => state);
 
   const toast = useToast();

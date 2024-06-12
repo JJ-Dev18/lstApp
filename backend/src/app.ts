@@ -24,6 +24,7 @@ import { eventRouter, registerEventHandlers } from './routes/events';
 import { Usuario } from '@prisma/client';
 import { PrismaClient } from '@prisma/client'
 import registrarLikes from './routes/likes';
+import path from 'path';
 
 dotenv.config();
 
@@ -54,7 +55,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/auth', authRoutes);
 // app.use('/events', eventRouter);
 app.use('/usuarios', usuarioRoutes)

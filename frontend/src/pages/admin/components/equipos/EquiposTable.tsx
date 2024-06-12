@@ -17,6 +17,7 @@ import {
   Input,
   Box,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -46,6 +47,7 @@ const columnHelper = createColumnHelper<Equipment>();
 const EquiposTable: React.FC = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const toast = useToast()
   const torneo = useStore((state) => state.torneo);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(
@@ -65,7 +67,23 @@ const EquiposTable: React.FC = () => {
     mutationFn: deleteEquipo,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["equipos"] });
+      toast({
+        title: 'Equipo eliminado con éxito.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     },
+    onError: (error: any) => {
+      console.log(error)
+      toast({
+        title: 'Error al eliminar equipo.',
+        description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   });
   const addMutation = useMutation({
     mutationFn: ({
@@ -77,7 +95,24 @@ const EquiposTable: React.FC = () => {
     }) => createEquipo(id, newEquipment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["equipos"] });
+      toast({
+        title: 'Equipo agregado con éxito.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+     
     },
+    onError: (error: any) => {
+      console.log(error)
+      toast({
+        title: 'Error al agregar equipo.',
+        description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   });
   const updateMutation = useMutation({
     mutationFn: ({
@@ -89,7 +124,23 @@ const EquiposTable: React.FC = () => {
     }) => updateEquipo(id, updatedEquipment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["equipos"] });
+      toast({
+        title: 'Equipo actualizado con éxito.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     },
+    onError: (error: any) => {
+      console.log(error)
+      toast({
+        title: 'Error al actualizar equipo.',
+        description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   });
   const openEditModal = (equipment: Equipment | null) => {
     setSelectedEquipment(equipment);

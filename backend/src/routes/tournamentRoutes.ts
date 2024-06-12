@@ -3,12 +3,13 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { Console, count } from 'console';
+import { ensureAuthenticated } from '../middlewares/auth';
 
 const prisma = new PrismaClient();
 const router = Router();
  
 
-router.get('/:usuarioId' , async ( req , res ) => {
+router.get('/:usuarioId' ,ensureAuthenticated, async ( req , res ) => {
   const { usuarioId } = req.params
   try {
     const torneos = await prisma.torneo.findMany({
@@ -56,7 +57,7 @@ router.get('/:usuarioId' , async ( req , res ) => {
     res.status(500).json({ error: 'Error al crear el torneo' });
   }
 })
-router.put( '/:id', async ( req, res ) => {
+router.put( '/:id', ensureAuthenticated,async ( req, res ) => {
   const { id } = req.params
   const { nombre } =  req.body
   const actualizado = await prisma.torneo.update({
@@ -65,8 +66,8 @@ router.put( '/:id', async ( req, res ) => {
   })
   res.status(200).json(actualizado)
 })
-router.post('/:usuarioId', async (req, res) => {
-  const { nombre, numEquipos, numJugadores, numCategorias } = req.body;
+router.post('/:usuarioId', ensureAuthenticated,async (req, res) => {
+  const { nombre  } = req.body;
   const { usuarioId } = req.params
 
   try {
@@ -103,35 +104,44 @@ router.post('/:usuarioId', async (req, res) => {
     });
     console.log(torneo,"torneo")
     // Crear categorías y obtener su ID
-    const categorias = [];
-    for (let i = 0; i < numCategorias; i++) {
+    
+    
       const categoria = await prisma.categoria.create({
         data: {
-          nombre: `Categoría ${i + 1}`,
+          nombre: 'Masculina',
           torneo: {
             connect: { id: torneo.id },
           },
         },
       });
-      categorias.push(categoria);
-    }
+      const categoria2 = await prisma.categoria.create({
+        data: {
+          nombre: 'Femenina',
+          torneo: {
+            connect: { id: torneo.id },
+          },
+        },
+      });
+     
+   
 
     // Crear equipos y jugadores
-    for (let i = 0; i < numEquipos; i++) {
-      const equipo = await prisma.equipo.create({
-        data: {
-          nombre: `Equipo ${i + 1}`,
-          categoria: {
-            connect: { id: categorias[i % numCategorias].id },
-          },
-          torneo: {
-            connect: { id: torneo.id },
-          },
-        },
-      });
+    // for (let i = 0; i < numEquipos; i++) {
+    //   const equipo = await prisma.equipo.create({
+    //     data: {
+    //       nombre: `Equipo ${i + 1}`,
+    //       categoria: {
+    //         connect: { id: categorias[i % numCategorias].id },
+    //       },
+    //       torneo: {
+    //         connect: { id: torneo.id },
+    //       },
+    //       logo : ''
+    //     },
+    //   });
 
      
-    }
+    // }
 
     res.status(200).json({...torneo, categorias : torneo.categorias.length, equipos : torneo.equipos.length, partidos : torneo.partidos.length});
   } catch (error) {
@@ -139,7 +149,7 @@ router.post('/:usuarioId', async (req, res) => {
     res.status(500).json({ error: 'Error al crear el torneo' });
   }
 });
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', ensureAuthenticated,async (req, res) => {
   const { id } = req.params;
 
   try {

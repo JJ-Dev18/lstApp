@@ -1,15 +1,16 @@
 import { Router } from 'express'
 import { getPartidos, getPartido, createPartido, updatePartido, deletePartido, actualizarMarcadorPartido, getPartidosPorTorneo } from '../controllers/partidoController'
+import { ensureAuthenticated } from '../middlewares/auth'
 
 const router = Router()
 
-router.get('/', getPartidos)
-router.get('/torneo/:torneoId', getPartidosPorTorneo)
-router.get('/:id', getPartido)
-router.post('/', createPartido)
-router.put('/:id', updatePartido)
-router.delete('/:id', deletePartido)
-router.put('/marcador' ,actualizarMarcadorPartido)
+router.get('/', ensureAuthenticated, getPartidos)
+router.get('/torneo/:torneoId', ensureAuthenticated,getPartidosPorTorneo)
+router.get('/:id',ensureAuthenticated, getPartido)
+router.post('/', ensureAuthenticated,createPartido)
+router.put('/:id', ensureAuthenticated,updatePartido)
+router.delete('/:id',ensureAuthenticated,deletePartido)
+router.put('/marcador' ,ensureAuthenticated, actualizarMarcadorPartido)
 
 
 export default router
