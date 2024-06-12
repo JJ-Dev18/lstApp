@@ -45,8 +45,10 @@ const storage: StorageEngine = multer.diskStorage({
 
 const fileFilter = (req :any, file:any , cb:any ) => {
   if (file.mimetype.startsWith('image/')) {
+     console.log(file.mimetype,"mimetype")
     cb(null, true);
   } else {
+    console.log('error no es un archivo de imagen')
     cb(new Error('No es un archivo de imagen!'), false);
   }
 };
