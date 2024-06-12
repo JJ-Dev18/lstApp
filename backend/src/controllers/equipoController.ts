@@ -84,6 +84,9 @@ export const createEquipo = async (req: Request, res: Response) => {
     if (!file) {
       return res.status(400).send("No se subió ninguna imagen.");
     }
+    console.log(req.get('host'))
+    console.log(req,"Reqest")
+
 
     // const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
     const imageUrl = `${req.protocol}://${req.get(

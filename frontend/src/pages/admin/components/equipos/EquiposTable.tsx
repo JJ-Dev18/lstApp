@@ -107,7 +107,7 @@ const EquiposTable: React.FC = () => {
       console.log(error)
       toast({
         title: 'Error al agregar equipo.',
-        description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
+        description: error.response?.data?.error || 'Hubo un problema al agregar el equipo',
         status: 'error',
         duration: 5000,
         isClosable: true,

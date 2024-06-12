@@ -172,7 +172,7 @@ const CrearPartidoModal: React.FC<CrearPartidoModalProps> = ({ partido,isOpen, o
                   <option key={planillero.id} value={planillero.id}>{planillero.nombre}</option>
                 ))}
               </Select>
-              <Input type="datetime-local"  value={fecha ? formatDateForInput(fecha) : ''} onChange={(e) => setFecha(e.target.value)} />
+              <Input type="datetime-local"  value={partido ? formatDateForInput(fecha) : fecha} onChange={(e) => setFecha(e.target.value)} />
               <Input type="number" placeholder="Duración (minutos)" value={duracion} onChange={(e) => setDuracion(parseInt(e.target.value))} />
               <Select value={estado} onChange={(e) => setEstado(e.target.value)}>
                 <option value="SIN_JUGAR">Sin jugar</option>

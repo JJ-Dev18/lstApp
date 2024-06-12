@@ -39,7 +39,7 @@ export default function Welcome() {
     <div className="flex flex-col items-center justify-center h-[70vh] px-4 md:px-6 overflow-x-hidden">
       <div className="max-w-md space-y-4 text-center">
        
-        <h1 className="text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">¡Bienvenido a nuestra plataforma!</h1>
+        <h1 className="text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">¡Bienvenido a nuestra plataforma {user?.nombre}!</h1>
         <p className="text-gray-500 md:text-xl dark:text-gray-400">
         Supervisa torneos, actualiza estadísticas y mantén a todos informados en tiempo real.</p>
         <Button
