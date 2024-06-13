@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import useStore from '../../store/store';
 import { Role } from '../../interfaces/auth';
-import { Progress } from '@chakra-ui/react';
 
 interface RoleProtectedRouteProps {
   allowedRoles: Role[];

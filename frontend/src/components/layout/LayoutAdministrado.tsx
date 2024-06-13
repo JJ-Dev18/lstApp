@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Box, Button, Flex} from "@chakra-ui/react";
-import { IoAddOutline } from "react-icons/io5";
+import { Box,  Flex} from "@chakra-ui/react";
+
 import { Outlet } from "react-router-dom";
 import NavbarAdmin from "./NavbarAdmin";
 import SidebarAdmin from "./SidebarAdmin";
