@@ -6,8 +6,9 @@ import { devtools } from 'zustand/middleware'
 import { TourState, createTourSlice } from './slices/TourSlice';
 import { SearchSlice, createSearchSlice } from './slices/SearchSlice';
 import { UISlice, createUIslice } from './slices/UiSlice';
+import { ErrorState, createErrorSlice } from './slices/ErrorSlice';
 
-interface Store extends AuthSlice,UserSlice,TorneoSlice,TourState,SearchSlice,UISlice {}
+interface Store extends AuthSlice,UserSlice,TorneoSlice,TourState,SearchSlice,UISlice,ErrorState {}
 
 const createStore: StateCreator<Store> = (set, get) => ({
   ...createAuthSlice(set,get),
@@ -15,7 +16,8 @@ const createStore: StateCreator<Store> = (set, get) => ({
   ...createTorneoSlice(set,get),
   ...createTourSlice(set),
   ...createSearchSlice(set),
-  ...createUIslice(set)
+  ...createUIslice(set),
+  ...createErrorSlice(set),
 });
 
 const useStore = create<Store>()(

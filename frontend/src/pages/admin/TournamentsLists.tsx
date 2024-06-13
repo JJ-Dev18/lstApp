@@ -21,6 +21,7 @@ import useStore from '../../store/store';
 import { TorneoSelected } from '../../store/slices/TorneoSlice';
 import UpdateTournamentModal from './components/torneos/UpdateTournamentModal';
 import { deleteTournament, fetchTorneos } from '../../api/admin/torneos';
+import { IoAddOutline } from 'react-icons/io5';
 
 
 
@@ -37,6 +38,7 @@ const TournamentsList: React.FC = () => {
   const [currentTournamentName, setCurrentTournamentName] = useState<string>('');
   const [selectedTournament, setSelectedTournament] = useState<TorneoSelected | null>(torneo);
   const [filter, setFilter] = useState<string>('');
+  const setOpenform= useStore( (state) => state.setOpenForm)
 
   const { data: tournaments, isLoading, isError } = useQuery({
     queryKey: ['torneos', user?.id],
@@ -59,14 +61,7 @@ const TournamentsList: React.FC = () => {
         isClosable: true,
       });
     },
-    onError: () => {
-      toast({
-        title: 'Error al eliminar el torneo.',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
+    
   });
 
   useEffect(() => {
@@ -130,6 +125,13 @@ const TournamentsList: React.FC = () => {
       <Heading as="h1" mb={4}>
         Lista de Torneos
       </Heading>
+      <Button 
+            size={{base :'md', md : 'lg'}}
+             onClick={() => setOpenform(true)}
+             mb={2}
+             id="btn-crear" aria-label="crear torneo"  position={{ base : 'static', lg : 'fixed'}} bottom={5} left={8}>
+              <IoAddOutline /> Crear Torneo 
+             </Button>
       <InputGroup mb={4}>
         <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.300" />} />
         <Input
@@ -151,14 +153,14 @@ const TournamentsList: React.FC = () => {
       <List spacing={3}>
         {filteredTournaments?.map((tournament: TorneoSelected, index: number) => (
           <ListItem key={tournament.id} bg={bgColor} p={3} shadow="md" borderWidth="1px" borderRadius="md">
-            <Flex justifyContent="space-between" alignItems="center">
+            <Flex flexDirection={{base:'column'}} justifyContent="space-between" alignItems="center">
               <Box color={textColor}>
                 <Text fontWeight="bold">{tournament.nombre}</Text>
                 <Text>Número de equipos: {tournament.equipos}</Text>
                 <Text>Número de jugadores: {tournament.jugadores}</Text>
                 <Text>Número de categorías: {tournament.categorias}</Text>
               </Box>
-              <Flex>
+              <Flex mt={2}>
                 <Button
                   id={`select-${index}`}
                   mr={2}

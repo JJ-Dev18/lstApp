@@ -82,7 +82,7 @@ export const createEquipo = async (req: Request, res: Response) => {
     const file = req.file;
 
     if (!file) {
-      return res.status(400).send("No se subió ninguna imagen.");
+      return res.status(400).send({message : "No se subió ninguna imagen."});
     }
     console.log(req.get('host'))
     console.log(req,"Reqest")

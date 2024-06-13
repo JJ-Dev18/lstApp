@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Flex} from "@chakra-ui/react";
 import { IoAddOutline } from "react-icons/io5";
 import { Outlet } from "react-router-dom";
@@ -9,7 +9,15 @@ import useStore from "../../store/store";
 
 const Layout: React.FC = () => {
 
-  const setOpenform= useStore( (state) => state.setOpenForm)
+  const setTorneo= useStore( (state) => state.setTorneo)
+
+  useEffect(() => {
+    const storedTorneo = localStorage.getItem('torneo');
+    if (storedTorneo) {
+        setTorneo(JSON.parse(storedTorneo)); // Inicializa el estado con el valor de localStorage si existe
+    }
+}, [setTorneo]);
+
   return (
     <Flex minHeight="100vh" direction="column">
       <NavbarAdmin />
@@ -24,13 +32,7 @@ const Layout: React.FC = () => {
           <Outlet />
          
            <Tour/>
-           <Button 
-            size={{base :'md', md : 'lg'}}
-             onClick={() => setOpenform(true)}
-             
-             id="btn-crear" aria-label="crear torneo" position="fixed" bottom={5} left={8}>
-              <IoAddOutline /> Crear Torneo 
-             </Button>
+           
         
            
         </Box>

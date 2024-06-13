@@ -52,30 +52,9 @@ const fileFilter = (req :any, file:any , cb:any ) => {
     cb(new Error('No es un archivo de imagen!'), false);
   }
 };
-// fileFilter: function (req, file, cb) {
-//     if (file.mimetype !== 'image/png') {
-//      req.fileValidationError = 'goes wrong on the mimetype';
-//      return cb(null, false, new Error('goes wrong on the mimetype'));
-//     }
-//     cb(null, true);
-//    }
-// export const fileFilter = (
-//     request: Request,
-//     file: Express.Multer.File,
-//     callback: FileFilterCallback
-// ): void => {
-//     if (
-//         file.mimetype === 'image/png' ||
-//         file.mimetype === 'image/jpg' ||
-//         file.mimetype === 'image/jpeg'
-//     ) {
-//         callback(null, true)
-//     } else {
-//         callback(null, false)
-//     }
-// }
+
 const limits = {
-  fileSize: 5 * 1024 * 1024, // 5 MB
+  fileSize: 1 * 1024 * 1024, // 5 MB
 };
 
 const upload: MulterConfig = multer({ storage,fileFilter, limits }) as MulterConfig;

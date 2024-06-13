@@ -9,26 +9,19 @@ interface RoleProtectedRouteProps {
 }
 
 const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({ allowedRoles }) => {
-  const { token, checkToken, user } = useStore((state) => ({
+  const { token, user } = useStore((state) => ({
     token: state.token,
-    checkToken: state.checkToken,
     user: state.user
   }));
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const location = useLocation();
 
-  useEffect(() => {
-    const verifyToken = async () => {
-      await checkToken();
-      setLoading(false);
-    };
-    verifyToken();
-  }, [checkToken]);
 
-  if (loading) {
-    return <Progress size='xs' isIndeterminate />; // Puedes reemplazar esto con un spinner o cualquier componente de carga
-  }
+
+  // if (loading) {
+  //   return <Progress size='xs' isIndeterminate />; // Puedes reemplazar esto con un spinner o cualquier componente de carga
+  // }
 
   if (!token) {
     return <Navigate to="/inicio" state={{ from: location }} />;

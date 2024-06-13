@@ -29,7 +29,7 @@ interface DragDropContextComponentProps {
   categoryId: number;
 }
 
-const fetchEquipos = async (categoryId: number) => {
+const fetchEquiposDisponibles = async (categoryId: number) => {
   const { data } = await instance.get(`/grupos/equipos-disponibles/${categoryId}`);
   return data;
 };
@@ -46,7 +46,7 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
   const [newGroupName, setNewGroupName] = useState('');
   const { data: equipos,  isLoading: equiposLoading  } = useQuery({
     queryKey: ["equiposDisponibles", categoryId],
-    queryFn: () => fetchEquipos(categoryId),
+    queryFn: () => fetchEquiposDisponibles(categoryId),
   });
   const { data: grupos, isLoading : gruposLoading , } = useQuery({
     queryKey: ["grupos", categoryId],
@@ -66,14 +66,7 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
           isClosable: true,
         });
       },
-      onError: () => {
-        toast({
-          title: 'Error al asociar el equipo al grupo.',
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      },
+      
     }
   );
   const createGroupMutation = useMutation(
@@ -90,15 +83,7 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
         setNewGroupName('');
         setIsModalOpen(false);
       },
-      onError: (error) => {
-        toast({
-          title: 'Error al crear el grupo.',
-          description: error.message,
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      },
+     
     }
   );
 
@@ -114,15 +99,7 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
           isClosable: true,
         });
       },
-      onError: (error) => {
-        toast({
-          title: 'Error al eliminar el grupo.',
-          description: error.message,
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      },
+     
     }
   );
 

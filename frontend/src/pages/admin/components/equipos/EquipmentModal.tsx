@@ -29,7 +29,12 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({ isOpen, onClose, equipm
   const [src, setsrc] = useState('')
   // const [jugadores, setPlayerCount] = useState<number>(equipment?.jugadores || 0);
   const [categoriaId, setCategoryId] = useState<string>(equipment?.categoriaId || '');
-  console.log(logo,"logo")
+  const handleCloseModal = () => {
+    onClose();
+    setsrc('');
+    setName('')
+    setLogo(null)
+  };
   useEffect(() => {
     if (equipment) {
       setName(equipment.nombre);
@@ -38,6 +43,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({ isOpen, onClose, equipm
       // setPlayerCount(equipment.jugadores);
       setCategoryId(equipment.categoriaId);
     } else {
+     console.log('cambiand osrc ')
       setName('');
       setsrc('')
       // setPlayerCount(0);
@@ -45,6 +51,7 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({ isOpen, onClose, equipm
     }
   }, [equipment]);
 
+  console.log(src,"Src")
   const handleSave = () => {
     const newEquipment: Partial<Equipment> = {
       nombre,
@@ -53,11 +60,11 @@ const EquipmentModal: React.FC<EquipmentModalProps> = ({ isOpen, onClose, equipm
       logo: logo ? logo : equipment?.logo,
     };
     onSave(newEquipment);
-    onClose();
+    handleCloseModal();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={handleCloseModal}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{equipment ? 'Editar Equipo' : 'Agregar Equipo'}</ModalHeader>

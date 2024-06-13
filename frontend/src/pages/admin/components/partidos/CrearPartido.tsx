@@ -4,9 +4,9 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel, Button, useDisclosure, Box } f
 import CrearPartidoModal from './CrearPartidoModal';
 import PartidosTable from './PartidosTable';
 import useStore from '../../../../store/store';
-import { fetchCategorias } from '../../../../api/admin/categorias';
 import { fetchPartidos } from '../../../../api/admin/partidos';
 import {  fetchEquiposPorCategoria } from '../../../../api/admin/equipos';
+import { useCategorias } from '../../../../hooks/useCategorias';
 
 // Funciones de fetch
 
@@ -26,10 +26,7 @@ const CrearPartido: React.FC = () => {
     queryFn: () => fetchPartidos(torneo?.id)
   });
   
-  const { data: categorias, isLoading: isLoadingCategorias } = useQuery({
-    queryKey: ["categorias", torneo?.id],
-    queryFn: () => fetchCategorias(torneo?.id.toString()),
-  });
+  const { categorias,  isLoadingCategorias } = useCategorias();
   const { data: equipos } = useQuery({
     queryKey: ["equipos", categoriaSeleccionada],
     enabled : !!categoriaSeleccionada,

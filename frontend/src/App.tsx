@@ -27,13 +27,15 @@ const Register = lazy(() => import('./pages/public/Register'));
 
 const App: React.FC = () => {
   const checkToken = useStore((state) => state.checkToken);
-
   useEffect(() => {
     const verifyToken = async () => {
       await checkToken();
     };
     verifyToken();
   }, [checkToken]);
+
+ 
+  
   return (
     <Router>
       <Suspense fallback={<Skeleton />}>

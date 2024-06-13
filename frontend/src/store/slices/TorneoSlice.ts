@@ -15,11 +15,22 @@ export interface TorneoSlice {
     openForm : boolean;
     crearTorneo : (data:any) => void 
 }
+const parseTorneo = (value:any) => {
+  try {
+      return value ? JSON.parse(value) : null;
+  } catch (e) {
+      console.error('Error parsing torneo from localStorage', e);
+      return null;
+  }
+};
 
 export const createTorneoSlice = (set: any, get : any): TorneoSlice => ({
 
-    torneo: null,
-    setTorneo: (torneo) => set({ torneo }),
+    torneo: parseTorneo(localStorage.getItem('torneo')) || null,
+    setTorneo: (torneo) => {
+      set({ torneo })
+      localStorage.setItem('torneo', JSON.stringify(torneo));
+      },
     openForm : false,
     setOpenForm : (openForm) => set({openForm }),
     crearTorneo : async (data: any) => {
@@ -29,6 +40,7 @@ export const createTorneoSlice = (set: any, get : any): TorneoSlice => ({
             console.log(user,"user")
          const response =  await instance.post(`/torneos/${user?.id}`, data);
          setTorneo(response.data)
+         localStorage.setItem('torneo', response.data);
          if (user) {
             setUser({ ...user, torneos: 1 });
           }

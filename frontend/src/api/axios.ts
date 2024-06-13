@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useStore from '../store/store';
 
 const instance = axios.create({
      baseURL:   import.meta.env.VITE_API_URL, 
@@ -16,8 +17,13 @@ instance.interceptors.request.use(
     }
     return config
   },
-  error => {
-    return Promise.reject(error)
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Si el servidor responde con un 401 Unauthorized, cerrar la sesión
+      useStore.getState().logout();
+      // logout();
+    }
+    return Promise.reject(error);
   }
 )
 

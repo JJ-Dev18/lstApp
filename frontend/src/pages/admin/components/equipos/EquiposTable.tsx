@@ -38,17 +38,19 @@ import {
   fetchEquipos,
   updateEquipo,
 } from "../../../../api/admin/equipos";
-import { fetchCategorias } from "../../../../api/admin/categorias";
 import { RiTeamFill } from "react-icons/ri";
 import debounce from "lodash.debounce";
+import { useCategorias } from "../../../../hooks/useCategorias";
 
 const columnHelper = createColumnHelper<Equipment>();
 
 const EquiposTable: React.FC = () => {
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const toast = useToast()
   const torneo = useStore((state) => state.torneo);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(
     null
@@ -58,11 +60,10 @@ const EquiposTable: React.FC = () => {
   const { data: equipos, isLoading: isLoadingEquipos } = useQuery({
     queryKey: ["equipos", torneo?.id],
     queryFn: () => fetchEquipos(torneo?.id.toString()),
+    enabled : !!torneo
+
   });
-  const { data: categorias, isLoading: isLoadingCategorias } = useQuery({
-    queryKey: ["categorias", torneo?.id],
-    queryFn: () => fetchCategorias(torneo?.id.toString()),
-  });
+  const {  categorias,  isLoadingCategorias } = useCategorias();
   const deleteMutation = useMutation({
     mutationFn: deleteEquipo,
     onSuccess: () => {
@@ -74,16 +75,7 @@ const EquiposTable: React.FC = () => {
         isClosable: true,
       });
     },
-    onError: (error: any) => {
-      console.log(error)
-      toast({
-        title: 'Error al eliminar equipo.',
-        description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
+    
   });
   const addMutation = useMutation({
     mutationFn: ({
@@ -103,16 +95,18 @@ const EquiposTable: React.FC = () => {
       });
      
     },
-    onError: (error: any) => {
-      console.log(error)
-      toast({
-        title: `Error al agregar equipo. ${error}`,
-        description: error.response?.data?.error || 'Hubo un problema al agregar el equipo',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
+    // onError : (error) => handleError(error),
+    // onError: (error: unknown) => {
+    //   console.log('un error aha acabado de ocurrir')
+    //   handleError(error)
+    //   // toast({
+    //   //   title: `Error al agregar equipo. ${error}`,
+    //   //   description: error.response?.data?.error || 'Hubo un problema al agregar el equipo',
+    //   //   status: 'error',
+    //   //   duration: 5000,
+    //   //   isClosable: true,
+    //   // });
+    // }
   });
   const updateMutation = useMutation({
     mutationFn: ({
@@ -131,16 +125,7 @@ const EquiposTable: React.FC = () => {
         isClosable: true,
       });
     },
-    onError: (error: any) => {
-      console.log(error)
-      toast({
-        title: 'Error al actualizar equipo.',
-        description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
+   
   });
   const openEditModal = (equipment: Equipment | null) => {
     setSelectedEquipment(equipment);
@@ -259,7 +244,7 @@ const EquiposTable: React.FC = () => {
         onChange={(index) => setActiveCategoryId(categorias[index]?.id || null)}
       >
         <TabList>
-          {categorias.map((category: Category) => (
+          {categorias?.map((category: Category) => (
             <Tab key={category.id}>{category.nombre}</Tab>
           ))}
         </TabList>
@@ -312,7 +297,10 @@ const EquiposTable: React.FC = () => {
       <Button onClick={() => openEditModal(null)}>Agregar nuevo</Button>
       <EquipmentModal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => {
+          setSelectedEquipment(null)
+          setModalOpen(false)
+        }}
         equipment={selectedEquipment}
         categories={categorias || []}
         onSave={handleSave}

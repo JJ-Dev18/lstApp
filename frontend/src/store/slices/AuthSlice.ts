@@ -1,3 +1,4 @@
+import { createStandaloneToast } from "@chakra-ui/react";
 import instance from "../../api/axios";
 import { User } from '../../interfaces/auth';
 
@@ -7,14 +8,15 @@ export interface AuthSlice {
     register : ( email : string , password : string , nombre : string ) => Promise<User>
     logout: () => void;
     checkToken: () => Promise<void>;
-    error : boolean,
+    // error : boolean,
    
   }
+const {toast} = createStandaloneToast();
   
  export const createAuthSlice = (set: any, get : any): AuthSlice => ({
    
     token: localStorage.getItem('token'),
-    error : false,
+    // error : false,
     register : async ( email : string , password : string , nombre : string ) => {
         try {
             const response = await instance.post('/auth/register', { email, password, nombre });
@@ -64,8 +66,13 @@ export interface AuthSlice {
     logout: () => {
       localStorage.removeItem('token');
       set({ token: null, torneo : null, navbarOpen : false, openForm : false });
-      // set({torneo : null});
-      // set({navbarOpen : false})
+      toast({
+        title: 'Sesion Cerrada',
+        
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     },
     checkToken: async () => {
       const token = localStorage.getItem('token');
@@ -85,7 +92,9 @@ export interface AuthSlice {
           
           // localStorage.removeItem('token');
           // set({ token: null });
+          
           logout()
+          
       }
     }
   });
