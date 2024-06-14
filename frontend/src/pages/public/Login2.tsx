@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useToast, Box, Flex, Heading, Text, Input, Button, VStack, InputGroup, InputLeftElement, Skeleton, Link as ChakraLink } from '@chakra-ui/react';
+import { useToast, Box, Flex, Heading, Text, Input, Button, VStack, InputGroup, InputLeftElement, Skeleton } from '@chakra-ui/react';
 import useStore from '../../store/store';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 import { BorderBeam } from '../../components/ui/BorderBeam';

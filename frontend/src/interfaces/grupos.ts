@@ -1,7 +1,4 @@
-interface Equipo {
-    id: number;
-    nombre: string;
-  }
+
   export interface EquiposGrupo {
     equipoId: number;
     grupoId:  number;
