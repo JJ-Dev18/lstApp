@@ -9,7 +9,10 @@ export const fetchEquipos = async (torneoId: string | undefined) => {
     const response = await instance.get(`/equipos/categoria/${categoriaId}`);
     return response.data;
   };  
- 
+  export const fetchEquiposDisponibles = async (categoryId: number) => {
+    const { data } = await instance.get(`/grupos/equipos-disponibles/${categoryId}`);
+    return data;
+  };
 export  const createEquipo = async (id:string | undefined,newEquipment: Partial<Equipment>) => {
   const formData = new FormData(); 
   formData.append('nombre', String(newEquipment.nombre));

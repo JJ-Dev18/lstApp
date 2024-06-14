@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useToast, Box, Flex, Heading, Text, Input, Button, VStack, InputGroup, InputLeftElement, Skeleton } from '@chakra-ui/react';
+import { useToast, Box, Flex, Heading, Text, Input, Button, VStack, InputGroup, InputLeftElement, Skeleton, Link as ChakraLink } from '@chakra-ui/react';
 import useStore from '../../store/store';
 import { EmailIcon, LockIcon } from '@chakra-ui/icons';
 import { BorderBeam } from '../../components/ui/BorderBeam';
@@ -45,7 +45,7 @@ const Login2 = () => {
       await dispatchLogin(username, password);
     } catch (error: any) {
       toast({
-        title: 'Login failed',
+        title: 'Error al iniciar',
         description: error.message || 'Invalid username or password.',
         status: 'error',
         duration: 5000,
@@ -144,6 +144,18 @@ const Login2 = () => {
             </Button>
           </VStack>
         </form>
+        <Button 
+        mt={2}
+         colorScheme="teal"
+         variant="solid"
+         width="full"
+        //  bg="teal.400"
+         type='submit'
+        //  _hover={{ bg: 'teal.500' }}
+         boxShadow="0 0 10px teal"
+        onClick={()=> navigate('/register')}>
+          Registrarse
+        </Button>
       </Flex>
     </Flex>
   );

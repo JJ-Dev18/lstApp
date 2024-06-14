@@ -1,13 +1,13 @@
 export const mobileSteps = [
     {
-        target: '#btn-crear',
+        target: '#start',
         content: 'Crearemos un torneo de forma rapida para empezar',
         placement: 'bottom',
         disableBeacon: true,
     },
     {
         target: '#torneoSubmit',
-        content: 'Simplificamos la creacion individual de categorias,equipos y jugadores',
+        content: 'Pondremos un nombre de prueba',
         disableBeacon: true,
         
       },
@@ -50,14 +50,14 @@ export const mobileSteps = [
 
 export  const desktopSteps = [
     {
-        target: '#btn-crear',
+        target: '#start',
         content: 'Crearemos un torneo de forma rapida para empezar',
         placement: 'bottom',
         disableBeacon: true,
       },
       {
         target: '#torneoSubmit',
-        content: 'Simplificamos la creacion individual de categorias,equipos y jugadores',
+        content:  'Pondremos un nombre de prueba',
         disableBeacon: true,
         scrollTo: true,
         

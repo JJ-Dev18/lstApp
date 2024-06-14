@@ -42,7 +42,7 @@ export const createJugador = async (req: Request, res: Response) => {
          }
          else {
            await prisma.jugador.create({
-            data : {...jugador,numero : Number(jugador.numero)}
+            data : {...jugador,numero : Number(jugador.numero) , documento : jugador.documento.toString(), celular : jugador.celular.toString()}
            })
          }
     });

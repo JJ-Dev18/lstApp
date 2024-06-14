@@ -3,41 +3,21 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Box, Heading, VStack, useToast, Button,Card, Modal, ModalOverlay, ModalContent, ModalHeader, Text, ModalFooter, ModalBody, ModalCloseButton, Input, IconButton } from '@chakra-ui/react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { asociarEquipoGrupo, createGrupo, deleteGrupo, fetchGrupos } from '../../../../api/admin/grupos';
-import instance from '../../../../api/axios';
 import { DeleteIcon } from '@chakra-ui/icons';
+import { Progress } from '@chakra-ui/react';
+import { EquiposGrupo, GruposEquipo } from '../../../../interfaces/grupos';
+import { Equipo } from '../../../../interfaces/marcador';
+import { fetchEquiposDisponibles } from '../../../../api/admin/equipos';
 
-interface Equipo {
-  id: number;
-  nombre: string;
-}
-export interface EquiposGrupo {
-  equipoId: number;
-  grupoId:  number;
-  equipo:   GruposEquipo;
-}
 
-export interface GruposEquipo {
-  id:             number;
-  nombre:         string;
-  categoriaId:    number;
-  equiposGrupos?: EquiposGrupo[];
-  torneoId?:      number;
-}
 
 
 interface DragDropContextComponentProps {
   categoryId: number;
 }
 
-const fetchEquiposDisponibles = async (categoryId: number) => {
-  const { data } = await instance.get(`/grupos/equipos-disponibles/${categoryId}`);
-  return data;
-};
 
-// const fetchGrupos = async (categoryId: number) => {
-//   const { data } = await axios.get(`/api/grupos/${categoryId}`);
-//   return data;
-// };
+
 
 const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ categoryId }) => {
   const queryClient = useQueryClient();
@@ -136,7 +116,7 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
     }
     deleteGroupMutation.mutate(groupId);
   };
-  if (equiposLoading || gruposLoading) return <div>Loading...</div>;
+  if (equiposLoading || gruposLoading) return <Progress/>;
 
   return (
   <>

@@ -77,10 +77,10 @@ const FileUpload: FC<FileUploadProps> = ({ onFileUpload }) => {
           numero: Number(row[2]),
           posicion: row[1],
           fotoUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-          edad :row[3],
+          edad: row[3],
           celular:row[4],
-          eps	:row[5],
-          documento :row[6],
+          eps: row[5],
+          documento : row[6],
 
         }));
         console.log(newPlayers,"new")

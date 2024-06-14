@@ -35,6 +35,7 @@ const Register = () => {
       });
       navigate('/login');
     } catch (error: any) {
+      console.log(error,"error")
       toast({
         title: 'Error en el registro',
         description: error.message || 'No se pudo crear la cuenta.',

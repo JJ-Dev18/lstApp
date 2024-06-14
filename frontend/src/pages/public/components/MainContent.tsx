@@ -43,7 +43,22 @@ const FeedbackForm = lazy(() => import("./FeedbackForm"));
 //   ];
 const MainContent: React.FC = () => (
   <>
-    <Box py={16} px={8}>
+    <Box py={16} px={8} position="relative">
+    <GridPattern
+        squares={[
+          [4, 4],
+          [5, 1],
+          [8, 2],
+          [6, 6],
+          [10, 5],
+          [13, 3],
+        ]}
+        className={cn(
+          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+          "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
+          "hidden md:block"
+        )}
+      />
       <Heading as="h3" size="xl" mb={8}>Como funciona ?</Heading>
       <Text fontSize="lg" mb={12}>
         Una plataforma sencilla y potente para gestionar tus mejores torneos y juegos de frisbee.
@@ -57,7 +72,7 @@ const MainContent: React.FC = () => (
         </Grid>
       </Suspense>
     </Box>
-
+    
     {/* <Box py={16} px={8}>
       <DotPattern className={cn("[mask-image:radial-gradient(700px_circle_at_center,white,transparent)]")} />
       <Heading as="h3" size="xl" mb={8}>Torneos destacados</Heading>
@@ -69,7 +84,7 @@ const MainContent: React.FC = () => (
         </Grid>
       </Suspense>
     </Box>
-
+ 
     <Box py={16} px={8}>
       <Heading as="h3" size="xl" mb={8}>Equipos destacados</Heading>
       <Suspense fallback={<Skeleton height="200px" />}>
@@ -91,11 +106,14 @@ const MainContent: React.FC = () => (
       </Suspense>
     </Box> */}
 
-    <Box py={16} px={8} position="relative">
+    <Box py={16} px={8} >
       <Suspense fallback={<Skeleton height="200px" />}>
         <Testimonials />
       </Suspense>
-      <GridPattern
+     
+    </Box>
+    {/* <Box  position="relative">
+    <GridPattern
         squares={[
           [4, 4],
           [5, 1],
@@ -105,14 +123,14 @@ const MainContent: React.FC = () => (
           [13, 3],
         ]}
         className={cn(
-          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+          "[mask-image:radial-gradient(200px_circle_at_center,white,transparent)]",
           "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
           "hidden md:block"
         )}
       />
-    </Box>
-
-    <Box py={16} px={8}>
+    
+    </Box> */}
+    <Box py={16} px={8} >
       {/* <Heading as="h3" size="xl" mb={8}>Estadisticas</Heading>
       <Box width="full" height="500px" position="relative">
         <Suspense fallback={<Skeleton height="500px" />}>
@@ -121,8 +139,10 @@ const MainContent: React.FC = () => (
       </Box> */}
       <Suspense fallback={<Skeleton height="200px" />}>
         <FeedbackForm />
+        
         <LikeButton />
       </Suspense>
+      
     </Box>
   </>
 );

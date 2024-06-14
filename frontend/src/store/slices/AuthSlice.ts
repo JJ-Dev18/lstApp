@@ -65,6 +65,8 @@ const {toast} = createStandaloneToast();
     },
     logout: () => {
       localStorage.removeItem('token');
+      localStorage.removeItem('torneo');
+
       set({ token: null, torneo : null, navbarOpen : false, openForm : false });
       toast({
         title: 'Sesion Cerrada',

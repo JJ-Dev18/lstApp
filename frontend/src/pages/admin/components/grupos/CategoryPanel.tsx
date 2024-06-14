@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Input, useToast, VStack } from '@chakra-ui/react';
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { createGrupo, fetchGrupos } from '../../../../api/admin/grupos';
+import { Progress } from '@chakra-ui/react';
 
 
 interface Group {
@@ -58,7 +59,7 @@ const CategoryPanel: React.FC<CategoryPanelProps> = ({ categoryId }) => {
     setNewGroupName('');
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Progress/>;
   if (isError) return <div>Error loading groups</div>;
 
   return (

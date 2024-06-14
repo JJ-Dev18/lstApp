@@ -43,7 +43,7 @@ const Header: React.FC = () => {
         <Text fontSize={{ base: "lg", md: "xl" }} mb={6} color="white">
           La mejor manera de realizar un seguimiento de tus juegos, torneos y ligas de Ultimate Frisbee en tiempo real.
         </Text>
-        <Button bg="teal.400" fontSize={{ base: "md", md: "lg" }} onClick={()=> navigate('/register')}>
+        <Button bg="teal.400" fontSize={{ base: "md", md: "lg" }} onClick={()=> navigate('/login')}>
           ¡Empieza ahora!
         </Button>
       </Box>

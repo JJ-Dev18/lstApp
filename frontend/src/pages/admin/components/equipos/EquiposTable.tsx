@@ -41,6 +41,7 @@ import {
 import { RiTeamFill } from "react-icons/ri";
 import debounce from "lodash.debounce";
 import { useCategorias } from "../../../../hooks/useCategorias";
+import { Progress } from '@chakra-ui/react';
 
 const columnHelper = createColumnHelper<Equipment>();
 
@@ -224,7 +225,7 @@ const EquiposTable: React.FC = () => {
   }, [categorias]);
 
   if (isLoadingCategorias || isLoadingEquipos) {
-    return <div>Loading...</div>;
+    return <Progress/>;
   }
   // const renderSortIcon = (isSorted: string | false) => {
   //   if (isSorted === 'asc') return <FaSortUp />;

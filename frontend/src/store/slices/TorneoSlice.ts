@@ -40,7 +40,7 @@ export const createTorneoSlice = (set: any, get : any): TorneoSlice => ({
             console.log(user,"user")
          const response =  await instance.post(`/torneos/${user?.id}`, data);
          setTorneo(response.data)
-         localStorage.setItem('torneo', response.data);
+        //  localStorage.setItem('torneo', response.data);
          if (user) {
             setUser({ ...user, torneos: 1 });
           }

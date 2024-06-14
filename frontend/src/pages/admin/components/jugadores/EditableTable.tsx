@@ -31,6 +31,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  CircularProgress,
 } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
@@ -120,7 +121,7 @@ const EditableTable: FC = () => {
   }, [jugadores]);
 
   const handleAddRow = () => {
-    setData([...data, {  nombre: '', equipoId: equipoId, numero: 0, posicion: '', fotoUrl: '' }]);
+    setData([...data, {  documento: '', nombre: '', equipoId: equipoId, numero: 0, posicion: '', fotoUrl: '',eps: '', edad: '', }]);
   };
 
   // const handleDeleteRow = (rowIndex: number) => {
@@ -171,6 +172,33 @@ const EditableTable: FC = () => {
 
   const columns: ColumnDef<Jugador>[] = [
     {
+      accessorKey: 'fotoUrl',
+      header: 'Foto URL',
+      cell: (info: CellContext<Jugador, any>) => (
+        <Box display="flex">
+        {/* <EditableCell
+          value={info.getValue()}
+          row={info.row}
+          column={info.column}
+          updateMyData={updateMyData}
+        /> */}
+        <img src={info.getValue()} alt="img jugador" />
+        </Box>
+      ),
+    },
+    {
+      accessorKey: 'documento',
+      header: 'Documento',
+      cell: (info: CellContext<Jugador, any>) => (
+        <EditableCell
+          value={info.getValue()}
+          row={info.row}
+          column={info.column}
+          updateMyData={updateMyData}
+        />
+      ),
+    },
+    {
       accessorKey: 'nombre',
       header: 'Nombre',
       cell: (info: CellContext<Jugador, any>) => (
@@ -207,8 +235,20 @@ const EditableTable: FC = () => {
       ),
     },
     {
-      accessorKey: 'fotoUrl',
-      header: 'Foto URL',
+      accessorKey: 'celular',
+      header: 'Celular',
+      cell: (info: CellContext<Jugador, any>) => (
+        <EditableCell
+          value={info.getValue()}
+          row={info.row}
+          column={info.column}
+          updateMyData={updateMyData}
+        />
+      ),
+    },
+    {
+      accessorKey: 'eps',
+      header: 'Eps',
       cell: (info: CellContext<Jugador, any>) => (
         <EditableCell
           value={info.getValue()}
@@ -279,7 +319,7 @@ const EditableTable: FC = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CircularProgress/>;
   }
 
   return (
@@ -370,7 +410,7 @@ const EditableCell: FC<EditableCellProps> = ({
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-
+  console.log(initialValue,id,"initialvalue")
   const onBlur = () => {
     updateMyData(index, id, value);
   };
@@ -379,7 +419,7 @@ const EditableCell: FC<EditableCellProps> = ({
     setValue(initialValue);
   }, [initialValue]);
 
-  return <Input value={value} onChange={onChange} onBlur={onBlur} />;
+  return <Input width="140px" value={value} onChange={onChange} onBlur={onBlur} />;
 };
 
 export default EditableTable;

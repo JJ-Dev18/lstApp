@@ -4,6 +4,9 @@ export interface Jugador {
     equipoId: number;
     numero: number;
     posicion: string;
+    edad: string;
+    eps: string ;
+    documento : string;
     fotoUrl: string;
    
   }

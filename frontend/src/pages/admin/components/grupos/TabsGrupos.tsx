@@ -2,6 +2,7 @@ import React from 'react';
 import {  Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import CategoryPanel2 from './CategoryPanel2';
 import { useCategorias } from '../../../../hooks/useCategorias';
+import { Progress } from '@chakra-ui/react';
 
 
 
@@ -10,7 +11,7 @@ const TabsGrupos: React.FC = () => {
     // Supongamos que tenemos el ID del torneo
   const { categorias,  isLoadingCategorias, isError } = useCategorias();
 
-  if (isLoadingCategorias) return <div>Loading...</div>;
+  if (isLoadingCategorias) return <Progress/>;
   if (isError) return <div>Error loading categories</div>;
 
   return (
