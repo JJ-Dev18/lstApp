@@ -43,8 +43,6 @@ import { createPlayers, deletePlayer, fetchPlayers } from '../../../../api/admin
 import { SiMicrosoftexcel } from 'react-icons/si';
 import axios from 'axios';
 
-
-
 interface EditableCellProps {
   value: any;
   row: Row<Jugador>;
@@ -53,42 +51,41 @@ interface EditableCellProps {
 }
 
 const EditableTable: FC = () => {
-  const { equipoId : teamId } = useParams<{ equipoId: string }>();
+  const { equipoId: teamId } = useParams<{ equipoId: string }>();
   const equipoId = parseInt(teamId!, 10);
   const queryClient = useQueryClient();
-  const toast = useToast()
+  const toast = useToast();
   const { data: jugadores, isLoading } = useQuery({
     queryKey: ['jugadores', equipoId],
     queryFn: () => fetchPlayers(equipoId),
   });
-  const mutation = useMutation( {
-    mutationFn : createPlayers,
-    
+
+  const mutation = useMutation({
+    mutationFn: createPlayers,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['jugadores', equipoId]});
+      queryClient.invalidateQueries({ queryKey: ['jugadores', equipoId] });
       toast({
         title: 'Jugadores agregados con éxito.',
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
-     
     },
-    onError: (error: any) => {
-      toast({
-        title: 'Error al agregar jugadores.',
-        description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
+    // onError: (error: any) => {
+    //   toast({
+    //     title: 'Error al agregar jugadores.',
+    //     description: error.response?.data?.error || 'Hubo un problema al agregar los jugadores',
+    //     status: 'error',
+    //     duration: 5000,
+    //     isClosable: true,
+    //   });
+    // }
   });
-  const deleteMutation = useMutation( {
-    mutationFn : deletePlayer,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['jugadores', equipoId]});
 
+  const deleteMutation = useMutation({
+    mutationFn: deletePlayer,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['jugadores', equipoId] });
       toast({
         title: 'Jugador eliminado.',
         description: 'El jugador ha sido eliminado exitosamente.',
@@ -107,13 +104,15 @@ const EditableTable: FC = () => {
       });
     },
   });
+
   const [data, setData] = useState<Jugador[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('nombre');
   const [sorting, setSorting] = useState<SortingState>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [playerToDelete, setPlayerToDelete] = useState<Jugador | null>(null);
-  const [filaSelected, setFilaSelected] = useState<number | null>(null)
+  const [filaSelected, setFilaSelected] = useState<number | null>(null);
+
   useEffect(() => {
     if (jugadores) {
       setData(jugadores);
@@ -121,17 +120,11 @@ const EditableTable: FC = () => {
   }, [jugadores]);
 
   const handleAddRow = () => {
-    setData([...data, {  documento: '', nombre: '', equipoId: equipoId, numero: 0, posicion: '', fotoUrl: '',eps: '', edad: '', }]);
+    setData([...data, { documento: '', nombre: '', equipoId: equipoId, numero: 0, posicion: '', fotoUrl: '', eps: '', edad: '' }]);
   };
 
-  // const handleDeleteRow = (rowIndex: number) => {
-  //   setData(data.filter((_, index) => index !== rowIndex));
-  // };
-
   const handleFileUpload = (newPlayers: Jugador[]) => {
-    // const newData = newPlayers.map(player => ({ ...player, equipoId }))
-    // setData((prev)=> [...prev,...newData]);
-    setData( newPlayers.map(player => ({ ...player, equipoId })))
+    setData(newPlayers.map(player => ({ ...player, equipoId })));
   };
 
   const handleSubmit = () => {
@@ -151,8 +144,9 @@ const EditableTable: FC = () => {
       })
     );
   };
+
   const debouncedSearch = useMemo(() =>
-    debounce((value:any) => {
+    debounce((value: any) => {
       setSearchTerm(value);
     }, 300), []);
 
@@ -176,13 +170,7 @@ const EditableTable: FC = () => {
       header: 'Foto URL',
       cell: (info: CellContext<Jugador, any>) => (
         <Box display="flex">
-        {/* <EditableCell
-          value={info.getValue()}
-          row={info.row}
-          column={info.column}
-          updateMyData={updateMyData}
-        /> */}
-        <img src={info.getValue()} alt="img jugador" />
+          <img src={info.getValue()} alt="img jugador" />
         </Box>
       ),
     },
@@ -259,17 +247,30 @@ const EditableTable: FC = () => {
       ),
     },
     {
+      accessorKey: 'edad',
+      header: 'Edad',
+      cell: (info: CellContext<Jugador, any>) => (
+        <EditableCell
+          value={info.getValue()}
+          row={info.row}
+          column={info.column}
+          updateMyData={updateMyData}
+        />
+      ),
+    },
+    {
       header: 'Acciones',
       cell: ({ row }) => (
         <Button colorScheme="red" onClick={() => {
-          handleDeleteClick(row.original)
-          setFilaSelected(row.index)
+          handleDeleteClick(row.original);
+          setFilaSelected(row.index);
         }}>
-        Eliminar
-      </Button>
+          Eliminar
+        </Button>
       ),
     },
   ];
+
   const handleDeleteClick = (player: any) => {
     setPlayerToDelete(player);
     onOpen();
@@ -277,14 +278,15 @@ const EditableTable: FC = () => {
 
   const confirmDelete = () => {
     if (playerToDelete) {
-      if(playerToDelete.id){
+      if (playerToDelete.id) {
         deleteMutation.mutate(playerToDelete.id);
-      }else{
+      } else {
         setData(data.filter((_, index) => index !== filaSelected));
       }
     }
     onClose();
   };
+
   const descargarPlantilla = () => {
     const url = 'plantilla.xlsx'; // Ruta de la plantilla de archivo Excel
 
@@ -302,11 +304,13 @@ const EditableTable: FC = () => {
         console.error('Error al descargar la plantilla:', error);
       });
   }
+
   const renderSortIcon = (isSorted: string | false) => {
     if (isSorted === 'asc') return <FaSortUp />;
     if (isSorted === 'desc') return <FaSortDown />;
     return <FaSort />;
   };
+
   const table = useReactTable({
     data: filteredData,
     columns,
@@ -319,38 +323,38 @@ const EditableTable: FC = () => {
   });
 
   if (isLoading) {
-    return <CircularProgress/>;
+    return <CircularProgress />;
   }
 
   return (
     <VStack spacing={4} align="stretch">
-    <HStack spacing={4}>
-      <Button colorScheme="teal" onClick={handleAddRow}>
-        Agregar Jugador
-      </Button>
-      <Button colorScheme="blue" onClick={handleSubmit}>
-        Enviar Datos
-      </Button>
-      <Button leftIcon={<SiMicrosoftexcel />} onClick={descargarPlantilla}>
-       Descargar plantilla
-      </Button>
-    </HStack>
-       <FileUpload onFileUpload={handleFileUpload} />
-     
-    <HStack spacing={4}>
-      <Input
-        placeholder="Buscar..."
-        onChange={handleSearchChange}
-      />
-      <Select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-        <option value="nombre">Nombre</option>
-        <option value="posicion">Posición</option>
-      </Select>
-    </HStack>
-    <Box overflowX="auto">
-      <Table variant="striped" colorScheme='teal'>
-        <Thead>
-        {table.getHeaderGroups().map(headerGroup => (
+      <HStack spacing={4}>
+        <Button colorScheme="teal" onClick={handleAddRow}>
+          Agregar Jugador
+        </Button>
+        <Button colorScheme="blue" onClick={handleSubmit}>
+          Enviar Datos
+        </Button>
+        <Button leftIcon={<SiMicrosoftexcel />} onClick={descargarPlantilla}>
+          Descargar plantilla
+        </Button>
+      </HStack>
+      <FileUpload onFileUpload={handleFileUpload} />
+
+      <HStack spacing={4}>
+        <Input
+          placeholder="Buscar..."
+          onChange={handleSearchChange}
+        />
+        <Select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+          <option value="nombre">Nombre</option>
+          <option value="posicion">Posición</option>
+        </Select>
+      </HStack>
+      <Box overflowX="auto">
+        <Table variant="striped" colorScheme='teal'>
+          <Thead>
+            {table.getHeaderGroups().map(headerGroup => (
               <Tr key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
                   <Th key={header.id} className='cursor-pointer' onClick={header.column.getToggleSortingHandler()}>
@@ -358,26 +362,26 @@ const EditableTable: FC = () => {
                       header.column.columnDef.header,
                       header.getContext()
                     )}
-                     {renderSortIcon(header.column.getIsSorted())}
+                    {renderSortIcon(header.column.getIsSorted())}
                   </Th>
                 ))}
               </Tr>
             ))}
-        </Thead>
-        <Tbody>
-          {table.getRowModel().rows.map(row => (
-            <Tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <Td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Td>
-              ))}
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </Box>
-    <Modal isOpen={isOpen} onClose={onClose}>
+          </Thead>
+          <Tbody>
+            {table.getRowModel().rows.map(row => (
+              <Tr key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <Td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Td>
+                ))}
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Confirmar eliminación</ModalHeader>
@@ -395,7 +399,7 @@ const EditableTable: FC = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-  </VStack>
+    </VStack>
   );
 };
 
@@ -410,7 +414,7 @@ const EditableCell: FC<EditableCellProps> = ({
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  console.log(initialValue,id,"initialvalue")
+
   const onBlur = () => {
     updateMyData(index, id, value);
   };

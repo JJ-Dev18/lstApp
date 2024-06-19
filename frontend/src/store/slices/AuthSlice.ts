@@ -20,7 +20,7 @@ const {toast} = createStandaloneToast();
     register : async ( email : string , password : string , nombre : string ) => {
         try {
             const response = await instance.post('/auth/register', { email, password, nombre });
-             const { setUser } = get() 
+             const { setUser ,setLinksAdmin , setLinksPlanillero } = get() 
             
             console.log(response.data.error,"respoinse")
             if(!response.data.error){
@@ -29,6 +29,11 @@ const {toast} = createStandaloneToast();
               const user = response.data.user
               localStorage.setItem('token', token);
               set({ token});
+              if(user.rol === 'administrador'){
+                setLinksAdmin()
+              }else{
+                setLinksPlanillero()
+              }
               setUser(user)
               return user;
             } else {
@@ -43,15 +48,20 @@ const {toast} = createStandaloneToast();
     login: async (email:string,password:string) => {
       try {
         const response = await instance.post('/auth/login', { email, password });
-         const { setUser } = get() 
+         const { setUser , setLinksAdmin, setLinksPlanillero} = get() 
         
-        console.log(response.data.error,"respoinse")
+        
         if(!response.data.error){
          
           const token = response.data.token
           const user = response.data.user
           localStorage.setItem('token', token);
           set({ token});
+          if(user.rol === 'administrador'){
+            setLinksAdmin()
+          }else{
+            setLinksPlanillero()
+          }
           setUser(user)
           return user;
         } else {
@@ -78,7 +88,7 @@ const {toast} = createStandaloneToast();
     },
     checkToken: async () => {
       const token = localStorage.getItem('token');
-      const {logout, setUser } = get() 
+      const {logout, setUser, setLinksAdmin,setLinksPlanillero } = get() 
       try {
        const response =  await instance.get('/auth/check-token',{
           headers: {
@@ -86,7 +96,13 @@ const {toast} = createStandaloneToast();
           },
         })
         set({ token });
+
         setUser(response.data.user)
+        if(response.data.user.rol === 'administrador'){
+          setLinksAdmin()
+        }else{
+          setLinksPlanillero()
+        }
         
         
       } catch (error) {

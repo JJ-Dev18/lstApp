@@ -33,17 +33,18 @@ export interface Equipo {
     id:          number;
     nombre:      string;
     categoriaId: number;
+    logo : string ;
 }
 
 export interface EventoType {
-    id:           number;
+    id?:           number;
     partidoId:    number;
     tipo:         string;
     tiempo:       string;
     jugadorId:    number;
-    planilleroId: number;
-    comentario:   null;
-    jugador:      Jugador;
+    planilleroId?: number;
+    comentario?:   string;
+    jugador?:      Jugador;
 }
 
 export interface Jugador {

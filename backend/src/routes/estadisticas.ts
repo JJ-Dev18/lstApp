@@ -31,8 +31,9 @@ router.get('/jugador/:jugadorId', async (req,res) => {
   })  
 
 
- const actualizarEstadisticas = async (tipo:string,jugadorId:number,partidoId:number) => {
-    const campoActualizar = {
+ const actualizarEstadisticas = async (tipo:string,jugadorId:number,partidoId:number,decrement?: boolean) => {
+  console.log(decrement,"decrement")  
+  const campoActualizar = {
         goles: 0,
         bloqueos: 0,
         intercepciones: 0,
@@ -67,15 +68,25 @@ router.get('/jugador/:jugadorId', async (req,res) => {
         
           if (estadisticaExistente) {
             // Actualizar la estadística existente
+           
+
             await prisma.estadistica.update({
               where: {
                 id: estadisticaExistente.id,
               },
               data: {
-                goles: { increment: campoActualizar.goles },
-                bloqueos: { increment: campoActualizar.bloqueos },
-                intercepciones: { increment: campoActualizar.intercepciones },
-                asistencias: { increment: campoActualizar.asistencias },
+                goles: {
+                  [!decrement ? 'increment' : 'decrement']: campoActualizar.goles,
+                },
+                bloqueos: {
+                  [!decrement ? 'increment' : 'decrement']: campoActualizar.bloqueos,
+                },
+                intercepciones: {
+                  [!decrement ? 'increment' : 'decrement']: campoActualizar.intercepciones,
+                },
+                asistencias: {
+                  [!decrement ? 'increment' : 'decrement']: campoActualizar.asistencias,
+                },
               },
             });
           } else {
@@ -141,4 +152,4 @@ async function obtenerEstadisticasEquipo(equipoId: number) {
         console.log(error)
     }
   }
-  export { router as EstadisticasRouter ,obtenerEstadisticasEquipo , obtenerEstadisticasJugador , actualizarEstadisticas};
+  export { router as estadisticasRoutes ,obtenerEstadisticasEquipo , obtenerEstadisticasJugador , actualizarEstadisticas};

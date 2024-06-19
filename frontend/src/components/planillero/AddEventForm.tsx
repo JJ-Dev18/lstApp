@@ -41,21 +41,9 @@ const AddEventForm: React.FC<Props> = ({time,partidoId}) => {
         socket.emit('register', eventData, (response: { status: string; evento?: any; error?: string }) => {
           console.log('Evento registrado:', response);
           if (response.status === 'success' && response.evento) {
-            toast({
-              title: 'Event added.',
-              description: 'The event has been added successfully.',
-              status: 'success',
-              duration: 5000,
-              isClosable: true,
-            });
+           
           } else {
-            toast({
-              title: 'Error adding event.',
-              description: 'There was an error adding the event.',
-              status: 'error',
-              duration: 5000,
-              isClosable: true,
-            });
+           
             console.error('Error registrando el evento:', response.error);
           }
         });

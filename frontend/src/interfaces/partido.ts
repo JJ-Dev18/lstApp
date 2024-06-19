@@ -34,3 +34,10 @@ export interface Planillero {
 export interface Usuario {
     nombre: string;
 }
+
+export enum estadoPartido {
+    SINJUGAR = "SIN_JUGAR",
+    ENCURSO = "EN_CURSO",
+    JUGADO = "JUGADO",
+    SUSPENDIDO = "SUSPENDIDO",
+  }

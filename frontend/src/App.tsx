@@ -9,9 +9,10 @@ import { JugadoresPage } from './pages/admin/JugadoresPage';
 import { GruposPage } from './pages/admin/GruposPage';
 import PlanillerosPage from './pages/admin/PlanillerosPage';
 import PartidosPage from './pages/admin/PartidosPage';
+import { PartidoPage } from './pages/planilero/PartidoPage';
+import { PartidosPlanillero } from './pages/planilero/PartidosPlanillero';
 const NotFound = lazy(() => import('./pages/public/NotFound'));
-const Partidos = lazy(() => import('./pages/planilero/Partidos'));
-const Marcador = lazy(() => import('./components/marcador/Marcador'));
+
 const RoleProtectedRoute = lazy(() => import('./pages/public/RoleProtectedRoute'));
 const UnauthorizedPage = lazy(() => import('./pages/public/UnAuthorized'));
 const Home = lazy(() => import('./pages/public/Home'));
@@ -46,12 +47,16 @@ const App: React.FC = () => {
         
         <Route path="/login" element={<Login2 />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/partidos" element={<PartidoPage />} />
+
 
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         
         <Route element={<RoleProtectedRoute allowedRoles={[Role.PLANILLERO]} />}>
-          <Route path="/planillero" element={<Partidos />} />
-          <Route path="/partidos/:partidoId" element={<Marcador />} />
+        <Route  element={<LayoutAdministrador />}>
+          <Route path="/planillero/partidos" element={<PartidosPlanillero />} />
+          <Route path="/planillero/partidos/:partidoId" element={<PartidoPage />} />
+          </Route>
         </Route>
         
         {/* <Route element={<RoleProtectedRoute allowedRoles={['planillero']} />}>

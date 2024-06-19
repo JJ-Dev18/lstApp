@@ -1,30 +1,37 @@
-import { Box, HStack, Text, useColorMode } from "@chakra-ui/react";
+import { Box, Flex, IconButton, Text } from "@chakra-ui/react";
 import { FC } from "react";
 import { EventoType } from "../../interfaces/marcador";
 import { LuGoal } from "react-icons/lu";
 import { GiThrowingBall } from "react-icons/gi";
 import { SiAdblock } from "react-icons/si";
+import { FaTrash } from "react-icons/fa";
 type Props = {
   event: EventoType;
+  align: 'left' | 'right';
+  color: string;
+  onDelete: (id?: number) => void;
 };
 
-export const Evento: FC<Props> = ({ event }) => {
-  const { colorMode } = useColorMode();
-  const { tiempo, tipo, jugador,  } = event;
-  console.log(tipo,"tipo")
+export const Evento: FC<Props> = ({ event, align,color, onDelete }) => {
+  const { tiempo, tipo, jugador } = event;
+  console.log(tipo, "tipo");
   return (
-    <Box
-      bg={colorMode === "dark" ? "gray.800" : "gray.200"}
-      p={4}
-      borderRadius="md"
-      w="full"
-    >
-      <HStack spacing={4}>
-        <Box
-          bg={colorMode === "dark" ? "gray.700" : "gray.200"}
-          p={2}
-          borderRadius="md"
-        >
+    <Flex justify={align === "left" ? "flex-start" : "flex-end"} mb={4}>
+      <Box bg={color} p={4} rounded="md" shadow="md" maxW={{ base: '70%', md: '100%' }} position="relative" >
+        <Text fontWeight="bold">
+          {tipo} - #{jugador?.nombre} - {jugador?.equipo.nombre}
+        </Text>
+        <IconButton
+            aria-label="Delete event"
+            icon={<FaTrash />}
+            color='white'
+            size="sm"
+            onClick={() => onDelete(event.id)}
+            position="absolute"
+            bottom={2}
+            right={2}
+          />
+        <Flex align="center"  mt={2}>
           {tipo === "gol" ? (
             <LuGoal />
           ) : tipo === "asistencia" ? (
@@ -32,18 +39,11 @@ export const Evento: FC<Props> = ({ event }) => {
           ) : (
             <SiAdblock />
           )}
-          
-        </Box>
-        <Box>
-          <Text fontSize="md" fontWeight="bold">
-            {tipo} - #{jugador.numero} - {jugador.nombre}
-          </Text>
-          <Text fontSize="sm">
-            {" "}
-            {tiempo} {jugador.equipo.nombre}
-          </Text>
-        </Box>
-      </HStack>
-    </Box>
+          <Text ml={1}>{tiempo}</Text>
+        </Flex>
+      </Box>
+    </Flex>
   );
 };
+
+

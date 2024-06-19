@@ -58,8 +58,9 @@ const Tour: React.FC = () => {
           numJugadores: 2
       })
       setOpenForm(false);
-      setNavbarOpen(true)
+      navigate(steps[nextIndex].navigateTo);
       await new Promise(resolve => setTimeout(resolve, 1000)); // Esperar para asegurar que el modal esté abierto
+      setNavbarOpen(true)
   }
     if (steps[nextIndex]?.target === '#select-0'){
       setNavbarOpen(false)
@@ -71,10 +72,10 @@ const Tour: React.FC = () => {
     //   setNavbarOpen(false)
     // }
         setStepIndex(nextIndex);
-      if (steps[nextIndex]?.navigateTo) {
-        navigate(steps[nextIndex].navigateTo);
-        await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el DOM esté actualizado
-      }
+      // if (steps[nextIndex]?.navigateTo) {
+      //   navigate(steps[nextIndex].navigateTo);
+      //   await new Promise(resolve => setTimeout(resolve, 500)); // Esperar para asegurar que el DOM esté actualizado
+      // }
     }
   };
 

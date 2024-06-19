@@ -18,6 +18,8 @@ import equipoRoutes from './routes/equipoRoutes'
 import feedbackRoutes  from './routes/feedbackRoutes'
 import torneosRoutes from './routes/tournamentRoutes'
 import planillerosRoutes from './routes/planilleroRoutes'
+import {estadisticasRoutes} from './routes/estadisticas'
+
 
 import grupoClasificacionRoutes from './routes/grupoClasificacionRoutes'
 import { eventRouter, registerEventHandlers } from './routes/events';
@@ -68,6 +70,8 @@ app.use('/partidos', partidoRoutes)
 app.use('/feedback', feedbackRoutes)
 app.use('/torneos', torneosRoutes)
 app.use('/planilleros', planillerosRoutes)
+app.use('/estadisticas', estadisticasRoutes)
+
 
 // app.use('/grupos', grupoClasificacionRoutes)
 
@@ -78,19 +82,19 @@ app.use('/planilleros', planillerosRoutes)
 
 
 
-// io.use((socket, next) => {
-//   const token = socket.handshake.auth.token;
-//   if (!token) {
-//     return next(new Error('Authentication error'));
-//   }
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultSecret') as Usuario;
-//     socket.data.user = decoded;
-//     next();
-//   } catch (err) {
-//     next(new Error('Authentication error'));
-//   }
-// });
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  if (!token) {
+    return next(new Error('Authentication error'));
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultSecret') as Usuario;
+    socket.data.user = decoded;
+    next();
+  } catch (err) {
+    next(new Error('Authentication error'));
+  }
+});
 
 registerEventHandlers(io);
 registrarLikes(io)

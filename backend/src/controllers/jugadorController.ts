@@ -13,6 +13,7 @@ export const getJugadores = async (req: Request, res: Response) => {
     })
     res.json(jugadores)
   } catch (error) {
+    console.log(error,"error")
     res.status(500).json({ error: 'Internal Server Error' })
   }
 }
@@ -42,18 +43,11 @@ export const createJugador = async (req: Request, res: Response) => {
          }
          else {
            await prisma.jugador.create({
-            data : {...jugador,numero : Number(jugador.numero) , documento : jugador.documento.toString(), celular : jugador.celular.toString()}
+            data : {...jugador,numero : Number(jugador.numero) ,edad: Number(jugador.edad), documento : jugador.documento.toString(), celular : jugador.celular.toString()}
            })
          }
     });
-    // const jugadores = await  prisma.jugador.createMany({
-    //   data : arrayJugadores,
-      
-    // })
- 
-    // const newJugador = await prisma.jugador.create({
-    //   data: { nombre, equipoId, numero, posicion, fotoUrl }
-    // })
+   
     res.status(201).json({ message : 'jugadores agregados'})
   } catch (error) {
     console.log(error)

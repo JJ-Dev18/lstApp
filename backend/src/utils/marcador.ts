@@ -1,8 +1,8 @@
 import prisma from "../config/database";
 
-async function actualizarMarcador(partidoId:number, jugadorId:number, tipo:string) {
+async function actualizarMarcador(partidoId:number, jugadorId:number, tipo:string,decrement?:boolean) {
     try {
-         console.log(tipo,"asdfasd")
+         console.log(decrement,"asdfasd")
          if (tipo == "gol") {
              // Buscar el partido por su ID
              const partido = await prisma.partido.findUnique({
@@ -24,8 +24,8 @@ async function actualizarMarcador(partidoId:number, jugadorId:number, tipo:strin
          
              // Determinar qué marcador actualizar basado en el equipo del jugador
              const campoActualizar = partido.equipo1Id === jugador.equipoId
-               ? { marcadorEquipo1: { increment: 1 } }  // Si el jugador pertenece al equipo 1, incrementar marcadorEquipo1
-               : { marcadorEquipo2: { increment: 1 } }; // Si el jugador pertenece al equipo 2, incrementar marcadorEquipo2
+               ? { marcadorEquipo1: {  [!decrement ? 'increment' : 'decrement']:  1 } }  // Si el jugador pertenece al equipo 1, incrementar marcadorEquipo1
+               : { marcadorEquipo2: {  [!decrement ? 'increment' : 'decrement']:  1 } }; // Si el jugador pertenece al equipo 2, incrementar marcadorEquipo2
           
              // Actualizar el marcador del partido en la base de datos
              await prisma.partido.update({

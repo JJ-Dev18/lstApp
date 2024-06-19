@@ -4,7 +4,6 @@ import { Box,  Flex} from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import NavbarAdmin from "./NavbarAdmin";
 import SidebarAdmin from "./SidebarAdmin";
-import Tour from "./Tour";
 import useStore from "../../store/store";
 
 const Layout: React.FC = () => {
@@ -31,7 +30,7 @@ const Layout: React.FC = () => {
         <Box flex="1" p={6} >
           <Outlet />
          
-           <Tour/>
+          
            
         
            

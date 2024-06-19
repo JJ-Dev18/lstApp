@@ -9,7 +9,8 @@ import { BorderBeam } from '../ui/BorderBeam';
 import SearchInput from '../../pages/admin/components/SearchInput';
 import { GiSoccerField } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
-import { links } from './SidebarAdmin';
+
+
 const Navbar: React.FC = () => {
   const { toggleColorMode } = useColorMode();
   const colorModeIcon = useColorModeValue(<MoonIcon />, <SunIcon />);
@@ -19,6 +20,8 @@ const Navbar: React.FC = () => {
   const setNavbarOpen = useStore( (state) => state.setNavbarOpen)
   const logout = useStore( (state) => state.logout)
   const torneo = useStore ( (state ) => state.torneo)
+  const links = useStore ( (state ) => state.links)
+
   
   return (
     <>
@@ -52,7 +55,8 @@ const Navbar: React.FC = () => {
             <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.300" />} />
             <Input type="text" placeholder="Search..." />
           </InputGroup> */}
-          <SearchInput className="hidden md:block"/>
+          { user?.rol === 'administrador' &&   <SearchInput className="hidden md:block"/>}
+         
           <IconButton
             aria-label="Toggle Color Mode"
             icon={colorModeIcon}

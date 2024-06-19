@@ -9,7 +9,7 @@ import { actualizarMarcador } from '../utils/marcador';
 
 
 const router = Router();
-const MAX_TIME = 1 * 120; // 120 minutos en segundos
+let MAX_TIME = 2 * 60; // 120 minutos en segundos
 let timerIntervals: { [key: number]: NodeJS.Timeout | undefined } = {};
 let currentTimes: { [key: number]: number } = {};
 
@@ -17,13 +17,20 @@ const registerEventHandlers = (io: SocketIOServer) => {
   io.on('connection', (socket: Socket) => {
     console.log(`Client connected: ${socket.id}`);
     // console.log(socket.data,"socket")
-    socket.on('joinRoom', ({ partidoId } : {partidoId : number}) => {
+    socket.on('joinRoom', async ({ partidoId } : {partidoId : number}) => {
       // console.log('join')
       const roomName = `partido_${partidoId}`;
       socket.join(roomName);
-      
+      const partido = await prisma.partido.findFirst( {
+        where : {
+          id : Number(partidoId)
+        },
+        
+      })
+      MAX_TIME = partido?.duracion  ? partido.duracion * 60 : 120 * 60 
       // Send the current time to the newly connected client
       io.to(roomName).emit('timeUpdate', { partidoId, time: currentTimes[partidoId] || 0 });
+      
       console.log(`Client with ID ${socket.id} joined room: ${roomName}`);
     });
 
@@ -67,6 +74,9 @@ const registerEventHandlers = (io: SocketIOServer) => {
       if (!user) {
         return callback({ error: 'Usuario no autenticado' });
       }
+      if(!jugadorId){
+        return callback({ error: `Jugador no seleccionado para el evento ${tipo}` });
+      }
       console.log(data)
       // Validar que el tiempo esté en formato "MM:SS"
       // if (!/^\d{2}:\d{2}$/.test(tiempo)) {
@@ -106,10 +116,42 @@ const registerEventHandlers = (io: SocketIOServer) => {
 
         console.log(evento,'se emitio el evento a todos lados') // Emitir evento a todos los clientes en la sala del partido
       } catch (error) {
+        console.log(error)
         callback({ status: 'error', error: error });
       }
     });
+    socket.on('deleteEvent', async (data, callback = () => {}) => {
+      // events = events.filter(event => event.id !== eventId); // En producción, elimina esto de la base de datos.
+    const { eventId, partidoId } = data;
+    const user = socket.data.user;
+    console.log(eventId, "EVENTiD ")
+    if (!user) {
+      return callback({ error: 'Usuario no autenticado' });
+    }
+    console.log('se recibio un evento de eliminacion ')
+    try {
+      const evento = await prisma.evento.delete({
+        where: { id: eventId }
+      });
 
+      const roomName = `partido_${partidoId}`;
+      callback({ status: 'success', eventId });
+
+      io.to(roomName).emit('eventDeleted', { eventId });
+      await actualizarEstadisticas(evento.tipo,evento.jugadorId,Number(partidoId),true)
+      await actualizarMarcador(Number(partidoId),evento.jugadorId,evento.tipo,true)
+      const partidoActualizado = await prisma.partido.findUnique({
+        where: { id: Number(partidoId) },
+      });
+     
+      io.to(roomName).emit('updateScore', partidoActualizado);
+      
+    } catch (error) {
+      console.log(error)
+      callback({ status: 'error', error: error });
+    }
+  }
+  );
     socket.on('disconnect', () => {
       console.log(`Client disconnected: ${socket.id}`);
     });

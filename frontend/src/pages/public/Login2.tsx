@@ -21,7 +21,7 @@ const Login2 = () => {
           navigate('/admin/inicio');
           break;
         case 'planillero':
-          navigate('/planillero');
+          navigate('/planillero/partidos');
           break;
         case 'espectador':
           navigate('/espectador');

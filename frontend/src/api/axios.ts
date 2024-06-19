@@ -21,6 +21,7 @@ instance.interceptors.request.use(
     if (error.response && error.response.status === 401) {
       // Si el servidor responde con un 401 Unauthorized, cerrar la sesión
       useStore.getState().logout();
+      console.log('sesion cerrada ')
       // logout();
     }
     return Promise.reject(error);

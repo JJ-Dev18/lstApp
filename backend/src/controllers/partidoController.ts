@@ -2,7 +2,39 @@ import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
+export const getPartidoPlanilleros  = async (req:Request , res: Response) => {
+  try {
+    const { planilleroId } = req.params
+    const planillero = await prisma.planillero.findFirst({
+      where : {
+        usuarioId : Number(planilleroId)
+      }
+    })
+    if(planillero){
+      console.log(planillero,"planillero")
+      const partidos = await prisma.partido.findMany({
+        include: {
+         equipo1 : true ,
+         equipo2 : true ,
+         categoria: true ,
+         eventos: true,
+        },
+        where : {
+          planilleroId : planillero?.id
+        }
+      })
+      res.status(200).json(partidos)
 
+    }
+    else{
+      res.status(200).json([])
+    }
+    
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' })
+    
+  }
+}
 export const getPartidos = async (req: Request, res: Response) => {
   try {
     const partidos = await prisma.partido.findMany({
@@ -126,6 +158,7 @@ export const deletePartido = async (req: Request, res: Response) => {
 
 export const actualizarMarcadorPartido = async (req: Request, res: Response)=> { 
     const { partidoId , marcadorEquipo1 , marcadorEquipo2 } = req.body 
+  try {
     const partidoActualizado = await prisma.partido.update({
         where: { id: partidoId },
         data: {
@@ -133,4 +166,27 @@ export const actualizarMarcadorPartido = async (req: Request, res: Response)=> {
           marcadorEquipo2: marcadorEquipo2,
         },
     })
+    res.status(200)
+    
+  } catch (error) {
+    res.status(500).json('Error en el servidor')
+  }
+}
+
+export const actualizarEstadoPartido = async ( req : Request , res:Response) => {
+  const { id } = req.params
+  const { estado } = req.body
+  try {
+    const partidoActualizado = await prisma.partido.update({
+      where : { id : Number(id)},
+      data :{
+         estado :estado
+      }
+    })
+    res.status(200).json(partidoActualizado)
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json('Error en el servidor')
+  }
 }
