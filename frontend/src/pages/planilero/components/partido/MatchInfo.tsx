@@ -13,7 +13,7 @@ const MatchInfo:FC<Props> = ({ fecha,planillero})=>  {
       <Text fontSize="sm" color="gray.400">
         {fecha}
         <br />
-        {planillero}
+        Planillero : {planillero}
       </Text>
     </Card>
   );

@@ -13,7 +13,7 @@ export function LiveEvents({ equipo1 ,events, onDelete } : { events : EventoType
   return (
     <Card  p={4} rounded="lg" mb={4}>
       <Text fontSize="lg" fontWeight="bold" mb={2}>Eventos</Text>
-      <Text fontSize="sm" color="gray.400">
+   
         {events.map((evento:EventoType) => (
           <Evento 
           align={evento.jugador?.equipo.nombre === equipo1 ? 'left' : 'right'}
@@ -29,7 +29,7 @@ export function LiveEvents({ equipo1 ,events, onDelete } : { events : EventoType
           //   <Box bg={color} rounded="full" px={2} py={1}>{team}</Box>
           // </Flex>
         ))}
-      </Text>
+      
       {/* <Text textAlign="right" fontSize="sm" color="gray.400" mt={2}>Time: 12:00</Text> */}
     </Card>
   );

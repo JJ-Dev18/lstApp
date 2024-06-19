@@ -22,6 +22,7 @@ export const useEvent = (partidoId? : string) => {
     const navigate = useNavigate()
     const [time, settime] = useState(0)
     const [fecha, setfecha] = useState('')
+    const [planillero, setPlanillero] = useState('')
     const [equipos, setEquipos] = useState<Equipos | null>(null)
     const [marcador, setmarcador] = useState<Marcador>({
       marcadorEquipo1: 0 ,
@@ -44,6 +45,7 @@ export const useEvent = (partidoId? : string) => {
       marcadorEquipo2: data.marcadorEquipo2
     });
     setfecha(new Date(data.fecha).toLocaleString());
+    setPlanillero(data.planillero.usuario.nombre)
     return data.eventos;
   };
   const { data: events = [] } = useQuery({ queryKey : ['events', partidoId], queryFn: fetchEvents,
@@ -313,7 +315,7 @@ export const useEvent = (partidoId? : string) => {
     startTimer,
     pauseTimer,
     maxTimeReached,
-    
+    planillero,
     handleDelete,
     handleTimerActions,
     isPaused,

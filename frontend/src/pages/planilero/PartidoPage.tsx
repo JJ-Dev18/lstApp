@@ -16,7 +16,7 @@ export const PartidoPage = () => {
   const { partidoId } = useParams()
  
   const [selectedEvent, setSelectedEvent] = useState<string>('gol');
-  const { terminarPartido,maxTimeReached,events , isPaused,handleTimerActions, handleDelete, time , marcador, equipos, isConnected, fecha  , handleSubmit} = useEvent(partidoId)
+  const { planillero, terminarPartido,maxTimeReached,events , isPaused,handleTimerActions, handleDelete, time , marcador, equipos, isConnected, fecha  , handleSubmit} = useEvent(partidoId)
  
 
   
@@ -38,7 +38,7 @@ export const PartidoPage = () => {
     <Header isConnected={isConnected}  marcador1={marcador.marcadorEquipo1} marcador2={marcador.marcadorEquipo2} equipo1={equipos?.equipo1} equipo2={equipos?.equipo2} time={formatTime(time)} />
     <Box className="p-4" maxWidth="1900px" >
      
-      <MatchInfo planillero={`juan jose`} fecha={fecha}/>
+      <MatchInfo planillero={planillero} fecha={fecha}/>
       <LiveEvents events={events} onDelete={handleDelete} equipo1={equipos?.equipo1.nombre}/>
       {/* <Box p={6} bg="gray.100" minH="100vh"> */}
       <EventTracker maxTimeReached={maxTimeReached} terminarPartido={terminarPartido} time={formatTime(time)} isPaused={isPaused} handleTimerActions={handleTimerActions} selectedEvent={selectedEvent} onSelectEvent={handleSelectEvent} />

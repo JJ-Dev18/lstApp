@@ -86,6 +86,11 @@ export const getPartido = async (req: Request, res: Response) => {
         equipo1 : true ,
         equipo2 : true ,
         categoria: true ,
+        planillero : {
+          include : {
+            usuario : true
+          }
+        },
         eventos: {
            include:{
                jugador : {
