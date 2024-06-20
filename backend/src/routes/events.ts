@@ -9,9 +9,9 @@ import { actualizarMarcador } from '../utils/marcador';
 
 
 const router = Router();
-let MAX_TIME = 2 * 60; // 120 minutos en segundos
 let timerIntervals: { [key: number]: NodeJS.Timeout | undefined } = {};
 let currentTimes: { [key: number]: number } = {};
+let MAX_TIME = 120 * 60; // 120 minutos en segundos
 
 const registerEventHandlers = (io: SocketIOServer) => {
   io.on('connection', (socket: Socket) => {

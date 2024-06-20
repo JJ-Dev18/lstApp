@@ -129,7 +129,43 @@ async function obtenerEstadisticasJugador(jugadorId: number) {
     }
   
   }
-
+  async function obtenerPartidosGanados(equipoId:number) {
+    // Obtener todos los partidos donde el equipo fue local o visitante
+    const partidos = await prisma.partido.findMany({
+      where: {
+        OR: [
+          { equipo1Id: equipoId },
+          { equipo2Id: equipoId },
+        ],
+        estado: 'JUGADO' // Solo partidos jugados
+      }
+    });
+    const partidosJugados = await prisma.partido.count({
+      where: {
+        OR: [
+          { equipo1Id: equipoId },
+          { equipo2Id: equipoId },
+        ],
+        estado: 'JUGADO' // Solo partidos jugados
+      }
+    });
+  
+    // Filtrar y contar partidos ganados
+    const partidosGanados = partidos.filter(partido => {
+      if (partido.equipo1Id === equipoId && partido.marcadorEquipo1 > partido.marcadorEquipo2) {
+        return true;
+      }
+      if (partido.equipo2Id === equipoId && partido.marcadorEquipo2 > partido.marcadorEquipo1) {
+        return true;
+      }
+      return false;
+    }).length;
+  
+    return {
+      partidosGanados,
+      partidosJugados 
+    };
+  }
 async function obtenerEstadisticasEquipo(equipoId: number) {
     try {
         
@@ -146,8 +182,8 @@ async function obtenerEstadisticasEquipo(equipoId: number) {
             },
           },
         });
-      
-        return estadisticas._sum;
+        const {partidosGanados,partidosJugados} = await obtenerPartidosGanados(equipoId)
+        return {...estadisticas._sum,partidosGanados,partidosJugados};
     } catch (error) {
         console.log(error)
     }

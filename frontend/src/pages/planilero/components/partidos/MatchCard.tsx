@@ -26,7 +26,7 @@ export function MatchCard({ marcadorEquipo1,marcadorEquipo2,id,equipo1,equipo2,d
           {fechaDate.current.toLocaleDateString()} 
         </Text>
         <Text color={dateColor} fontSize="sm" mt="1">
-           duracion : {duracion}
+           duracion : {duracion} minutos
         </Text>
       </Box>
       <Flex bg={scoreBgColor} px="4" py="3" roundedBottom="lg" justify="space-between" align="center">
@@ -39,7 +39,7 @@ export function MatchCard({ marcadorEquipo1,marcadorEquipo2,id,equipo1,equipo2,d
         </Badge>
       </Flex>
       <Box p="4" textAlign="right">
-        <Button variant="outline" size="sm" onClick={() => navigate(`/planillero/partidos/${id}`)}>
+        <Button isDisabled={estado === 'JUGADO'} variant="outline" size="sm" onClick={() => navigate(`/planillero/partidos/${id}`)}>
             Planillar
           {/* <InfoIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" /> */}
         </Button>
