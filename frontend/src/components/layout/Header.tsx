@@ -74,7 +74,7 @@ const Header: React.FC = () => {
           <DrawerHeader>Admin Dashboard</DrawerHeader>
           <DrawerBody>
             <VStack as="nav" spacing={4}>
-              <Link href="/dashboard">Dashboard  </Link>
+              <Link href="/dashboard">Dashboard</Link>
               <Link href="/orders">Orders</Link>
               <Link href="/products">Products</Link>
               <Link href="/customers">Customers</Link>
