@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const Evento: FC<Props> = ({ event, align,color, onDelete }) => {
-  const { tiempo, tipo, jugador } = event;
+  const { tiempo, tipo, jugador, comentario } = event;
   console.log(tipo, "tipo");
   return (
     <Flex justify={align === "left" ? "flex-start" : "flex-end"} mb={4}>
@@ -40,6 +40,7 @@ export const Evento: FC<Props> = ({ event, align,color, onDelete }) => {
             <SiAdblock />
           )}
           <Text ml={1}>{tiempo}</Text>
+          <Text ml={1}>{comentario}</Text>
         </Flex>
       </Box>
     </Flex>

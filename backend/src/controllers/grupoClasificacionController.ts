@@ -56,13 +56,32 @@ export const createGrupoClasificacion = async (req: Request, res: Response) => {
 
 export const asociarEquipoGrupo = async ( req :Request, res : Response) => {
   try {
-    const { equipoId, grupoId } = req.body;
+    const { equipoId, grupoId ,categoriaId, torneoId} = req.body;
     const equiposGrupos = await prisma.equiposGrupos.create({
       data: {
         equipoId: Number(equipoId),
         grupoId: Number(grupoId),
       },
     });
+    const posicionExistente = await prisma.posiciones.findFirst({
+      where: {
+        equipoId: equipoId,
+        torneoId: torneoId,
+        categoriaId: categoriaId,
+        grupoId: grupoId,
+      },
+    });
+
+    if (!posicionExistente) {
+      await prisma.posiciones.create({
+        data: {
+          equipoId: equipoId,
+          torneoId: torneoId,
+          categoriaId: categoriaId,
+          grupoId: grupoId,
+        },
+      });
+    }
     res.status(200).json(equiposGrupos);
   } catch (error) {
     console.log(error,"error asociarequipo")

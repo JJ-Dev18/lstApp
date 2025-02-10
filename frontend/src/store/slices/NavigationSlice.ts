@@ -2,6 +2,7 @@ import { As } from '@chakra-ui/react';
 import { FaBox, FaGamepad, FaUsers } from 'react-icons/fa';
 import { MdCategory } from 'react-icons/md';
 import { VscUngroupByRefType } from 'react-icons/vsc';
+import { HiTable } from "react-icons/hi";
 
 interface Link{
     href: string ;
@@ -23,6 +24,8 @@ const linksAdmin = [
     { href: "/admin/planilleros", label: "Planilleros", icon: FaUsers },
     { href: "/admin/grupos", label: "Grupos", icon: VscUngroupByRefType },
     { href: "/admin/partidos", label: "Partidos", icon: FaGamepad },
+    { href: "/admin/posiciones", label: "Posiciones", icon: HiTable },
+
     // { href: "/admin/estadísticas", label: "Estadísticas", icon: FaChartBar },
     // { href: "/admin/clasificación", label: "Clasificación", icon: FaCog },
   

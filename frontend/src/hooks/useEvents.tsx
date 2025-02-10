@@ -6,6 +6,8 @@ import { useToast } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { estadoPartido } from "../interfaces/partido";
 import {  useNavigate } from "react-router-dom";
+import { actualizarPosiciones } from "../api/admin/posiciones";
+import useStore from "../store/store";
 
 type Equipos = {
     equipo1 : Equipo
@@ -20,6 +22,8 @@ type Equipos = {
 export const useEvent = (partidoId? : string) => {
     const { socket, isConnected } = useSocket(); 
     const navigate = useNavigate()
+    const torneo = useStore( (state) => state.torneo)
+    
     const [time, settime] = useState(0)
     const [fecha, setfecha] = useState('')
     const [planillero, setPlanillero] = useState('')
@@ -120,6 +124,30 @@ export const useEvent = (partidoId? : string) => {
       // queryClient.invalidateQueries({queryKey:  ['events', partidoId]});
     }
   });
+
+  const actualizarPosicionesMutate = useMutation({
+     mutationFn : () => actualizarPosiciones(Number(partidoId)),
+     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey :['tablaDePosiciones', torneo?.id]});
+     
+      
+       toast({
+         title: 'Posiciones actualizadas.',
+         status: 'success',
+         duration: 5000,
+         isClosable: true,
+       });
+     },
+     onError: () => {
+       toast({
+         title: 'Error actualizando posiciones.',
+         status: 'error',
+         duration: 5000,
+         isClosable: true,
+       });
+     },
+   });
+
 
   useEffect(() => {
     if (socket) {
@@ -296,6 +324,9 @@ export const useEvent = (partidoId? : string) => {
   await instance.put(`/partidos/estado/${partidoId}`,{
    estado : estadoPartido.JUGADO
  })
+ actualizarPosicionesMutate.mutate()
+
+
  toast({
   title: 'Partido Terminado',
   status: 'success',
@@ -320,5 +351,6 @@ export const useEvent = (partidoId? : string) => {
     handleTimerActions,
     isPaused,
     terminarPartido,
+    actualizarPosicionesMutate
   }
 }

@@ -8,6 +8,7 @@ import { Progress } from '@chakra-ui/react';
 import { EquiposGrupo, GruposEquipo } from '../../../../interfaces/grupos';
 import { Equipo } from '../../../../interfaces/marcador';
 import { fetchEquiposDisponibles } from '../../../../api/admin/equipos';
+import useStore from '../../../../store/store';
 
 
 
@@ -22,6 +23,7 @@ interface DragDropContextComponentProps {
 const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ categoryId }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
+  const torneo = useStore((state) => state.torneo) 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
   const { data: equipos,  isLoading: equiposLoading  } = useQuery({
@@ -35,7 +37,9 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
   const associateTeamMutation = useMutation(
    
     {
-      mutationFn : ({ equipoId, sourceGroupId, destinationGroupId }: { equipoId: number; sourceGroupId?: number; destinationGroupId: number | null}) => asociarEquipoGrupo( {equipoId, sourceGroupId, destinationGroupId}),
+      mutationFn : (
+        { equipoId, sourceGroupId, destinationGroupId, categoriaId , torneoId}: { equipoId: number; sourceGroupId?: number; destinationGroupId: number | null ,categoriaId : number, torneoId : number | undefined}
+      ) => asociarEquipoGrupo( {equipoId, sourceGroupId, destinationGroupId,categoriaId : categoryId, torneoId : torneo?.id}),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['equiposDisponibles', categoryId]});
         queryClient.invalidateQueries({queryKey: ['grupos', categoryId]});
@@ -95,10 +99,10 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
       const destinationGroupId = destination.droppableId !== 'equiposDisponibles' ? Number(destination.droppableId) : null;
       if (destinationGroupId === undefined) {
         // Mover de un grupo a la lista de equipos disponibles
-        associateTeamMutation.mutate({ equipoId, sourceGroupId, destinationGroupId: null });
+        associateTeamMutation.mutate({ equipoId, sourceGroupId, destinationGroupId: null ,categoriaId : categoryId, torneoId : torneo?.id});
       } else {
         // Mover entre grupos
-        associateTeamMutation.mutate({ equipoId, sourceGroupId, destinationGroupId });
+        associateTeamMutation.mutate({ equipoId, sourceGroupId, destinationGroupId, categoriaId : categoryId, torneoId : torneo?.id });
       }
     }
   };

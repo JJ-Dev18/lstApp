@@ -30,6 +30,7 @@ model Torneo {
   planilleros Planillero[]  
   usuario     Usuario      @relation(fields: [usuarioId], references: [id])
   usuarioId   Int
+  posiciones  Posiciones[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   @@map("torneos")
@@ -50,6 +51,7 @@ model Categoria {
   equipos Equipo[]
   partidos Partido[]
   grupos   GrupoClasificacion[]
+  posiciones       Posiciones[]
   torneo   Torneo  @relation(fields: [torneoId], references: [id])
   torneoId Int
   @@map("categorias")
@@ -67,6 +69,7 @@ model Equipo {
   grupos      EquiposGrupos[]
   equipo1     Partido[]   @relation("Equipo1")
   equipo2     Partido[]   @relation("Equipo2")
+  posiciones      Posiciones[]
   @@map("equipos")
 }
 
@@ -134,9 +137,31 @@ model GrupoClasificacion {
   categoriaId  Int
   categoria    Categoria        @relation(fields: [categoriaId], references: [id])
   equiposGrupos EquiposGrupos[]
+  posiciones       Posiciones[]
   @@map("grupos_clasificacion")
 }
 
+model Posiciones {
+  id               Int              @id @default(autoincrement())
+  equipoId         Int
+  torneoId         Int
+  categoriaId      Int
+  grupoId         Int?
+  partidosJugados  Int              @default(0)
+  partidosGanados  Int              @default(0)
+  partidosEmpatados Int             @default(0)
+  partidosPerdidos Int              @default(0)
+  golesAFavor      Int              @default(0)
+  golesEnContra    Int              @default(0)
+  puntos           Int              @default(0)
+  equipo           Equipo           @relation(fields: [equipoId], references: [id])
+  torneo           Torneo           @relation(fields: [torneoId], references: [id])
+  categoria        Categoria        @relation(fields: [categoriaId], references: [id])
+  grupo            GrupoClasificacion?  @relation(fields: [grupoId], references: [id])
+  @@unique([equipoId, torneoId, categoriaId, grupoId])
+  @@map("posiciones")
+
+}
 model EquiposGrupos {
   equipoId Int
   grupoId  Int

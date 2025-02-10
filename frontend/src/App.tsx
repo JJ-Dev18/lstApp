@@ -11,6 +11,7 @@ import PlanillerosPage from './pages/admin/PlanillerosPage';
 import PartidosPage from './pages/admin/PartidosPage';
 import { PartidoPage } from './pages/planilero/PartidoPage';
 import { PartidosPlanillero } from './pages/planilero/PartidosPlanillero';
+import { PosicionesPage } from './pages/admin/PosicionesPage';
 const NotFound = lazy(() => import('./pages/public/NotFound'));
 
 const RoleProtectedRoute = lazy(() => import('./pages/public/RoleProtectedRoute'));
@@ -81,6 +82,8 @@ const App: React.FC = () => {
           <Route path="/admin/equipos/:equipoId/jugadores" element={<JugadoresPage/>} />
          
           <Route path="/admin/partidos" element={<PartidosPage/>} />
+          <Route path="/admin/posiciones" element={<PosicionesPage/>} />
+
           {/* <Route path="/admi/neventos" element={<CrudTable apiEndpoint={apiEndpoints.eventos} columns={columnsAdminCrud.eventos} model="Evento" />} /> */}
           <Route path="/admin/grupos" element={<GruposPage/>}/>
           {/* <Route path="/admin/estadisticas" element={<CrudTable apiEndpoint={apiEndpoints.estadisticas} columns={columnsAdminCrud.estadisticas} model="Estadistica" />} /> */}

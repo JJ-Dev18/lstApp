@@ -22,7 +22,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 
 router.post('/register', async (req, res) => {
     const { email, password, nombre } = req.body;
-
+    console.log(req.body)
     try {
       // Verificar si el usuario ya existe
       const existingUser = await prisma.usuario.findUnique({ where: { email } });

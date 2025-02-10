@@ -33,15 +33,15 @@ type Props = {
 };
 
 const CreateTournamentForm: React.FC<Props> = ({ isOpen, onClose }) => {
+  const user = useStore((state) => state.user);
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     defaultValues: {
-      nombre: 'prueba torneo',
+      nombre: `torneo ${user?.nombre}`,
       // numCategorias: 2,
       // numEquipos: 2,
     }
   });
 
-  const user = useStore((state) => state.user);
   const setOpenForm = useStore((state) => state.setOpenForm);
   const toast = useToast();
   const queryClient = useQueryClient();

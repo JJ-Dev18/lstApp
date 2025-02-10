@@ -47,6 +47,8 @@ const Tour: React.FC = () => {
             numJugadores: 2
         })
         setOpenForm(false);
+        navigate(steps[nextIndex].navigateTo);
+
         // setNavbarOpen(true)
         await new Promise(resolve => setTimeout(resolve, 1000)); // Esperar para asegurar que el modal esté abierto
     }

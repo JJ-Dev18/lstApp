@@ -129,7 +129,7 @@ const TournamentsList: React.FC = () => {
             size={{base :'md', md : 'lg'}}
              onClick={() => setOpenform(true)}
              mb={2}
-             id="btn-crear" aria-label="crear torneo"  position={{ base : 'static', lg : 'fixed'}} bottom={5} left={8}>
+             id="btn-crear" aria-label="crear torneo"  position={{ base : 'static'}} bottom={5} left={8}>
               <IoAddOutline /> Crear Torneo 
              </Button>
       <InputGroup mb={4}>

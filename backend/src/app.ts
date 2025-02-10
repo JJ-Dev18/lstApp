@@ -19,6 +19,7 @@ import feedbackRoutes  from './routes/feedbackRoutes'
 import torneosRoutes from './routes/tournamentRoutes'
 import planillerosRoutes from './routes/planilleroRoutes'
 import {estadisticasRoutes} from './routes/estadisticas'
+import posicionesRoutes from './routes/posicionRoutes'
 
 
 import grupoClasificacionRoutes from './routes/grupoClasificacionRoutes'
@@ -71,6 +72,8 @@ app.use('/feedback', feedbackRoutes)
 app.use('/torneos', torneosRoutes)
 app.use('/planilleros', planillerosRoutes)
 app.use('/estadisticas', estadisticasRoutes)
+app.use('/posiciones', posicionesRoutes)
+
 
 
 // app.use('/grupos', grupoClasificacionRoutes)

@@ -1,6 +1,6 @@
 import { VStack, useColorModeValue, Link as ChakraLink, Flex, Icon, Text } from '@chakra-ui/react';
 import useStore from '../../store/store';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaSignOutAlt } from 'react-icons/fa';
 import { GiSoccerField } from 'react-icons/gi';
 
@@ -8,7 +8,7 @@ export const MenuAdmin = () => {
     const linkBg = useColorModeValue('teal.500', 'teal.700');
     const linkText = useColorModeValue('black', 'white');
     
-  
+    const location = useLocation()
     // const linkHoverBg = useColorModeValue('gray.200', 'gray.600');
     const logout = useStore( (state)=> state.logout)
     const torneo = useStore( (state)=> state.torneo)

@@ -20,10 +20,14 @@ export const deleteGrupo = async ( id:number) => {
 }
 export const asociarEquipoGrupo = async ({
   equipoId,
+  torneoId,
+  categoriaId,
   sourceGroupId,
   destinationGroupId,
 }: {
   equipoId: number;
+  torneoId: number | undefined;
+  categoriaId : number;
   sourceGroupId?: number;
   destinationGroupId: number | null;
 }) => {
@@ -37,6 +41,8 @@ export const asociarEquipoGrupo = async ({
     const response = await instance.post(`/grupos/equipos-grupos`, {
       equipoId,
       grupoId: destinationGroupId,
+      torneoId,
+      categoriaId
     });
     console.log(response, "response");
     return response.data;
