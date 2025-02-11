@@ -11,7 +11,7 @@ interface Props {
 
 const GrupoTabs: React.FC<Props> = ({ categoriaId }) => {
 
-  const { data: grupos, isLoading , isError } = useQuery({
+  const { data: grupos } = useQuery({
     queryKey: ["grupos", categoriaId],
     queryFn: () => fetchGrupos(categoriaId.toString()),
   });

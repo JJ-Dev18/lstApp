@@ -38,7 +38,7 @@ const DragDropContextComponent: React.FC<DragDropContextComponentProps> = ({ cat
    
     {
       mutationFn : (
-        { equipoId, sourceGroupId, destinationGroupId, categoriaId , torneoId}: { equipoId: number; sourceGroupId?: number; destinationGroupId: number | null ,categoriaId : number, torneoId : number | undefined}
+        { equipoId, sourceGroupId, destinationGroupId}: { equipoId: number; sourceGroupId?: number; destinationGroupId: number | null ,categoriaId : number, torneoId : number | undefined}
       ) => asociarEquipoGrupo( {equipoId, sourceGroupId, destinationGroupId,categoriaId : categoryId, torneoId : torneo?.id}),
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['equiposDisponibles', categoryId]});

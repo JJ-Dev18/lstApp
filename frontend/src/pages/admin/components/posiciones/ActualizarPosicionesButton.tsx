@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Input } from '@chakra-ui/react';
-import axios from 'axios';
-import { useMutation } from '@tanstack/react-query';
-import { useToast } from '@chakra-ui/react';
+
+// import { useToast } from '@chakra-ui/react';
 
 
 const ActualizarPosicionesButton: React.FC = () => {
   const [partidoId, setPartidoId] = useState<number>(0);
-  const toast = useToast();
+  // const toast = useToast();
   
 
   return (

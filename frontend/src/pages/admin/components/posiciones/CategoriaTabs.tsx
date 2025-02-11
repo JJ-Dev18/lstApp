@@ -11,7 +11,7 @@ interface Props {
 }
 
 const CategoriaTabs: React.FC<Props> = () => {
-  const { categorias, isLoadingCategorias } = useCategorias()
+  const { categorias } = useCategorias()
 
   return (
     <Tabs >
