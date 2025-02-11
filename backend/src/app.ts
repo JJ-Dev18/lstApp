@@ -44,7 +44,7 @@ const io = new SocketIOServer(server, {
 });
 
 app.use(cors({
-  origin:process.env.FRONTEND_URL,
+  origin:[`${process.env.FRONTEND_URL}`,`https://www.livescoretracking.online`],
   credentials: true,
 }));
 
