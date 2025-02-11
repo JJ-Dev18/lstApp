@@ -1,5 +1,11 @@
-# Usa una imagen base de Node.js 16
+# Usa una imagen base de Node.js 18 en Alpine
 FROM node:18-alpine
+
+# Instala OpenSSL 3.0 y otras dependencias necesarias
+RUN apk update && apk add --no-cache \
+    openssl3 \
+    bash \
+    && rm -rf /var/cache/apk/*
 
 # Crea un directorio de trabajo
 WORKDIR /usr/src/app
@@ -15,8 +21,6 @@ COPY . .
 
 # Genera el cliente de Prisma
 RUN npm run prisma
-
-
 
 # Compila TypeScript a JavaScript
 RUN npm run build
