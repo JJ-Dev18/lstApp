@@ -20,6 +20,9 @@ si hubo error en el build entonces habria que entrar a la ubicacion de la app /v
 docker compose build 
 
 entrar a el contenedor del backend
+
+docker exec -it lstapp-backend-1 /bin/sh
+
 npm run migrate
 npm run seeds 
 
