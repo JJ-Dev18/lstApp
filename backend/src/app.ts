@@ -39,7 +39,7 @@ const io = new SocketIOServer(server, {
   cors: {
     origin: process.env.FRONTEND_URL,
     methods: ['GET', 'POST'],
-    credentials: true,
+    credentials: false,
   },
 });
 
@@ -57,6 +57,7 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
+
 app.get('/check', (req, res) => {
   res.json({ message: 'Hello, world!' });
 });
@@ -89,19 +90,19 @@ app.use('/posiciones', posicionesRoutes)
 
 
 
-io.use((socket, next) => {
-  const token = socket.handshake.auth.token;
-  if (!token) {
-    return next(new Error('Authentication error'));
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultSecret') as Usuario;
-    socket.data.user = decoded;
-    next();
-  } catch (err) {
-    next(new Error('Authentication error'));
-  }
-});
+// io.use((socket, next) => {
+//   const token = socket.handshake.auth.token;
+//   // if (!token) {
+//   //   return next(new Error('Authentication error'));
+//   // }
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'defaultSecret') as Usuario;
+//     socket.data.user = decoded;
+//     next();
+//   } catch (err) {
+//     next(new Error('Authentication error'));
+//   }
+// });
 
 registerEventHandlers(io);
 registrarLikes(io)
