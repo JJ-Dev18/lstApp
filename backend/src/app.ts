@@ -57,6 +57,10 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
+app.get('/check', (req, res) => {
+  res.json({ message: 'Hello, world!' });
+});
+
 app.use(passport.session());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/auth', authRoutes);
