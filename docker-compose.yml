@@ -26,7 +26,7 @@ services:
     volumes:
       - ./backend/uploads:/usr/src/app/uploads
     environment:
-      - DATABASE_URL=postgresql://username:password@db:5432/mydatabase
+      - DATABASE_URL=postgresql://root:root@postgres:5432/lst
       - FRONTEND_URL=https://livescoretracking.online
       - HOST=https://api.livescoretracking.online/
       - SESSION_SECRET=mysecret
@@ -40,5 +40,4 @@ services:
 networks:
   app-network:
 
-volumes:
-  postgres-data:
+

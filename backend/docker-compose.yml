@@ -24,3 +24,7 @@ services:
 
 volumes:
   pgdata:
+  
+networks:
+  app-network:
+    external: true 
