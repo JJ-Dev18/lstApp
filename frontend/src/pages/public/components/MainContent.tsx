@@ -20,7 +20,7 @@ const FeatureCard = lazy(() => import('./FeatureCard'));
 // const CurvedlineChart = lazy(() => import("./CurvedLineChart"));
 // const Estadisticas = lazy(() => import("./Estadisticas"));
 const Testimonials = lazy(() => import("./Testimonials"));
-const LikeButton = lazy(() => import("./LikeButton"));
+// const LikeButton = lazy(() => import("./LikeButton"));
 const FeedbackForm = lazy(() => import("./FeedbackForm"));
 
 
@@ -140,7 +140,7 @@ const MainContent: React.FC = () => (
       <Suspense fallback={<Skeleton height="200px" />}>
         <FeedbackForm />
         
-        <LikeButton />
+        {/* <LikeButton /> */}
       </Suspense>
       
     </Box>

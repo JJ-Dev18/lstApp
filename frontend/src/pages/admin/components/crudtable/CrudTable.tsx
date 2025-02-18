@@ -59,7 +59,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model , add
     try {
       const response: any = await instance.get(`${apiEndpoint}/${torneo?.id}`);
       const formattedData = response.data.map((item: any) => {
-        let newItem = { ...item };
+        const newItem = { ...item };
         columns.forEach(col => {
           if (col.nested) {
             newItem[col.name] = newItem[col.name][col.nested];
@@ -145,7 +145,7 @@ const CrudTable: React.FC<CrudTableProps> = ({ apiEndpoint, columns, model , add
       handleCloseModal();
     } catch (error) {
       toast({
-        title: `Error ${editingId ? 'updating' : 'creating'} ${model}.`,
+        title: `Error ${editingId ? 'updating' : 'creating'} ${(error as any).response?.data?.error || 'desconocido'}.`,
         status: 'error',
         duration: 3000,
         isClosable: true,

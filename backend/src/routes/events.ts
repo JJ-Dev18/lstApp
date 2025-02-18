@@ -70,7 +70,7 @@ const registerEventHandlers = (io: SocketIOServer) => {
     socket.on('register', async (data, callback) => {
       const { tipo, tiempo, jugadorId, partidoId, comentario } = data;
       const user = socket.data.user;
-     
+      console.log(socket.data,"scoket data")
       if (!user) {
         return callback({ error: 'Usuario no autenticado' });
       }
