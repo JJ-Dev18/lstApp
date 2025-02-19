@@ -12,7 +12,7 @@ export function MatchCard({ marcadorEquipo1,marcadorEquipo2,id,equipo1,equipo2,d
   const fechaDate = useRef( new Date(fecha))
   const navigate = useNavigate()
   return (
-    <Box bg={bgColor} rounded="lg" shadow="md" overflow="hidden">
+    <Box bg={bgColor} rounded="lg" shadow="md" overflow="hidden" sx={{width: '300px'}}>
       <Box p="4">
         <Flex justify="space-between" align="center">
           <Text fontSize="lg" fontWeight="bold" >

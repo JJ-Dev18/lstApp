@@ -28,7 +28,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://root:root@postgres:5432/lst
       - FRONTEND_URL=https://livescoretracking.online
-      - HOST=https://api.livescoretracking.online/
+      - HOST=https://api.livescoretracking.online
       - SESSION_SECRET=mysecret
       - JWT_SECRET=myjwtsecret
       - GOOGLE_CLIENT_ID=yourclientid

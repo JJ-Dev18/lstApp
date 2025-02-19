@@ -18,7 +18,7 @@ export const Evento: FC<Props> = ({ event, align,color, onDelete }) => {
   return (
     <Flex justify={align === "left" ? "flex-start" : "flex-end"} mb={4}>
       <Box bg={color} p={4} rounded="md" shadow="md" maxW={{ base: '70%', md: '100%' }} position="relative" >
-        <Text fontWeight="bold">
+        <Text  color="white" fontWeight="bold">
           {tipo} - #{jugador?.nombre} - {jugador?.equipo.nombre}
         </Text>
         <IconButton
@@ -39,8 +39,8 @@ export const Evento: FC<Props> = ({ event, align,color, onDelete }) => {
           ) : (
             <SiAdblock />
           )}
-          <Text ml={1}>{tiempo}</Text>
-          <Text ml={1}>{comentario}</Text>
+          <Text color="white" ml={1}>{tiempo}</Text>
+          <Text color="white" ml={1}>{comentario}</Text>
         </Flex>
       </Box>
     </Flex>

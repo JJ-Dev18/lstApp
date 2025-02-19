@@ -288,7 +288,7 @@ const EditableTable: FC = () => {
   };
 
   const descargarPlantilla = () => {
-    const url = 'plantilla.xlsx'; // Ruta de la plantilla de archivo Excel
+    const url = '/src/assets/plantilla.xlsx'; // Ruta de la plantilla de archivo Excel
 
     axios.get(url, { responseType: 'blob' })
       .then((response) => {

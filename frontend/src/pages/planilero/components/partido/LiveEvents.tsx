@@ -17,7 +17,7 @@ export function LiveEvents({ equipo1 ,events, onDelete } : { events : EventoType
         {events.map((evento:EventoType) => (
           <Evento 
           align={evento.jugador?.equipo.nombre === equipo1 ? 'left' : 'right'}
-          color={evento.jugador?.equipo.nombre === equipo1 ? 'green.50' : 'red.50'}
+          color={evento.jugador?.equipo.nombre === equipo1 ? 'brand.500' : 'teal.500'}
           key={evento.id} event={evento}
           onDelete={onDelete}
           

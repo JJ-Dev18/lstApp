@@ -4,11 +4,11 @@ import { FaPlay, FaPause, FaHandPaper, FaHandsHelping, FaClock, FaHeart, FaStopw
 import { LuGoal } from 'react-icons/lu';
 
 const events = [
-  { name: 'gol', icon: LuGoal },
-  { name: 'bloqueo', icon: FaHandPaper },
-  { name: 'asistencia', icon: FaHandsHelping },
+  { name: 'Gol', icon: LuGoal },
+  { name: 'Bloqueo', icon: FaHandPaper },
+  { name: 'AsistencIa', icon: FaHandsHelping },
   { name: 'Time out', icon: FaClock },
-  { name: 'Tiempo de espiritu', icon: FaHeart },
+  { name: 'Tiempo de espíritu', icon: FaHeart },
   { name: 'Medio tiempo', icon: FaStopwatch }
 ];
 interface EventTrackerProps {
