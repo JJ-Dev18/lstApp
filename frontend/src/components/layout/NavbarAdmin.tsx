@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
             icon={<HamburgerIcon />}
             onClick={()=> setNavbarOpen(true)}
             variant="ghost"
-            display={{ base: "block", md: "none" }}
+            display={{ base: "block", lg: "none" }}
           />
           <Avatar name="User Name" size="sm" display={{ base: 'none', md: 'block' }}>
             <AvatarBadge boxSize="1.25em" bg="green.500" />

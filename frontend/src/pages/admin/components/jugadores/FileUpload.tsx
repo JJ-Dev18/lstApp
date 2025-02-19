@@ -58,18 +58,20 @@ const FileUpload: FC<FileUploadProps> = ({ onFileUpload }) => {
         }
         const expectedColumns = ['nombre', 'posicion', 'numero','edad','celular','eps','documento'];
         const headers = rows[0];
-        const isValid = headers.every((header: string, index: number) => expectedColumns.includes(header) && header === expectedColumns[index]);
+        // const isValid = headers.every((header: string, index: number) => expectedColumns.includes(header) && header === expectedColumns[index]);
+        // const hasAllColumns = expectedColumns.every(column => headers.includes(column));
+        console.log(expectedColumns,headers,"jeaders")
 
-        if (!isValid) {
-          toast({
-            title: 'Error de formato i ',
-            description: 'El archivo Excel no tiene la estructura esperada.',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-          return;
-        }
+        // if (!isValid) {
+        //   toast({
+        //     title: 'Error de formato i ',
+        //     description: 'El archivo Excel no tiene la estructura esperada.',
+        //     status: 'error',
+        //     duration: 5000,
+        //     isClosable: true,
+        //   });
+        //   return;
+        // }
         const newPlayers = rows.slice(1).map((row: any) => ({
           // Asigna un id temporal o manejado por el backend
           nombre: row[0],

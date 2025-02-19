@@ -23,7 +23,7 @@ const Layout: React.FC = () => {
       <Flex
         flex="1"
         p={{ base: 0, md: 20 }}
-        ml={{ base: 0, md: "200px" }}
+        ml={{ base: 0, md: 0, }}
         mt={{ base: 20, md: 0 }}
       >
         <SidebarAdmin />

@@ -30,7 +30,7 @@ const SidebarAdmin: React.FC = () => {
     boxShadow="md"
     p={5}
     zIndex="999"
-    display={{ base: 'none', lg: 'block' }}
+    display={{ base: 'none', md:'none' , lg:'none', xl: 'block' }}
   >
    
     {

@@ -70,7 +70,7 @@ export function EventForm({ selectedEvent,team1,team2,handleSubmit}: EventFormPr
       </FormControl>
       {selectedEvent === 'gol' && (
         <FormControl id="assistPlayer" mb={4}>
-          <FormLabel>Asitencia</FormLabel>
+          <FormLabel>Asistencia</FormLabel>
           <Select
             styles={styles}
             value={selectedAssistPlayer}
