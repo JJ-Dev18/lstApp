@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Box, Heading, HStack, Button, IconButton, useDisclosure, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useColorMode, Image } from "@chakra-ui/react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import ToggleThemeButton from "../../../components/layout/ToggleThemeButton";
-import Logo  from '../../../assets/logo.svg'
-import LogoBlanco  from '../../../assets/logoblanco.svg'
+import Logo  from '../../../assets/logo3.svg'
+import LogoBlanco  from '../../../assets/logo4.svg'
 import { useNavigate } from "react-router-dom";
 
 const Navbar: React.FC = () => {
@@ -44,11 +44,11 @@ const Navbar: React.FC = () => {
   //   return 'white';
   // }, [scrollY, colorMode]);
   return (
-    <Box  bg={bgColor} position="fixed" top={0} zIndex={999} width='100vw'
+    <Box  bg={bgColor} position="fixed" top={0} zIndex={999} width='100vw' 
     transition="background-color 0.3s ease" as="nav" display="flex" justifyContent="space-between" alignItems="center" py={4} px={8}>
       <Heading as="h1" size="lg" cursor="pointer">
-      <Image src={logoColor} alt="Logo LST" boxSize={{ base: "60px", md: "60px" }} onClick={() => navigate('/')}
-                  objectFit="contain"/>
+      <Image src={logoColor} alt="Logo LST" boxSize={{ base: "40px",}} onClick={() => navigate('/')}
+             width={{ base: 100,md : 200}} height="auto"  />
       </Heading>
       <HStack spacing={4} display={{ base: "none", md: "flex" }}>
         {/* <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Tournaments</Link>
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
         <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Matches</Link>
         <Link href="#" fontSize="lg" className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white hover:text-white hover:bg-gray-400 dark:hover:bg-gray-500">Stats</Link> */}
         <ToggleThemeButton/>
-        <Button bg="brand.500" variant="ghost"  color="white" fontSize="lg" onClick={() => navigate('/login')}>Iniciar</Button>
+        <Button bg="custom.brightGreen" variant="ghost"  color="white" fontSize="lg" onClick={() => navigate('/login')}>Iniciar</Button>
         {/* <Button bg="brand.300" fontSize="lg">Sign Up</Button> */}
       </HStack>
      

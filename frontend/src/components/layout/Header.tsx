@@ -2,7 +2,7 @@
 import { Box, Flex, IconButton, Input, Avatar, useDisclosure, HStack, Drawer, DrawerContent, DrawerOverlay, DrawerCloseButton, DrawerHeader, DrawerBody, Link, InputGroup, InputLeftElement, Spacer, VStack, useColorMode, Image } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, SearchIcon, BellIcon } from '@chakra-ui/icons';
 import React, { useEffect, useState } from 'react';
-import Logo  from '../../assets/logo.svg'
+import Logo  from '../../assets/logo2.svg'
 import LogoBlanco  from '../../assets/logoblanco.svg'
 import ToggleThemeButton from './ToggleThemeButton';
 const Header: React.FC = () => {

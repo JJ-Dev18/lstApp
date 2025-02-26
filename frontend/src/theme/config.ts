@@ -34,6 +34,10 @@ const colors = {
     800: '#2c2c66',
     900: '#1e1e40',
   },
+  custom: {
+    brightGreen: '#16F98A',
+    brightRed : '#DC0031'
+  },
 };
 
 const components = {
@@ -57,17 +61,19 @@ const components = {
     },
     variants: {
       solid: (props: any) => ({
-        bg: mode('brand.500', 'brand.200')(props),
+        bg: mode('custom.brightGreen', 'white')(props),
         color: mode('white', 'gray.800')(props),
         _hover: {
-          bg: mode('brand.600', 'brand.300')(props),
+          bg: mode('custom.brightGreen', 'custom.brightGreen')(props),
+          color: mode('white', 'black')(props),
+
         },
       }),
       ghost: (props: any) => ({
         bg: mode('transparent', 'transparent')(props),
         color: mode('gray.800', 'whiteAlpha.900')(props),
         _hover: {
-          bg: mode('gray.200', 'whiteAlpha.200')(props),
+          bg: mode('gray.200', 'custom.brightRed')(props),
         },
       }),
     },
@@ -98,6 +104,15 @@ const components = {
   },
 };
 
-const customTheme = extendTheme({ config, styles, colors, components });
+const customTheme = extendTheme({
+  config,
+  styles,
+  colors,
+  components,
+  fonts: {
+    heading: 'Roboto, sans-serif',
+    body: 'Roboto, sans-serif',
+  },
+});
 
 export default customTheme;
