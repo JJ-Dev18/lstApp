@@ -23,8 +23,36 @@ jobs:
       uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        
+    - name: Check disk space and clean docker resources
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        df -h
+        docker system prune -f
+        docker image prune -af
+        docker volume prune -f
+        df -h
+        EOF
 
-    - name: Clean up old backend containers and networks
+    - name: Ensure network exists
+      env:
+        VPS_USER: ${{ secrets.VPS_USER }}
+        VPS_HOST: ${{ secrets.VPS_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
+        # Verificar si la red existe, si no, crearla
+        if ! docker network inspect app-network >/dev/null 2>&1; then
+          echo "La red app-network no existe, creándola..."
+          docker network create app-network
+        else
+          echo "La red app-network ya existe"
+        fi
+        EOF
+
+    - name: Clean up old backend containers
       if: contains(github.event.head_commit.message, '[backend]') || contains(github.event.head_commit.message, '[both]') || github.event.inputs.deploy_target == 'backend' || github.event.inputs.deploy_target == 'both'
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
@@ -36,7 +64,7 @@ jobs:
         docker-compose rm -f backend
         EOF
 
-    - name: Clean up old frontend containers and networks
+    - name: Clean up old frontend containers
       if: contains(github.event.head_commit.message, '[frontend]') || contains(github.event.head_commit.message, '[both]') || github.event.inputs.deploy_target == 'frontend' || github.event.inputs.deploy_target == 'both'
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
@@ -72,7 +100,6 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "mkdir -p /var/www/lstapp/frontend"
         rsync -avz --exclude 'node_modules' --exclude '.git' --exclude 'dist' ./frontend/ ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/frontend/
-        # scp -o StrictHostKeyChecking=no -r ./frontend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/frontend/
       
     - name: Copy docker-compose.yml to VPS
       env:
@@ -81,7 +108,7 @@ jobs:
       run: |
         scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
 
-    - name: Build frontend on VPS
+    - name: Build and deploy frontend on VPS (standalone)
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -89,16 +116,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
         docker-compose build frontend
-        EOF
-
-    - name: Deploy frontend on VPS
-      env:
-        VPS_USER: ${{ secrets.VPS_USER }}
-        VPS_HOST: ${{ secrets.VPS_HOST }}
-      run: |
-        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
-        cd /var/www/lstapp
-        docker-compose up -d frontend
+        docker-compose up -d --no-deps frontend
         EOF
 
   deploy-backend:
@@ -114,6 +132,7 @@ jobs:
       uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        
     - name: Install rsync
       run: sudo apt-get update && sudo apt-get install -y rsync
 
@@ -124,7 +143,6 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} "mkdir -p /var/www/lstapp/backend"
         rsync -avz --exclude 'node_modules' --exclude '.git' --exclude 'dist' ./backend/ ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
-        # scp -o StrictHostKeyChecking=no -r ./backend/* ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/backend/
       
     - name: Copy docker-compose.yml to VPS
       env:
@@ -133,7 +151,7 @@ jobs:
       run: |
         scp -o StrictHostKeyChecking=no ./docker-compose.yml ${VPS_USER}@${VPS_HOST}:/var/www/lstapp/docker-compose.yml
 
-    - name: Build backend on VPS
+    - name: Build and deploy backend on VPS
       env:
         VPS_USER: ${{ secrets.VPS_USER }}
         VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -141,16 +159,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
         docker-compose build backend
-        EOF
-
-    - name: Deploy backend on VPS
-      env:
-        VPS_USER: ${{ secrets.VPS_USER }}
-        VPS_HOST: ${{ secrets.VPS_HOST }}
-      run: |
-        ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
-        cd /var/www/lstapp
-        docker-compose up -d backend
+        docker-compose up -d --no-deps backend
         EOF
 
     - name: Run migrations
@@ -161,7 +170,7 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
-        docker-compose exec backend npm run migrate
+        docker-compose exec -T backend npm run migrate
         EOF
 
     - name: Run seeds
@@ -172,5 +181,5 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} << 'EOF'
         cd /var/www/lstapp
-        docker-compose exec backend npm run seeds
+        docker-compose exec -T backend npm run seeds
         EOF

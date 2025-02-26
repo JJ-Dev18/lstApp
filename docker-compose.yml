@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   frontend:
@@ -5,17 +6,13 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        VITE_API_URL:  'https://api.livescoretracking.online/'
+        VITE_API_URL: 'https://api.livescoretracking.online/'
         VITE_API_URL_SOCKET: 'https://api.livescoretracking.online/'
     ports:
       - "3000:80"
-    
-       
-    depends_on:
-      - backend  
+    restart: unless-stopped
     networks:
       - app-network
-
 
   backend:
     build:
@@ -33,12 +30,10 @@ services:
       - JWT_SECRET=myjwtsecret
       - GOOGLE_CLIENT_ID=yourclientid
       - GOOGLE_CLIENT_SECRET=yourclientsecret
+    restart: unless-stopped
     networks:
       - app-network
- 
 
 networks:
   app-network:
-   external : true 
-
-
+    external: true

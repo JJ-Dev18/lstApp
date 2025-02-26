@@ -110,8 +110,8 @@ const customTheme = extendTheme({
   colors,
   components,
   fonts: {
-    heading: 'Roboto, sans-serif',
-    body: 'Roboto, sans-serif',
+    heading: 'Poppins, sans-serif',
+    body: 'Poppins, sans-serif',
   },
 });
 

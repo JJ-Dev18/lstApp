@@ -14,14 +14,15 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <Box textAlign="center" position="relative" py={{ base: 24, md: 32, lg: 80 }} 
-     height={{ base: "400px", md: "600px", lg: "600px" , xl: '800px', '2xl' : '1200px'  }}
+    <Box textAlign="center" position="relative" py={{ base: 0, md: 0, lg: 0 }} 
+ 
+    height={{ base: "400px", md: "600px", lg: "800px" , xl: '800px', '2xl' : '1100px'  }}
     >
       <Skeleton position={"absolute"}  fadeDuration={1}   isLoaded={!loading} width="100%" height="100%" top={0}>
         <Box
           bgImage="url(/assets/inicio/header2.webp)"
           bgPosition={{ base: "center" }}
-          bgSize={{ base: "contain", xl: 'contain',  }}
+          bgSize={{ base: "cover"  }}
           backgroundRepeat="no-repeat"
           height="100%"
          
@@ -40,8 +41,12 @@ const Header: React.FC = () => {
         bottom={0}
         bg="rgba(0, 0, 0, 0.7)"
         zIndex={0}
+       
       />
-      <Box position="relative" zIndex={1}>
+      <Box position="relative" zIndex={1} display="flex" flexDirection='column'
+      justifyContent="center"  alignItems="center"  
+      height="100%"
+      >
         {/* <ChakraImage  src={LogoGrande} width={800}/> */}
               <Heading as="h2" size={{ base: "2xl", md: "4xl" }} mb={4} color="white">
                 Ultimate Frisbee Tracker
@@ -54,7 +59,7 @@ const Header: React.FC = () => {
               
               UFT es la herramienta para seguir tus partidos en tiempo real, estadísticas detalladas y análisis completo.
               </Text>
-              <Button bg="custom.brightRed" color={'white'} fontSize={{ base: "md", md: "lg" }} onClick={()=> navigate('/login')}>
+              <Button bg="custom.brightRed" width={200} height={50} color={'white'} fontSize={{ base: "md", md: "lg" }} onClick={()=> navigate('/login')}>
                 ¡Empieza ahora!
               </Button>
       </Box>
